@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <%- include('../partials/head', { title: title }) %>
+    <link rel="stylesheet" href="/css/products.css">
+</head>
+<body>
+    <%- include('../partials/header') %>
+
+    <main class="content">
+        <h1><%= title %></h1>
+        
+        <div class="filters">
+            <form class="filter-by-categories">
+            </form>
+        </div>
+        
+        <div class="products-grid">
+            <% products.forEach(product => { %>
+                <div class="product-card">
+                    <a href="/products/<%= product.id %>">
+                        <% if (product.image_url) { %>
+                            <img src="<%= product.image_url %>" alt="<%= product.name %>">
+                        <% } else { %>
+                            <div class="no-image">No image</div>
+                        <% } %>
+                        <div class="product-details">
+                            <h3><%= product.name %></h3>
+                            <p class="price"><%= product.price %> ₽</p>
+                            <p class="category"><%= product.category %></p>
+                        </div>
+                    </a>
+                    <div class="product-actions">
+                        <form action="/cart/add" method="POST">
+                            <input type="hidden" name="productId" value="<%= product.id %>">
+                            <input type="number" name="quantity" value="1" min="1" max="10">
+                            <button type="submit" class="btn">Добавить в корзину</button>
+                        </form>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </main>
+
+    <%- include('../partials/footer') %>
+</body>
+</html>

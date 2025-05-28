@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <%- include('../partials/head', { title: title }) %>
+    <link rel="stylesheet" href="/css/cart.css">
+</head>
+<body>
+    <%- include('../partials/header') %>
+
+    <main class="cart-container">
+        <h1>Ваша корзина</h1>
+        
+        <% if (items.length > 0) { %>
+            <div class="cart-items">
+                <% items.forEach(item => { %>
+                    <div class="cart-item">
+                        <img src="<%= item.image_url || '/images/no-image.png' %>" alt="<%= item.name %>">
+                        <div class="item-details">
+                            <h3><%= item.name %></h3>
+                            <div class="quantity-control">
+                                <form action="/cart/update/<%= item.id %>" method="POST" class="quantity-form">
+                                    <button type="button" class="quantity-btn minus">-</button>
+                                    <input type="number" name="quantity" value="<%= item.quantity %>" min="1" class="quantity-input">
+                                    <button type="button" class="quantity-btn plus">+</button>
+                                </form>
+                            </div>
+                            <p class="price"><%= parseFloat(item.price).toFixed(2) %> ₽</p>
+                            <p class="total">Итого: <%= (parseFloat(item.price) * item.quantity).toFixed(2) %> ₽</p>
+                        </div>
+                        <form action="/cart/remove/<%= item.id %>" method="POST">
+                            <button type="submit" class="remove-btn">×</button>
+                        </form>
+                    </div>
+                <% }); %>
+            </div>
+            
+            <div class="cart-summary">
+                <h3>Итого: <span><%= total %> ₽</span></h3>
+                <form action="/cart/checkout" method="POST">
+                    <button type="submit" class="checkout-btn">Оформить заказ</button>
+                </form>
+            </div>
+        <% } else { %>
+            <p class="empty-cart">Ваша корзина пуста</p>
+            <a href="/products" class="btn">Перейти в каталог</a>
+        <% } %>
+    </main>
+
+    <%- include('../partials/footer') %>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Обработчики для кнопок +/-
+        document.querySelectorAll('.quantity-btn').forEach(button => {
+            button.addEventListener('click', async function() {
+                const form = this.closest('.quantity-form');
+                const input = form.querySelector('.quantity-input');
+                let quantity = parseInt(input.value);
+                
+                // Изменяем количество
+                if (this.classList.contains('plus')) {
+                    quantity++;
+                } else if (this.classList.contains('minus') && quantity > 1) {
+                    quantity--;
+                }
+                
+                input.value = quantity;
+                
+                // Отправляем обновление на сервер
+                try {
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            quantity: quantity,
+                            _method: 'PUT' // Для совместимости с Express
+                        })
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        // Обновляем итоговую цену для товара
+                        const itemElement = form.closest('.cart-item');
+                        const price = parseFloat(itemElement.querySelector('.price').textContent);
+                        itemElement.querySelector('.total').textContent = `Итого: ${(price * quantity).toFixed(2)} ₽`;
+                        
+                        // Обновляем общую сумму
+                        document.querySelector('.cart-summary h3 span').textContent = `${result.newTotal} ₽`;
+                    }
+                } catch (error) {
+                    console.error('Ошибка:', error);
+                }
+            });
+        });
+    });
+    </script>
+</body>
+</html>

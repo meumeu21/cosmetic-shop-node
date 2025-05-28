@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <%- include('../partials/head', { title: title }) %>
+    <link rel="stylesheet" href="/css/order.css">
+</head>
+<body>
+    <%- include('../partials/header') %>
+
+    <main class="order-container">
+        <a href="/account" class="back-link">Назад</a>
+        
+        <h1>Заказ #<%= order.id %></h1>
+        
+        <div class="order-info">
+            <div class="info-block">
+                <h3>Дата заказа</h3>
+                <p><%= new Date(order.order_date).toLocaleDateString() %></p>
+            </div>
+            
+            <div class="info-block">
+                <h3>Статус</h3>
+                <p class="status-<%= order.status %>">
+                    <% 
+                        const statusText = {
+                            'pending': 'В обработке',
+                            'processing': 'В процессе',
+                            'shipped': 'Отправлен',
+                            'delivered': 'Доставлен',
+                            'cancelled': 'Отменен'
+                        };
+                    %>
+                    <%= statusText[order.status] %>
+                </p>
+            </div>
+            
+            <div class="info-block">
+                <h3>Сумма заказа</h3>
+                <p><%= parseFloat(order.total_amount).toFixed(2) %> ₽</p>
+            </div>
+        </div>
+        
+        <h2>Товары в заказе</h2>
+        
+        <div class="order-items">
+            <% order.items.forEach(item => { %>
+                <div class="order-item">
+                    <img src="<%= item.image_url || '/images/no-image.png' %>" alt="<%= item.name %>">
+                    
+                    <div class="item-details">
+                        <h3><%= item.name %></h3>
+                        <p>Количество: <%= item.quantity %></p>
+                        <p>Цена: <%= parseFloat(item.price).toFixed(2) %> ₽</p>
+                        <p class="item-total">Итого: <%= parseFloat(item.price * item.quantity).toFixed(2) %> ₽</p>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </main>
+
+    <%- include('../partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<aside class="sidebar">
+  <nav>
+      <ul>
+            <li><a href="/admin/">Главная</a></li>
+            <li><a href="/admin/products">Товары</a></li>
+            <% if (user.role === 'admin') { %>
+                <li><a href="/admin/staff">Персонал</a></li>
+            <% } %>
+            <% if (user.role === 'admin') { %>
+                <li><a href="/admin/customers">Покупатели</a></li>
+            <% } %>
+          <li><a href="/admin/logout">Выход</a></li>
+      </ul>
+  </nav>
+</aside>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <%- include('../partials/head', { title: 'Главная' }) %>
+</head>
+<body>
+    <%- include('../partials/header') %>
+
+    <main class="content">
+        <section class="main">
+            <div class="two-columns">
+                <img alt="main-illustration">
+                <div class="main-information">
+                    <div class="main-images">
+                        <img alt="main-product">
+                        <img alt="main-haerin">
+                    </div>
+                    <p class="main-slogan">Take care of yourself</p>
+                    <div class="main-texts">
+                        <span class="main-text-1">
+                            Great skin is not simply a matter of DNA — your daily habits, in fact, have a big impact on what you see in the mirror. But depending on which product reviews you read or doctors you consult, there is a dizzying number of opinions 
+                        </span>
+                        <span class="main-text-2">
+                            on everything from how to moisturize to how to protect yourself from UV rays. Ultimately, caring for your skin is simply personal. Here’s what you should keep in mind to sort through all the noise.
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bestsellers">
+            <h2>Bestsellers</h2>
+            <div class="carousel">
+                <% products.slice(0, 4).forEach(product => { %>
+                    <div class="product-card">
+                        <a href="/products/<%= product.id %>">
+                            <% if (product.image_url) { %>
+                                <img src="<%= product.image_url %>" alt="<%= product.name %>">
+                            <% } else { %>
+                                <div class="no-image">No image</div>
+                            <% } %>
+                            <h3><%= product.name %></h3>
+                            <p class="price"><%= product.price %> ₽</p>
+                        </a>
+                        <div class="product-actions">
+                            <form action="/cart/add" method="POST">
+                                <input type="hidden" name="productId" value="<%= product.id %>">
+                                <input type="number" name="quantity" value="1" min="1" max="10">
+                                <button type="submit" class="btn">Добавить в корзину</button>
+                            </form>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        </section>
+
+        <section class="products">
+            <h2>Новинки</h2>
+            <div class="products-list">
+                <% products.slice(4).forEach(product => { %>
+                    <div class="product-item">
+                        <a href="/products/<%= product.id %>">
+                            <% if (product.image_url) { %>
+                                <img src="<%= product.image_url %>" alt="<%= product.name %>">
+                            <% } else { %>
+                                <div class="no-image">No image</div>
+                            <% } %>
+                            <div class="product-info">
+                                <h3><%= product.name %></h3>
+                                <p class="price"><%= product.price %> ₽</p>
+                                <p class="category"><%= product.category %></p>
+                            </div>
+                        </a>
+                        <div class="product-actions">
+                            <form action="/cart/add" method="POST">
+                                <input type="hidden" name="productId" value="<%= product.id %>">
+                                <input type="number" name="quantity" value="1" min="1" max="10">
+                                <button type="submit" class="btn">Добавить в корзину</button>
+                            </form>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        </section>
+    </main>
+
+    <%- include('../partials/footer') %>
+</body>
+</html>

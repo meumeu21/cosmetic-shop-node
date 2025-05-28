@@ -1,0 +1,42 @@
+<div class="auth-popup" id="authPopup">
+  <div class="auth-container">
+    <button class="close-btn" id="closeAuthPopup">&times;</button>
+    
+    <div class="auth-tabs">
+      <button class="tab-btn active" data-tab="login">Вход</button>
+      <button class="tab-btn" data-tab="register">Регистрация</button>
+    </div>
+
+    <form id="loginForm" class="auth-form active" action="/auth/login" method="POST">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label>Пароль</label>
+        <input type="password" name="password" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Войти</button>
+    </form>
+
+    <form id="registerForm" class="auth-form" action="/auth/register" method="POST">
+      <div class="form-group">
+        <label>Логин</label>
+        <input type="text" name="username" required>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label>Пароль</label>
+        <input type="password" name="password" required minlength="6">
+      </div>
+      <div class="form-group">
+        <label>Подтвердите пароль</label>
+        <input type="password" name="confirmPassword" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+    </form>
+  </div>
+</div>

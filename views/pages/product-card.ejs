@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <%- include('../partials/head', { title: title }) %>
+    <link rel="stylesheet" href="/css/product-card.css">
+</head>
+<body>
+    <%- include('../partials/header') %>
+
+    <main class="content">
+        <div class="product-container">
+            <div class="product-images">
+                <% if (product.image_url) { %>
+                    <img src="<%= product.image_url %>" alt="<%= product.name %>" class="main-image">
+                <% } else { %>
+                    <div class="no-image">No image</div>
+                <% } %>
+            </div>
+            
+            <div class="product-info">
+                <h1><%= product.name %></h1>
+                <p class="price"><%= product.price %> ₽</p>
+                
+                <div class="product-meta">
+                    <p><strong>Бренд:</strong> <%= product.brand || 'Не указан' %></p>
+                    <p><strong>Возраст:</strong> <%= product.age_group %></p>
+                    <p><strong>Объем:</strong> <%= product.volume %> мл</p>
+                    <p><strong>В наборе:</strong> <%= product.items_in_set %> шт</p>
+                    <p><strong>Гипоаллергенно:</strong> <%= product.is_hypoallergenic ? 'Да' : 'Нет' %></p>
+                </div>
+                
+                <div class="product-description">
+                    <h3>Описание</h3>
+                    <p><%= product.description %></p>
+                    
+                    <h3>Применение</h3>
+                    <p><%= product.application %></p>
+                    
+                    <h3>Состав</h3>
+                    <p><%= product.composition %></p>
+                    
+                    <h3>Противопоказания</h3>
+                    <p><%= product.contraindications %></p>
+                </div>
+                
+                <div class="product-actions">
+                    <form action="/cart/add" method="POST">
+                        <input type="hidden" name="productId" value="<%= product.id %>">
+                        <input type="number" name="quantity" value="1" min="1" max="10">
+                        <button type="submit" class="btn">Добавить в корзину</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <%- include('../partials/footer') %>
+</body>
+</html>
