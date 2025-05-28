@@ -1,43 +1,68 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
+  <head>
     <%- include('../partials/head', { title: title }) %>
-</head>
-    <body>
-        <%- include('../partials/header') %>
-        <h2>Редактировать профиль</h2>
+  </head>
+  <body>
+    <%- include('../partials/header') %>
+    <h2>Редактировать профиль</h2>
 
-        <form action="/account/edit" method="POST">
-        <div>
-            <label for="username">Логин:</label>
-            <input type="text" id="username" name="username" value="<%= customer.username %>" required>
-        </div>
-        
-        <div>
-            <label for="email">Электронная почта:</label>
-            <input type="email" id="email" name="email" value="<%= customer.email %>" required>
-        </div>
+    <form action="/account/edit" method="POST">
+      <div>
+        <label for="username">Логин:</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          value="<%= customer.username %>"
+          required
+        />
+      </div>
 
-        <div>
-            <label for="password">Пароль:</label>
-            <input type="password" id="password" name="password" value="<%= customer.password %>" required>
-        </div>
+      <div>
+        <label for="email">Электронная почта:</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          value="<%= customer.email %>"
+          required
+        />
+      </div>
 
-        <div>
-            <label>Номер телефона</label>
-            <input type="tel" name="phone" pattern="+7[0-9]{10}" class="form-control"
-                    value="<%= customer.phone %>">
-            <span>Формат: +79999999999</span>
-        </div>
+      <div>
+        <label for="password">Пароль:</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          value="<%= customer.password %>"
+          required
+        />
+      </div>
 
-        <div>
-            <label>Адрес</label>
-            <textarea name="address" class="form-control"><%= customer.address %></textarea>
-        </div>
+      <div>
+        <label>Номер телефона</label>
+        <input
+          type="tel"
+          name="phone"
+          pattern="+7[0-9]{10}"
+          class="form-control"
+          value="<%= customer.phone %>"
+        />
+        <span>Формат: +79999999999</span>
+      </div>
 
-        <button type="submit">Сохранить</button>
-        </form>
+      <div>
+        <label>Адрес</label>
+        <textarea name="address" class="form-control">
+<%= customer.address %></textarea
+        >
+      </div>
 
-        <%- include('../partials/footer') %>
-    </body>
+      <button type="submit">Сохранить</button>
+    </form>
+
+    <%- include('../partials/footer') %>
+  </body>
 </html>

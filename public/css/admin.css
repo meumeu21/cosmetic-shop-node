@@ -1,5 +1,5 @@
-@import url('../vendor/bootstrap-5.3.6-dist/css/bootstrap.css');
-@import url('../vendor/bootstrap-5.3.6-dist/css/bootstrap.min.css');
+@import url("../vendor/bootstrap-5.3.6-dist/css/bootstrap.css");
+@import url("../vendor/bootstrap-5.3.6-dist/css/bootstrap.min.css");
 
 body {
   font-family: Arial, sans-serif;
@@ -87,11 +87,14 @@ table {
   margin-bottom: 20px;
 }
 
-table, th, td {
+table,
+th,
+td {
   border: 1px solid #ddd;
 }
 
-th, td {
+th,
+td {
   padding: 12px;
   text-align: left;
 }

@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-  <%- include('../partials/admin-head', { title: 'Админка' }) %>
-</head>
-<body>
+  <head>
+    <%- include('../partials/admin-head', { title: 'Админка' }) %>
+  </head>
+  <body>
     <div class="admin-container">
-        <%- include('../partials/admin-aside') %>
+      <%- include('../partials/admin-aside') %>
 
-        <main class="content">
-          <h1>Добро пожаловать, <%= user.username %>!</h1>
-          <p>Ваша роль: <%= user.role === 'admin' ? 'Администратор' : 'Менеджер' %></p>
-        </main>
+      <main class="content">
+        <h1>Добро пожаловать, <%= user.username %>!</h1>
+        <p>
+          Ваша роль: <%= user.role === 'admin' ? 'Администратор' : 'Менеджер' %>
+        </p>
+      </main>
     </div>
     <%- include('../partials/footer') %>
-</body>
+  </body>
 </html>
-
-

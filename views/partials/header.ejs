@@ -1,19 +1,19 @@
 <header>
   <nav>
-      <h1><a href="/">Главная</a></h1>
-      <a href="/products">Каталог товаров</a>
-      <a href="/skincare">Уход за кожей</a>
-      <a href="/about">О нас</a>
-      <div class="auth-section">
-        <% if (typeof customer !== 'undefined') { %>
-            <a href="/account" class="profile-link">
-                <span><%= customer.username %></span>
-            </a>
-        <% } else { %>
-            <button id="authPopupBtn" class="auth-btn">Войти в профиль</button>
-        <% } %>
+    <h1><a href="/">Главная</a></h1>
+    <a href="/products">Каталог товаров</a>
+    <a href="/skincare">Уход за кожей</a>
+    <a href="/about">О нас</a>
+    <div class="auth-section">
+      <% if (typeof customer !== 'undefined') { %>
+      <a href="/account" class="profile-link">
+        <span><%= customer.username %></span>
+      </a>
+      <% } else { %>
+      <button id="authPopupBtn" class="auth-btn">Войти в профиль</button>
+      <% } %>
     </div>
-      <a href="/cart">Корзина</a>
+    <a href="/cart">Корзина</a>
   </nav>
   <%- include('./auth-popup') %>
 </header>

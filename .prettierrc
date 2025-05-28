@@ -1,0 +1,15 @@
+{
+  "overrides": [
+    {
+      "files": "*.ejs",
+      "options": {
+        "parser": "html",
+        "tabWidth": 2,
+        "printWidth": 80,
+        "useTabs": false,
+        "semi": false,
+        "singleQuote": true
+      }
+    }
+  ]
+}

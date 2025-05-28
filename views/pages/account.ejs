@@ -1,74 +1,75 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-  <%- include('../partials/head', { title: title }) %>
-</head>
-<body>
-  <%- include('../partials/header') %>
+  <head>
+    <%- include('../partials/head', { title: title }) %>
+  </head>
+  <body>
+    <%- include('../partials/header') %>
 
-  <main class="account-container">
-    <h1>Мой аккаунт</h1>
-    
-    <div class="account-info">
-      <div class="account-section">
-        <h2>Личная информация</h2>
-        <div class="info-row">
-          <span class="info-label">Логин:</span>
-          <span class="info-value"><%= customer.username %></span>
+    <main class="account-container">
+      <h1>Мой аккаунт</h1>
+
+      <div class="account-info">
+        <div class="account-section">
+          <h2>Личная информация</h2>
+          <div class="info-row">
+            <span class="info-label">Логин:</span>
+            <span class="info-value"><%= customer.username %></span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Email:</span>
+            <span class="info-value"><%= customer.email %></span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Телефон:</span>
+            <span class="info-value"><%= customer.phone || 'Не указан' %></span>
+          </div>
         </div>
-        <div class="info-row">
-          <span class="info-label">Email:</span>
-          <span class="info-value"><%= customer.email %></span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">Телефон:</span>
-          <span class="info-value"><%= customer.phone || 'Не указан' %></span>
+
+        <div class="account-actions">
+          <a href="/account/edit" class="btn btn-edit">Редактировать профиль</a>
+          <form action="/auth/logout" method="GET">
+            <button type="submit" class="btn btn-logout">Выйти</button>
+          </form>
         </div>
       </div>
-
-
-    <div class="account-actions">
-      <a href="/account/edit" class="btn btn-edit">Редактировать профиль</a>
-      <form action="/auth/logout" method="GET">
-        <button type="submit" class="btn btn-logout">Выйти</button>
-      </form>
-    </div>
-    </div>
-    <div class="account-section">
+      <div class="account-section">
         <h2>История заказов</h2>
         <% if (orders.length > 0) { %>
-            <table class="orders-table">
-                <thead>
-                    <tr>
-                        <th>№ заказа</th>
-                        <th>Дата</th>
-                        <th>Товаров</th>
-                        <th>Сумма</th>
-                        <th>Статус</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% orders.forEach(order => { %>
-                        <tr>
-                            <td>#<%= order.id %></td>
-                            <td><%= new Date(order.order_date).toLocaleDateString() %></td>
-                            <td><%= order.items_count %></td>
-                            <td><%= parseFloat(order.total_amount).toFixed(2) %> ₽</td>
-                            <td><%= order.status %></td>
-                            <td>
-                                <a href="/account/orders/<%= order.id %>" class="btn btn-sm">Подробнее</a>
-                            </td>
-                        </tr>
-                    <% }); %>
-                </tbody>
-            </table>
+        <table class="orders-table">
+          <thead>
+            <tr>
+              <th>№ заказа</th>
+              <th>Дата</th>
+              <th>Товаров</th>
+              <th>Сумма</th>
+              <th>Статус</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% orders.forEach(order => { %>
+            <tr>
+              <td>#<%= order.id %></td>
+              <td><%= new Date(order.order_date).toLocaleDateString() %></td>
+              <td><%= order.items_count %></td>
+              <td><%= parseFloat(order.total_amount).toFixed(2) %> ₽</td>
+              <td><%= order.status %></td>
+              <td>
+                <a href="/account/orders/<%= order.id %>" class="btn btn-sm"
+                  >Подробнее</a
+                >
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
         <% } else { %>
-            <p>У вас пока нет заказов</p>
+        <p>У вас пока нет заказов</p>
         <% } %>
-    </div>
-  </main>
+      </div>
+    </main>
 
-  <%- include('../partials/footer') %>
-</body>
+    <%- include('../partials/footer') %>
+  </body>
 </html>
