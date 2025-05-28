@@ -21,13 +21,7 @@ class Order {
 
   static async getCustomerOrders(customerId) {
     const [orders] = await db.query(
-      `
-            SELECT o.*, 
-                   (SELECT COUNT(*) FROM order_items oi WHERE oi.order_id = o.id) AS items_count
-            FROM orders o
-            WHERE o.customer_id = ?
-            ORDER BY o.order_date DESC
-        `,
+      `SELECT o.*, (SELECT COUNT(*) FROM order_items oi WHERE oi.order_id = o.id) AS items_count FROM orders o WHERE o.customer_id = ? ORDER BY o.order_date DESC`,
       [customerId],
     );
     return orders;
@@ -38,12 +32,7 @@ class Order {
       orderId,
     ]);
     const [items] = await db.query(
-      `
-            SELECT oi.*, p.name, p.image_url
-            FROM order_items oi
-            JOIN products p ON oi.product_id = p.id
-            WHERE oi.order_id = ?
-        `,
+      `SELECT oi.*, p.name, p.image_url FROM order_items oi JOIN products p ON oi.product_id = p.id WHERE oi.order_id = ?`,
       [orderId],
     );
 
@@ -51,6 +40,11 @@ class Order {
       ...order[0],
       items,
     };
+  }
+
+  static async delete(orderId) {
+    await db.query('DELETE FROM order_items WHERE order_id = ?', [orderId]);
+    await db.query('DELETE FROM orders WHERE id = ?', [orderId]);
   }
 }
 

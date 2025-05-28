@@ -1,1 +1,10 @@
-OOPS!!! OUR FAULT BTW
+<%- include('../partials/head', { title: 'Ошибка сервера' }) %>
+<body class="error-page">
+  <div class="container">
+    <h1>500 - Ошибка сервера</h1>
+    <% if (typeof message !== 'undefined' && message) { %>
+      <div class="alert alert-danger"><%= message %></div>
+    <% } %>
+    <p>Произошла внутренняя ошибка сервера.</p>
+  </div>
+<%- include('../partials/footer') %>

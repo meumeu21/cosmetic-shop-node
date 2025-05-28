@@ -9,9 +9,11 @@ const { ensureCustomer } = require("../middleware/auth");
 router.get("/", async (req, res) => {
   try {
     const products = await Product.getRecent(8);
+    const bestsellers = await Product.getBestsellers(6);
     res.render("pages/home", {
       title: "Главная",
       products,
+      bestsellers,
     });
   } catch (err) {
     console.error(err);
@@ -35,16 +37,24 @@ router.get("/products", async (req, res) => {
 router.get("/products/:id", async (req, res) => {
   try {
     const product = await Product.getById(req.params.id);
+
     if (!product) {
-      return res.status(404).render("error", { message: "Товар не найден" });
+      return res.status(404).render("pages/404", {
+        message: "Товар с ID " + req.params.id + " не найден",
+        user: req.user || null
+      });
     }
+
     res.render("pages/product-card", {
       title: product.name,
       product,
     });
   } catch (err) {
     console.error(err);
-    res.status(500).render("error", { message: "Ошибка сервера" });
+    res.status(500).render("pages/500", {
+      message: "Произошла ошибка при загрузке товара",
+      user: req.user || null
+    });
   }
 });
 

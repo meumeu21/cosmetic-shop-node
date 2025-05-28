@@ -1,9 +1,5 @@
-<!DOCTYPE html>
-<html lang="ru">
-  <head>
-    <%- include('../../partials/admin-head', { title: 'Админка' }) %>
-  </head>
-  <body>
+<%- include('../../partials/admin-head', { title: 'Панель администратора' }) %>
+  <body class="dashboard">
     <div class="admin-container">
       <%- include('../../partials/admin-aside') %>
       <main class="content">
@@ -52,5 +48,4 @@
         </table>
       </main>
     </div>
-  </body>
-</html>
+<%- include('../../partials/admin-footer') %>

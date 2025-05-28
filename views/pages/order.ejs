@@ -1,9 +1,4 @@
-<!DOCTYPE html>
-<html lang="ru">
-  <head>
-    <%- include('../partials/head', { title: title }) %>
-    <link rel="stylesheet" href="/css/order.css" />
-  </head>
+<%- include('../partials/head', { title: title }) %>
   <body>
     <%- include('../partials/header') %>
 
@@ -21,8 +16,7 @@
         <div class="info-block">
           <h3>Статус</h3>
           <p class="status-<%= order.status %>">
-            <% const statusText = { 'pending': 'В обработке', 'processing': 'В
-            процессе', 'shipped': 'Отправлен', 'delivered': 'Доставлен',
+            <% const statusText = { 'pending': 'В обработке', 'processing': 'В процессе', 'shipped': 'Отправлен', 'delivered': 'Доставлен',
             'cancelled': 'Отменен' }; %> <%= statusText[order.status] %>
           </p>
         </div>
@@ -55,7 +49,4 @@
         <% }); %>
       </div>
     </main>
-
-    <%- include('../partials/footer') %>
-  </body>
-</html>
+<%- include('../partials/footer') %>

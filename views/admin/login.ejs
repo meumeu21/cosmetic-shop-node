@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html lang="ru">
-  <head>
-    <%- include('../partials/admin-head', { title: title }) %>
-    <link href="/admin-css/signin.css" rel="stylesheet" />
-  </head>
-  <body class="text-center">
+<%- include('../partials/admin-head', { title: title }) %>
+  <body class="text-center sign-in">
     <form class="form-signin" action="/admin/login" method="POST">
       <h1 class="h3 mb-3 font-weight-normal">Вход в админку</h1>
-      <% if (error){ %>
+      <% if (error) { %>
       <div class="alert alert-danger"><%= error %></div>
       <% } %>
       <label for="email">Email</label>
@@ -33,5 +28,4 @@
         Войти
       </button>
     </form>
-  </body>
-</html>
+<%- include('../partials/admin-footer') %>

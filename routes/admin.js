@@ -5,6 +5,7 @@ const { ensureAuthenticated, ensureAdmin } = require("../middleware/auth");
 const Staff = require("../models/Staff");
 const Product = require("../models/Product");
 const Customer = require("../models/Customer");
+const Order = require("../models/Order")
 
 router.get("/", ensureAuthenticated, (req, res) => {
   if (req.isAuthenticated()) {
@@ -85,6 +86,7 @@ router.post("/products/add", ensureAuthenticated, async (req, res) => {
       composition,
       contraindications,
       type,
+      is_bestseller,
     } = req.body;
     await Product.create({
       name,
@@ -102,6 +104,7 @@ router.post("/products/add", ensureAuthenticated, async (req, res) => {
       composition,
       contraindications,
       type,
+      is_bestseller,
       created_by: req.user.id,
     });
     req.flash("success_msg", "Товар успешно добавлен");
@@ -373,6 +376,63 @@ router.post("/customers/delete/:id", ensureAdmin, async (req, res) => {
     console.error(err);
     req.flash("error_msg", "Ошибка при удалении покупателя");
     res.redirect("/admin/customers");
+  }
+});
+
+router.get('/customers/:customerId/orders', ensureAdmin, async (req, res) => {
+  try {
+    const customer = await Customer.findById(req.params.customerId);
+
+    if (!customer) {
+      req.flash('error_msg', 'Пользователь не найден');
+      return res.redirect('/admin/customers');
+    }
+
+    const orders = await Order.getCustomerOrders(req.params.customerId);
+
+    res.render('admin/customers/orders', {
+      title: `Заказы пользователя ${customer.username || customer.email}`,
+      customer,
+      orders,
+      user: req.user
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).render('pages/500', { message: 'Ошибка сервера' });
+  }
+});
+
+router.get('/customers/:customerId/orders/:orderId', ensureAdmin, async (req, res) => {
+  try {
+    const customer = await Customer.findById(req.params.customerId);
+    const orderDetails = await Order.getOrderDetails(req.params.orderId);
+
+    if (!customer || !orderDetails) {
+      req.flash('error_msg', 'Данные не найдены');
+      return res.redirect('/admin/customers');
+    }
+
+    res.render('admin/customers/order-details', {
+      title: `Заказ #${orderDetails.id}`,
+      customer,
+      order: orderDetails,
+      user: req.user
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).render('pages/500', { message: 'Ошибка сервера' });
+  }
+});
+
+router.post('/customers/:customerId/orders/:orderId/delete', ensureAdmin, async (req, res) => {
+  try {
+    await Order.delete(req.params.orderId);
+    req.flash('success_msg', 'Заказ успешно удален');
+    res.redirect(`/admin/customers/${req.params.customerId}/orders`);
+  } catch (err) {
+    console.error(err);
+    req.flash('error_msg', 'Ошибка при удалении заказа');
+    res.redirect(`/admin/customers/${req.params.customerId}/orders/${req.params.orderId}`);
   }
 });
 

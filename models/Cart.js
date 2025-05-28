@@ -39,12 +39,7 @@ class Cart {
 
   static async getCartItems(cartId) {
     const [items] = await db.query(
-      `
-            SELECT ci.*, p.name, p.price, p.image_url 
-            FROM cart_items ci
-            JOIN products p ON ci.product_id = p.id
-            WHERE ci.cart_id = ?
-        `,
+      `SELECT ci.*, p.name, p.price, p.image_url FROM cart_items ci JOIN products p ON ci.product_id = p.id WHERE ci.cart_id = ?`,
       [cartId],
     );
     return items;

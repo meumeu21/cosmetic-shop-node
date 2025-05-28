@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   const popup = document.getElementById("authPopup");
+  popup.style.display = "none";
   const openBtn = document.getElementById("authPopupBtn");
   const closeBtn = document.getElementById("closeAuthPopup");
   const tabBtns = document.querySelectorAll(".tab-btn");

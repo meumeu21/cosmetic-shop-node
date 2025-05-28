@@ -2,12 +2,7 @@ const db = require("../config/db");
 
 class Product {
   static async getAll() {
-    const [rows] = await db.query(`
-            SELECT p.*, s.username as creator_name
-            FROM products p
-            JOIN staff s ON p.created_by = s.id
-            ORDER BY p.created_at DESC
-        `);
+    const [rows] = await db.query(`SELECT p.*, s.username as creator_name FROM products p JOIN staff s ON p.created_by = s.id ORDER BY p.created_at DESC`);
     return rows;
   }
 
@@ -23,11 +18,15 @@ class Product {
 
   static async getRecent(limit = 5) {
     const [rows] = await db.query(
-      `
-            SELECT * FROM products
-            ORDER BY created_at DESC
-            LIMIT ?
-        `,
+      `SELECT * FROM products ORDER BY created_at DESC LIMIT ?`,
+      [limit],
+    );
+    return rows;
+  }
+
+  static async getBestsellers(limit = 4) {
+    const [rows] = await db.query(
+      `SELECT * FROM products WHERE is_bestseller = TRUE LIMIT ?`,
       [limit],
     );
     return rows;
@@ -50,12 +49,13 @@ class Product {
     brand,
     contraindications,
     type,
+    is_bestseller,
   }) {
     const [result] = await db.query(
-      `INSERT INTO products (name, description, price, stock_quantity, category, image_url, created_by, age_group, volume, items_in_set, is_hypoallergenic, application, composition, brand, contraindications, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO products (name, description, price, stock_quantity, category, image_url, created_by, age_group, volume, items_in_set, is_hypoallergenic, application, composition, brand, contraindications, type, is_bestseller) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         name,
-        description,
+        description.trim(),
         price,
         stock_quantity,
         category,
@@ -65,11 +65,12 @@ class Product {
         volume,
         items_in_set,
         is_hypoallergenic,
-        application,
-        composition,
+        application.trim(),
+        composition.trim(),
         brand,
-        contraindications,
+        contraindications.trim(),
         type,
+        is_bestseller,
       ],
     );
     return result.insertId;
@@ -93,10 +94,11 @@ class Product {
       brand,
       contraindications,
       type,
+      is_bestseller,
     },
   ) {
     await db.query(
-      `UPDATE products SET name = ?, description = ?, price = ?, stock_quantity = ?, category = ?, image_url = ?, age_group = ?, volume = ?, items_in_set = ?, is_hypoallergenic = ?, application = ?, composition = ?, brand = ?, contraindications = ?, type = ? WHERE id = ?`,
+      `UPDATE products SET name = ?, description = ?, price = ?, stock_quantity = ?, category = ?, image_url = ?, age_group = ?, volume = ?, items_in_set = ?, is_hypoallergenic = ?, application = ?, composition = ?, brand = ?, contraindications = ?, type = ?, is_bestseller = ? WHERE id = ?`,
       [
         name,
         description,
@@ -113,6 +115,7 @@ class Product {
         brand,
         contraindications,
         type,
+        is_bestseller,
         id,
       ],
     );

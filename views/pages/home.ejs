@@ -1,76 +1,129 @@
-<!DOCTYPE html>
-<html lang="ru">
-  <head>
-    <%- include('../partials/head', { title: 'Главная' }) %>
-  </head>
-  <body>
-    <%- include('../partials/header') %>
+<%- include('../partials/head', { title: 'Главная' }) %>
+  <body class="bg-dark font-raleway max-w-[1440px] mx-auto">
+    <main class="content mx-auto bg-white">
 
-    <main class="content">
-      <section class="main">
-        <div class="two-columns">
-          <img alt="main-illustration" />
-          <div class="main-information">
-            <div class="main-images">
-              <img alt="main-product" />
-              <img alt="main-haerin" />
+      <!-- Главная страница -->
+      <section class="main h-[934px]">
+        <div class="flex flex-col lg:flex-row">
+
+          <!-- Левая часть: изображение -->
+          <div class="w-[710px] bg-mud">
+            <img src="/images/main-illustration.png" alt="main-illustration" class="w-[710px] h-[934px] object-cover" />
+          </div>
+
+          <!-- Правая часть: контент -->
+          <div class="w-[730px] pl-[73px] pr-[76px] pb-[50px]">
+
+            <!-- Header -->
+            <header>
+              <nav class="hidden lg:flex justify-between items-center my-[50px] text-lg text-black font-light">
+                <div class="flex flex-wrap gap-[clamp(15px,2.5vw,35px)]">
+                  <a href="/products" class="hover:text-black" style="text-transform:uppercase;">Каталог</a>
+                  <a href="/skincare" class="hover:text-black" style="text-transform:uppercase;">Skincare</a>
+                  <a href="/about" class="hover:text-black" style="text-transform:uppercase;">О нас</a>
+                </div>
+                <div class="flex-1"></div>
+                <div class="flex gap-[clamp(10px,2vw,20px)]">
+                  <% if (typeof customer !== 'undefined') { %>
+                    <a href="/account" class="hover:text-black">
+                      <span style="text-transform:uppercase;"><%= customer.username %></span>
+                    </a>
+                  <% } else { %>
+                    <button id="authPopupBtn" class="auth-btn hover:text-black" style="text-transform:uppercase; text-decoration: underline;">Профиль</button>
+                  <% } %>
+                  <a href="/cart" class="hover:text-black" style="text-transform:uppercase;">Корзина</a>
+                </div>
+              </nav>
+              <%- include('../partials/auth-popup') %>
+            </header>
+
+            <!-- Картинки -->
+            <div class="flex justify-between">
+              <img src="/images/product.png" alt="main-product" class="w-[270px] h-[270px] object-cover" />
+              <img src="/images/haerin.png" alt="main-haerin" class="w-[270px] h-[408px] object-cover self-start" />
             </div>
-            <p class="main-slogan">Take care of yourself</p>
-            <div class="main-texts">
-              <span class="main-text-1">
-                Great skin is not simply a matter of DNA — your daily habits, in
-                fact, have a big impact on what you see in the mirror. But
-                depending on which product reviews you read or doctors you
-                consult, there is a dizzying number of opinions
-              </span>
-              <span class="main-text-2">
-                on everything from how to moisturize to how to protect yourself
-                from UV rays. Ultimately, caring for your skin is simply
-                personal. Here’s what you should keep in mind to sort through
-                all the noise.
-              </span>
+
+            <!-- Заголовок -->
+            <p class="text-2xl font-medium text-left text-5xl mt-[20px]" style="text-transform:uppercase;">Take care of yourself</p>
+
+            <!-- Текст в двух колонках -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-[41px] text-lg font-light leading-snug text-black leading-relaxed mt-[30px]">
+              <p>
+                Great skin is not simply a matter of DNA — your daily habits, in fact,
+                have a big impact on what you see in the mirror. But depending on which
+                product reviews you read or doctors you consult, there is a dizzying
+                number of opinions.
+              </p>
+              <p>
+                On everything from how to moisturize to how to protect yourself from UV rays.
+                Ultimately, caring for your skin is simply personal. Here’s what you should
+                keep in mind to sort through all the noise.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="bestsellers">
-        <h2>Bestsellers</h2>
-        <div class="carousel">
-          <% products.slice(0, 4).forEach(product => { %>
-          <div class="product-card">
-            <a href="/products/<%= product.id %>">
-              <% if (product.image_url) { %>
-              <img src="<%= product.image_url %>" alt="<%= product.name %>" />
-              <% } else { %>
-              <div class="no-image">No image</div>
-              <% } %>
-              <h3><%= product.name %></h3>
-              <p class="price"><%= product.price %> ₽</p>
-            </a>
-            <div class="product-actions">
-              <form action="/cart/add" method="POST">
-                <input
-                  type="hidden"
-                  name="productId"
-                  value="<%= product.id %>"
-                />
-                <input
-                  type="number"
-                  name="quantity"
-                  value="1"
-                  min="1"
-                  max="10"
-                />
-                <button type="submit" class="btn">Добавить в корзину</button>
-              </form>
+      <!-- Бестселлеры -->
+      <section class="bestsellers bg-mud pt-[60px] pb-[80px] relative overflow-hidden">
+        <h2 class="text-4xl font-medium text-white mb-[60px] ml-[78px]" style="text-transform:uppercase;">Бестселлеры</h2>
+
+        <!-- Карусель -->
+        <div class="relative px-[157px]">
+
+          <!-- Стрелка влево -->
+          <button id="prevBtn" class="absolute left-[55px] top-1/2 -translate-y-1/2 z-10 disabled:opacity-50 disabled:pointer-events-none">
+            <img src="/svgs/left-arrow.svg" alt="Prev">
+          </button>
+
+          <!-- Оверфлоу контейнер -->
+          <div class="relative overflow-hidden">
+            <!-- Контейнер с карточками -->
+            <div id="carousel" class="flex transition-transform duration-500 ease-in-out gap-[100px]">
+
+              <% bestsellers.forEach((product, index) => { %>
+              <div class="min-w-[308px] max-w-[308px] flex-shrink-0 flex flex-col">
+                <a href="/products/<%= product.id %>">
+                  <img src="<%= product.image_url %>" alt="<%= product.name %>" class="w-[308px] h-[419px] object-cover">
+                </a>
+                <a href="/products/<%= product.id %>" class="pt-[30px] flex flex-col items-start gap-[15px] text-white leading-tight">
+                  <h3 class="text-2xl font-medium" style="text-transform:uppercase;"><%= product.name %></h3>
+                  <p class="text-xl font-light" style="text-transform:uppercase;"><%= product.type %></p>
+                </a>
+                <div class="mt-[20px] flex justify-between items-center text-white">
+                  <span class="font-quicksand font-medium text-xl"><%= product.price %> ₽</span>
+                  <form action="/cart/add" style="height: 32px;" method="POST">
+                    <input type="hidden" name="productId" value="<%= product.id %>">
+                    <button type="submit" class="relative group">
+                      <img src="/svgs/plus-white.svg" alt="Добавить" class="w-8 h-8 group-hover:hidden" />
+                      <img src="/svgs/plus-white-press.svg" alt="Добавить" class="w-8 h-8 hidden group-hover:block" />
+                    </button>
+                  </form>
+                </div>
+              </div>
+              <% }); %>
+
             </div>
           </div>
+
+          <!-- Стрелка вправо -->
+          <button id="nextBtn" class="absolute right-[55px] top-1/2 -translate-y-1/2 z-10 disabled:opacity-50 disabled:pointer-events-none">
+            <img src="/svgs/right-arrow.svg" alt="Next">
+          </button>
+        </div>
+
+        <!-- Точки навигации -->
+        <div class="flex justify-center gap-2 mt-[53px]" id="carousel-dots">
+          <% bestsellers.slice(0, bestsellers.length - 2).forEach((_, i) => { %>
+          <svg class="w-3 h-3 cursor-pointer" fill="<%= i === 0 ? '#DADED6' : '#52544E' %>" viewBox="0 0 8 8">
+            <circle cx="4" cy="4" r="3" stroke="#DADED6" stroke-width="1" />
+          </svg>
           <% }); %>
         </div>
+        <script src="/js/carousel.js" defer></script>
       </section>
 
-      <section class="products">
+      <!-- <section class="products">
         <h2>Новинки</h2>
         <div class="products-list">
           <% products.slice(4).forEach(product => { %>
@@ -107,9 +160,6 @@
           </div>
           <% }); %>
         </div>
-      </section>
+      </section> -->
     </main>
-
-    <%- include('../partials/footer') %>
-  </body>
-</html>
+<%- include('../partials/footer') %>

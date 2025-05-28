@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "concurrently \"npm run dev:css\" \"nodemon app.js\"",
+    "dev:css": "tailwindcss -i ./public/css/src/input.css -o ./public/css/dist/output.css --watch",
+    "build:css": "tailwindcss -i ./public/css/src/input.css -o ./public/css/dist/output.css --minify"
   },
   "keywords": [],
   "author": "",
@@ -21,10 +22,16 @@
     "method-override": "^3.0.0",
     "mysql2": "^3.14.1",
     "passport": "^0.7.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "postcss-cli": "^11.0.1"
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "concurrently": "^9.1.2",
+    "cssnano": "^7.0.7",
     "nodemon": "^3.1.10",
-    "prettier-plugin-ejs": "^1.0.3"
+    "postcss": "^8.5.3",
+    "prettier-plugin-ejs": "^1.0.3",
+    "tailwindcss": "^3.4.17"
   }
 }

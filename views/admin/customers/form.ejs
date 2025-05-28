@@ -1,9 +1,5 @@
-<!DOCTYPE html>
-<html lang="ru">
-  <head>
-    <%- include('../../partials/admin-head', { title: 'Админка' }) %>
-  </head>
-  <body>
+<%- include('../../partials/admin-head', { title: 'Панель администратора' }) %>
+  <body class="dashboard">
     <div class="admin-container">
       <%- include('../../partials/admin-aside') %>
       <main class="content">
@@ -57,8 +53,7 @@
           <div class="form-group">
             <label>Адрес</label>
             <textarea name="address" class="form-control">
-<%= customer ? customer.address : '' %></textarea
-            >
+              <%= customer ? customer.address : '' %></textarea>
           </div>
 
           <button type="submit" class="btn btn-primary">
@@ -69,5 +64,4 @@
         </form>
       </main>
     </div>
-  </body>
-</html>
+<%- include('../../partials/admin-footer') %>

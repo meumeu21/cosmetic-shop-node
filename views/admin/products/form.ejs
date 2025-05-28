@@ -1,9 +1,5 @@
-<!DOCTYPE html>
-<html lang="ru">
-  <head>
-    <%- include('../../partials/admin-head', { title: 'Админка' }) %>
-  </head>
-  <body>
+<%- include('../../partials/admin-head', { title: 'Панель администратора' }) %>
+  <body class="dashboard">
     <div class="admin-container">
       <%- include('../../partials/admin-aside') %>
       <main class="content">
@@ -52,9 +48,7 @@
 
           <div class="form-group">
             <label>Описание</label>
-            <textarea name="description" class="form-control">
-<%= product ? product.description : '' %></textarea
-            >
+            <textarea name="description" class="form-control"><%= product ? product.description.trim() : '' %></textarea>
           </div>
 
           <div class="form-group">
@@ -98,7 +92,7 @@
               type="number"
               name="volume"
               class="form-control"
-              value="<%= product ? product.volume : '' %>"
+              value="<%= product ? product.volume : '0' %>"
             />
           </div>
 
@@ -108,12 +102,12 @@
               type="number"
               name="items_in_set"
               class="form-control"
-              value="<%= product ? product.items_in_set : '1' %>"
+              value="<%= product ? product.items_in_set : '0' %>"
             />
           </div>
 
           <div class="form-group">
-            <label>Гипоаллергенно</label>
+            <label>Гипоаллергенно?</label>
             <select name="is_hypoallergenic" class="form-control" required>
               <option value="1" <%= product && product.is_hypoallergenic ? 'selected' : '' %>>Да</option>
               <option value="0" <%= product && !product.is_hypoallergenic ? 'selected' : '' %>>Нет</option>
@@ -122,35 +116,37 @@
 
           <div class="form-group">
             <label>Применение</label>
-            <textarea name="application" class="form-control">
-<%= product ? product.application : '' %></textarea
-            >
+            <textarea name="application" class="form-control"><%= product ? product.application.trim() : '' %></textarea>
           </div>
 
           <div class="form-group">
             <label>Состав</label>
-            <textarea name="composition" class="form-control">
-<%= product ? product.composition : '' %></textarea
-            >
+            <textarea name="composition" class="form-control"><%= product ? product.composition.trim() : '' %></textarea>
           </div>
 
           <div class="form-group">
             <label>Противопоказания</label>
-            <textarea name="contraindications" class="form-control">
-<%= product ? product.contraindications : '' %></textarea
-            >
+            <textarea name="contraindications" class="form-control"><%= product ? product.contraindications.trim() : '' %></textarea>
           </div>
 
           <div class="form-group">
             <label>Ссылка на изображение</label>
             <input
-              type="url"
+              type="text"
               name="image_url"
               class="form-control"
-              pattern=".+\.(jpg|jpeg|png|gif|webp)$"
-              title="Введите URL изображения (jpg, jpeg, png, gif или webp)"
+              pattern="^(.+\.(jpg|jpeg|png|gif|webp))|(\/?.+\/.+\.(jpg|jpeg|png|gif|webp))$"
+              title="Введите URL или относительный путь к изображению (jpg, jpeg, png, gif или webp)"
               value="<%= product ? product.image_url : '' %>"
             />
+          </div>
+
+          <div class="form-group">
+            <label>Бестселлер?</label>
+            <select name="is_bestseller" class="form-control" required>
+              <option value="1" <%= product && product.is_bestseller ? 'selected' : '' %>>Да</option>
+              <option value="0" <%= product && !product.is_bestseller ? 'selected' : '' %>>Нет</option>
+            </select>
           </div>
 
           <% if (isEdit) { %>
@@ -167,5 +163,4 @@
         </form>
       </main>
     </div>
-  </body>
-</html>
+<%- include('../../partials/admin-footer') %>

@@ -1,1 +1,10 @@
-SORRY NOT HERE NO TERRITORY NO LOVE NO LIFE ONLY ETERNAL SADNESS
+<%- include('../partials/head', { title: 'Страница не найдена' }) %>
+<body class="error-page">
+  <div class="container">
+    <h1>404 - Страница не найдена</h1>
+    <% if (typeof message !== 'undefined' && message) { %>
+      <div class="alert alert-warning"><%= message %></div>
+    <% } %>
+    <p>Запрошенная страница не существует.</p>
+  </div>
+<%- include('../partials/footer') %>
