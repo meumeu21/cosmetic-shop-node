@@ -51,24 +51,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const endIndex = Math.min(startIndex + itemsPerPage, filteredProducts.length);
     const productsToShow = filteredProducts.slice(startIndex, endIndex);
 
-    const row1 = document.createElement('div');
-    row1.className = 'flex justify-between w-full mb-[62px]';
-    const row2 = document.createElement('div');
-    row2.className = 'flex justify-between w-full';
-
-    productsToShow.forEach((product, index) => {
+    productsToShow.forEach(product => {
       const productClone = product.cloneNode(true);
-      if (index < 4) {
-        row1.appendChild(productClone);
-      } else {
-        row2.appendChild(productClone);
-      }
+      productListContainer.appendChild(productClone);
     });
-
-    productListContainer.appendChild(row1);
-    if (productsToShow.length > 4) {
-      productListContainer.appendChild(row2);
-    }
   }
 
   function updatePagination() {
