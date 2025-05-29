@@ -1,12 +1,12 @@
-<header class="max-w-[1440px]">
-  <nav class="hidden lg:flex justify-between items-center mt-[33px] mx-[75px] text-lg text-black font-light uppercase">
+<header class="header bg-white">
+  <nav class="hidden lg:flex justify-between items-center pt-[33px] px-[75px] mx-auto text-lg text-black font-light max-w-[1440px]">
     <div class="flex flex-wrap gap-[clamp(15px,2.5vw,35px)] items-center">
       <a href="/">
         <img src="/svgs/logo-black.png" alt="Логотип" class="w-[72px] h-[47px]">
       </a>
-      <a href="/products" class="hover:text-dark">Каталог</a>
-      <a href="/skincare" class="hover:text-dark">Skincare</a>
-      <a href="/about" class="hover:text-dark">О нас</a>
+      <a href="/products" class="hover:text-dark uppercase">Каталог</a>
+      <a href="/skincare" class="hover:text-dark uppercase">Skincare</a>
+      <a href="/about" class="hover:text-dark uppercase">О нас</a>
     </div>
     <div class="flex-1"></div>
     <div class="flex gap-[clamp(10px,2vw,35px)]">
@@ -15,9 +15,9 @@
           <span><%= customer.username %></span>
         </a>
       <% } else { %>
-        <button id="authPopupBtn" class="auth-btn hover:text-dark" style="text-transform:uppercase; text-decoration: underline;">Профиль</button>
+        <button id="authPopupBtn" class="auth-btn hover:text-dark uppercase underline">Профиль</button>
       <% } %>
-      <a href="/cart" class="hover:text-dark">Корзина</a>
+      <a href="/cart" class="hover:text-dark uppercase">Корзина</a>
     </div>
   </nav>
   <%- include('../partials/auth-popup') %>

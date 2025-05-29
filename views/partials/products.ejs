@@ -1,0 +1,86 @@
+<section class="product-list bg-white text-black">
+<div class="relative max-w-[1440px] min-w-[1440px] pt-[50px] pb-[80px] mx-auto">
+
+  <!-- Фильтры -->
+  <div class="filters-line px-[75px] font-light text-sm flex flex-row gap-[63px] relative">
+
+    <!-- Кнопка фильтра категорий (закрытое состояние) -->
+    <div class="relative">
+      <button id="categoryFilterBtn" class="gap-[15px] h-[45px] px-[22px] py-[17px] flex flex-row justify-between items-center border border-solid rounded-[3px] w-full">
+        <p>Категории</p>
+        <img src="/svgs/dropdown.svg" class="w-[16px] h-[7px]">
+      </button>
+      <div id="categoryOpenFilter" class="absolute left-0 top-full mt-1 border border-solid rounded-[3px] w-[143px] h-[277px] bg-white z-10 hidden">
+        <button class="h-[45px] pt-[17px] pb-[15px] px-[22px] flex items-center w-full">
+          <p class="hover:text-hoverb">Все</p>
+        </button>
+        <div class="h-[1px] w-full bg-black opacity-[.36]"></div>
+        <button class="h-[45px] pt-[17px] pb-[15px] px-[22px] flex items-center w-full">
+          <p class="hover:text-hoverb">Anti-aging</p>
+        </button>
+        <div class="h-[1px] w-full bg-black opacity-[.36]"></div>
+        <button class="h-[45px] pt-[17px] pb-[15px] px-[22px] flex items-center w-full">
+          <p class="hover:text-hoverb">Watering</p>
+        </button>
+        <div class="h-[1px] w-full bg-black opacity-[.36]"></div>
+        <button class="h-[45px] pt-[17px] pb-[15px] px-[22px] flex items-center w-full">
+          <p class="hover:text-hoverb">Cleaning</p>
+        </button>
+        <div class="h-[1px] w-full bg-black opacity-[.36]"></div>
+        <button class="h-[45px] pt-[17px] pb-[15px] px-[22px] flex items-center w-full">
+          <p class="hover:text-hoverb">Calming</p>
+        </button>
+        <div class="h-[1px] w-full bg-black opacity-[.36]"></div>
+        <button class="h-[45px] pt-[17px] pb-[15px] px-[22px] flex items-center w-full">
+          <p class="hover:text-hoverb">Problem skin</p>
+        </button>
+      </div>
+    </div>
+
+    <!-- Кнопка фильтра сортировки (закрытое состояние) -->
+    <div class="relative">
+      <button id="sortFilterBtn" class="gap-[15px] h-[45px] px-[22px] py-[17px] flex flex-row justify-between items-center border border-solid rounded-[3px] w-full">
+        <p>Сортировать</p>
+        <img src="/svgs/dropdown.svg" class="w-[16px] h-[7px]">
+      </button>
+      <div id="sortOpenFilter" class="absolute left-0 top-full mt-1 border border-solid rounded-[3px] w-[160px] h-[95px] bg-white z-10 hidden">
+        <button class="h-[45px] pt-[17px] pb-[15px] px-[22px] flex items-center w-full">
+          <p class="text-left hover:text-hoverb">Цена: по возрастанию</p>
+        </button>
+        <div class="h-[1px] w-full bg-black opacity-[.36]"></div>
+        <button class="h-[45px] pt-[17px] pb-[15px] px-[22px] flex items-center w-full">
+          <p class="text-left hover:text-hoverb">Цена: по убыванию</p>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Каталог товаров c пагинацией -->
+  <div class="relative pt-[50px] px-[75px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-12">
+    <% products.forEach((product, index) => { %>
+    <div class="product-item min-w-[256px] max-w-[256px] flex-shrink-0 flex flex-col uppercase">
+      <a href="/products/<%= product.id %>">
+        <img src="<%= product.image_url %>" alt="<%= product.name %>" class="w-[256px] h-[347px] object-cover">
+      </a>
+      <a href="/products/<%= product.id %>" class="pt-[30px] flex flex-col items-start gap-[15px] leading-tight hover:text-hoverb">
+        <h3 class="text-2xl font-medium"><%= product.name %></h3>
+        <p class="text-xl font-light"><%= product.type %></p>
+      </a>
+      <div class="mt-[20px] flex justify-between items-center">
+        <span class="hidden"><%= product.category %></span>
+        <span class="font-quicksand font-medium text-xl"><%= product.price %> ₽</span>
+        <form action="/cart/add" style="height: 32px;" method="POST">
+          <input type="hidden" name="productId" value="<%= product.id %>">
+          <button type="submit" class="relative group">
+            <img src="/svgs/plus-black.svg" alt="Добавить" class="w-8 h-8 group-hover:hidden" />
+            <img src="/svgs/plus-black-press.svg" alt="Добавить" class="w-8 h-8 hidden group-hover:block" />
+          </button>
+        </form>
+      </div>
+    </div>
+    <% }); %>
+  </div>
+<script src="/js/pagination.js" defer></script>
+<script src="/js/filter.js" defer></script>
+</section>

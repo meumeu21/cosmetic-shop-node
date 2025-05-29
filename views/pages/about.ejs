@@ -1,9 +1,35 @@
 <%- include('../partials/head', { title: 'Главная' }) %>
-  <body>
+  <body class="bg-dark font-raleway">
     <%- include('../partials/header') %>
-
-    <main>
-      <p>Лучшие косметические продукты по доступным ценам.</p>
+    <main class="content">
+      <h1 class="hidden text-white">SOME BY MI</h1>
+      <section class="main bg-white text-black">
+        <div class="flex flex-row max-w-[1440px] w-full px-[75px] mx-auto pt-[75px] pb-[105px]">
+          <div class="column1 w-[345px] mr-[51px]">
+            <h2 class="font-medium text-left text-4xl uppercase">Take care of yourself</h2>
+            <p class="font-light mt-[15px] text-2xl">
+              Great skin is not simply a matter of DNA — your daily habits, in fact, have a big impact on what you see in the mirror. But depending on which product reviews you read or doctors you consult, there is a dizzying number of opinions.
+            </p>
+            <p class="font-light mt-[20px] text-2xl">
+              Some experts swear by the effectiveness of natural remedies cosmetics, while others call for using only time-tested developments.  In stores you are bombarded with bright promises of creams and peels, each of which promises a miraculous transformation.
+            </p>
+          </div>
+          <div class="column2 w-[539px] mr-[83px]">
+            <img src="/images/about.png" alt="about" class="w-[539px] h-[657px] object-cover">
+          </div>
+          <div class="column3 w-[270px] text-2xl font-light">
+            <p>
+              However, with so much conflicting information out there about what's best for your skin, navigating the maze of tips and tricks can be a daunting task.
+            </p>
+            <p class="mt-[24px]">
+              But where is the truth? How to separate truly useful products from marketing gimmicks?
+            </p>
+            <p class="mt-[24px]">
+              Finding the answer to this question can take a lot of time and effort.  But don't despair! Some By Mi products can help your skin, improve its condition and make it glow
+            </p>
+          </div>
+        </div>
+      </section>
     </main>
 
 <%- include('../partials/footer') %>
