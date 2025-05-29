@@ -8,7 +8,7 @@ const { ensureCustomer } = require("../middleware/auth");
 
 router.get("/", async (req, res) => {
   try {
-    const products = await Product.getRecent(8);
+    const products = await Product.getAll();
     const bestsellers = await Product.getBestsellers(6);
     res.render("pages/home", {
       title: "Главная",

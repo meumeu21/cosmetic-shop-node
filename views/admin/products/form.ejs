@@ -38,12 +38,13 @@
 
           <div class="form-group">
             <label>Категория</label>
-            <input
-              type="text"
-              name="category"
-              class="form-control"
-              value="<%= product ? product.category : '' %>"
-            />
+            <select name="category" class="form-control" required>
+              <option value="Anti-aging" <%= product && product.category === 'Anti-aging' ? 'selected' : '' %>>Anti-aging</option>
+              <option value="Watering" <%= product && product.category === 'Watering' ? 'selected' : '' %>>Watering</option>
+              <option value="Cleaning" <%= product && product.category === 'Cleaning' ? 'selected' : '' %>>Cleaning</option>
+              <option value="Calming" <%= product && product.category === 'Calming' ? 'selected' : '' %>>Calming</option>
+              <option value="Problem skin" <%= product && product.category === 'Problem skin' ? 'selected' : '' %>>Problem skin</option>
+            </select>
           </div>
 
           <div class="form-group">

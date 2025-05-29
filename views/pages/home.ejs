@@ -1,10 +1,12 @@
 <%- include('../partials/head', { title: 'Главная' }) %>
-  <body class="bg-dark font-raleway max-w-[1440px] mx-auto">
-    <main class="content mx-auto bg-white">
+  <body class="bg-dark font-raleway">
+    <main class="content">
+
+      <h1 class="hidden text-white">SOME BY MI</h1>
 
       <!-- Главная страница -->
-      <section class="main h-[934px]">
-        <div class="flex flex-col lg:flex-row">
+      <section class="main bg-white text-black">
+        <div class="flex flex-col lg:flex-row max-w-[1440px] w-full mx-auto">
 
           <!-- Левая часть: изображение -->
           <div class="w-[710px] bg-mud">
@@ -16,22 +18,22 @@
 
             <!-- Header -->
             <header>
-              <nav class="hidden lg:flex justify-between items-center my-[50px] text-lg text-black font-light">
+              <nav class="hidden lg:flex justify-between items-center my-[50px] text-lg text-black font-light uppercase">
                 <div class="flex flex-wrap gap-[clamp(15px,2.5vw,35px)]">
-                  <a href="/products" class="hover:text-black" style="text-transform:uppercase;">Каталог</a>
-                  <a href="/skincare" class="hover:text-black" style="text-transform:uppercase;">Skincare</a>
-                  <a href="/about" class="hover:text-black" style="text-transform:uppercase;">О нас</a>
+                  <a href="/products" class="hover:text-dark">Каталог</a>
+                  <a href="/skincare" class="hover:text-dark">Skincare</a>
+                  <a href="/about" class="hover:text-dark">О нас</a>
                 </div>
                 <div class="flex-1"></div>
                 <div class="flex gap-[clamp(10px,2vw,20px)]">
                   <% if (typeof customer !== 'undefined') { %>
-                    <a href="/account" class="hover:text-black">
-                      <span style="text-transform:uppercase;"><%= customer.username %></span>
+                    <a href="/account" class="hover:text-dark">
+                      <span><%= customer.username %></span>
                     </a>
                   <% } else { %>
-                    <button id="authPopupBtn" class="auth-btn hover:text-black" style="text-transform:uppercase; text-decoration: underline;">Профиль</button>
+                    <button id="authPopupBtn" class="auth-btn hover:text-darkgreen" style="text-transform:uppercase; text-decoration: underline;">Профиль</button>
                   <% } %>
-                  <a href="/cart" class="hover:text-black" style="text-transform:uppercase;">Корзина</a>
+                  <a href="/cart" class="hover:text-dark">Корзина</a>
                 </div>
               </nav>
               <%- include('../partials/auth-popup') %>
@@ -44,7 +46,7 @@
             </div>
 
             <!-- Заголовок -->
-            <p class="text-2xl font-medium text-left text-5xl mt-[20px]" style="text-transform:uppercase;">Take care of yourself</p>
+            <p class="text-2xl font-medium text-left text-5xl mt-[20px] uppercase">Take care of yourself</p>
 
             <!-- Текст в двух колонках -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-[41px] text-lg font-light leading-snug text-black leading-relaxed mt-[30px]">
@@ -65,101 +67,153 @@
       </section>
 
       <!-- Бестселлеры -->
-      <section class="bestsellers bg-mud pt-[60px] pb-[80px] relative overflow-hidden">
-        <h2 class="text-4xl font-medium text-white mb-[60px] ml-[78px]" style="text-transform:uppercase;">Бестселлеры</h2>
+      <section class="bestsellers bg-mud text-white">
+        <div class="relative overflow-hidden max-w-[1440px] min-w-[1440px] pt-[60px] pb-[80px] mx-auto">
+          <h2 class="text-4xl font-medium mb-[60px] ml-[78px] uppercase">Бестселлеры</h2>
 
-        <!-- Карусель -->
-        <div class="relative px-[157px]">
+          <!-- Карусель -->
+          <div class="relative px-[157px]">
 
-          <!-- Стрелка влево -->
-          <button id="prevBtn" class="absolute left-[55px] top-1/2 -translate-y-1/2 z-10 disabled:opacity-50 disabled:pointer-events-none">
-            <img src="/svgs/left-arrow.svg" alt="Prev">
-          </button>
+            <!-- Стрелка влево -->
+            <button id="prevBtn" class="absolute left-[55px] top-1/2 -translate-y-1/2 z-10 disabled:opacity-50 disabled:pointer-events-none">
+              <img src="/svgs/left-arrow.svg" alt="Prev">
+            </button>
 
-          <!-- Оверфлоу контейнер -->
-          <div class="relative overflow-hidden">
-            <!-- Контейнер с карточками -->
-            <div id="carousel" class="flex transition-transform duration-500 ease-in-out gap-[100px]">
+            <!-- Оверфлоу контейнер -->
+            <div class="relative overflow-hidden">
+              <!-- Контейнер с карточками -->
+              <div id="carousel" class="flex transition-transform duration-500 ease-in-out gap-[100px]">
 
-              <% bestsellers.forEach((product, index) => { %>
-              <div class="min-w-[308px] max-w-[308px] flex-shrink-0 flex flex-col">
-                <a href="/products/<%= product.id %>">
-                  <img src="<%= product.image_url %>" alt="<%= product.name %>" class="w-[308px] h-[419px] object-cover">
-                </a>
-                <a href="/products/<%= product.id %>" class="pt-[30px] flex flex-col items-start gap-[15px] text-white leading-tight">
-                  <h3 class="text-2xl font-medium" style="text-transform:uppercase;"><%= product.name %></h3>
-                  <p class="text-xl font-light" style="text-transform:uppercase;"><%= product.type %></p>
-                </a>
-                <div class="mt-[20px] flex justify-between items-center text-white">
-                  <span class="font-quicksand font-medium text-xl"><%= product.price %> ₽</span>
-                  <form action="/cart/add" style="height: 32px;" method="POST">
-                    <input type="hidden" name="productId" value="<%= product.id %>">
-                    <button type="submit" class="relative group">
-                      <img src="/svgs/plus-white.svg" alt="Добавить" class="w-8 h-8 group-hover:hidden" />
-                      <img src="/svgs/plus-white-press.svg" alt="Добавить" class="w-8 h-8 hidden group-hover:block" />
-                    </button>
-                  </form>
+                <% bestsellers.forEach((product, index) => { %>
+                <div class="min-w-[308px] max-w-[308px] flex-shrink-0 flex flex-col uppercase">
+                  <a href="/products/<%= product.id %>">
+                    <img src="<%= product.image_url %>" alt="<%= product.name %>" class="w-[308px] h-[419px] object-cover">
+                  </a>
+                  <a href="/products/<%= product.id %>" class="pt-[30px] flex flex-col items-start gap-[15px] leading-tight hover:text-hoverw">
+                    <h3 class="text-2xl font-medium"><%= product.name %></h3>
+                    <p class="text-xl font-light"><%= product.type %></p>
+                  </a>
+                  <div class="mt-[20px] flex justify-between items-center">
+                    <span class="font-quicksand font-medium text-xl"><%= product.price %> ₽</span>
+                    <form action="/cart/add" style="height: 32px;" method="POST">
+                      <input type="hidden" name="productId" value="<%= product.id %>">
+                      <button type="submit" class="relative group">
+                        <img src="/svgs/plus-white.svg" alt="Добавить" class="w-8 h-8 group-hover:hidden" />
+                        <img src="/svgs/plus-white-press.svg" alt="Добавить" class="w-8 h-8 hidden group-hover:block" />
+                      </button>
+                    </form>
+                  </div>
                 </div>
-              </div>
-              <% }); %>
+                <% }); %>
 
+              </div>
             </div>
+
+            <!-- Стрелка вправо -->
+            <button id="nextBtn" class="absolute right-[55px] top-1/2 -translate-y-1/2 z-10 disabled:opacity-50 disabled:pointer-events-none">
+              <img src="/svgs/right-arrow.svg" alt="Next">
+            </button>
           </div>
 
-          <!-- Стрелка вправо -->
-          <button id="nextBtn" class="absolute right-[55px] top-1/2 -translate-y-1/2 z-10 disabled:opacity-50 disabled:pointer-events-none">
-            <img src="/svgs/right-arrow.svg" alt="Next">
-          </button>
-        </div>
-
-        <!-- Точки навигации -->
-        <div class="flex justify-center gap-2 mt-[53px]" id="carousel-dots">
-          <% bestsellers.slice(0, bestsellers.length - 2).forEach((_, i) => { %>
-          <svg class="w-3 h-3 cursor-pointer" fill="<%= i === 0 ? '#DADED6' : '#52544E' %>" viewBox="0 0 8 8">
-            <circle cx="4" cy="4" r="3" stroke="#DADED6" stroke-width="1" />
-          </svg>
-          <% }); %>
+          <!-- Точки навигации -->
+          <div class="flex justify-center gap-2 mt-[53px]" id="carousel-dots">
+            <% bestsellers.slice(0, bestsellers.length - 2).forEach((_, i) => { %>
+            <svg class="w-3 h-3 cursor-pointer" fill="<%= i === 0 ? '#DADED6' : '#52544E' %>" viewBox="0 0 8 8">
+              <circle cx="4" cy="4" r="3" stroke="#DADED6" stroke-width="1" />
+            </svg>
+            <% }); %>
+          </div>
         </div>
         <script src="/js/carousel.js" defer></script>
       </section>
 
-      <!-- <section class="products">
-        <h2>Новинки</h2>
-        <div class="products-list">
-          <% products.slice(4).forEach(product => { %>
-          <div class="product-item">
-            <a href="/products/<%= product.id %>">
-              <% if (product.image_url) { %>
-              <img src="<%= product.image_url %>" alt="<%= product.name %>" />
-              <% } else { %>
-              <div class="no-image">No image</div>
-              <% } %>
-              <div class="product-info">
-                <h3><%= product.name %></h3>
-                <p class="price"><%= product.price %> ₽</p>
-                <p class="category"><%= product.category %></p>
+
+      <!-- Каталог товаров -->
+      <section class="product-list bg-white text-black">
+        <div class="relative max-w-[1440px] min-w-[1440px] pt-[50px] pb-[80px] mx-auto">
+
+          <!-- Фильтры -->
+          <div class="filters-line px-[75px] font-light text-sm flex flex-row gap-[63px] relative">
+
+            <!-- Кнопка фильтра категорий (закрытое состояние) -->
+            <div class="relative">
+              <button id="categoryFilterBtn" class="gap-[15px] h-[45px] px-[22px] py-[17px] flex flex-row justify-between items-center border border-solid rounded-[3px] w-full">
+                <p>Категории</p>
+                <img src="/svgs/dropdown.svg" class="w-[16px] h-[7px]">
+              </button>
+              <div id="categoryOpenFilter" class="absolute left-0 top-full mt-1 border border-solid rounded-[3px] w-[143px] h-[277px] bg-white z-10 hidden">
+                <button class="h-[45px] pt-[17px] pb-[15px] px-[22px] flex items-center w-full">
+                  <p class="hover:text-hoverb">Все</p>
+                </button>
+                <div class="h-[1px] w-full bg-black opacity-[.36]"></div>
+                <button class="h-[45px] pt-[17px] pb-[15px] px-[22px] flex items-center w-full">
+                  <p class="hover:text-hoverb">Anti-aging</p>
+                </button>
+                <div class="h-[1px] w-full bg-black opacity-[.36]"></div>
+                <button class="h-[45px] pt-[17px] pb-[15px] px-[22px] flex items-center w-full">
+                  <p class="hover:text-hoverb">Watering</p>
+                </button>
+                <div class="h-[1px] w-full bg-black opacity-[.36]"></div>
+                <button class="h-[45px] pt-[17px] pb-[15px] px-[22px] flex items-center w-full">
+                  <p class="hover:text-hoverb">Cleaning</p>
+                </button>
+                <div class="h-[1px] w-full bg-black opacity-[.36]"></div>
+                <button class="h-[45px] pt-[17px] pb-[15px] px-[22px] flex items-center w-full">
+                  <p class="hover:text-hoverb">Calming</p>
+                </button>
+                <div class="h-[1px] w-full bg-black opacity-[.36]"></div>
+                <button class="h-[45px] pt-[17px] pb-[15px] px-[22px] flex items-center w-full">
+                  <p class="hover:text-hoverb">Problem skin</p>
+                </button>
               </div>
-            </a>
-            <div class="product-actions">
-              <form action="/cart/add" method="POST">
-                <input
-                  type="hidden"
-                  name="productId"
-                  value="<%= product.id %>"
-                />
-                <input
-                  type="number"
-                  name="quantity"
-                  value="1"
-                  min="1"
-                  max="10"
-                />
-                <button type="submit" class="btn">Добавить в корзину</button>
-              </form>
             </div>
+
+            <!-- Кнопка фильтра сортировки (закрытое состояние) -->
+            <div class="relative">
+              <button id="sortFilterBtn" class="gap-[15px] h-[45px] px-[22px] py-[17px] flex flex-row justify-between items-center border border-solid rounded-[3px] w-full">
+                <p>Сортировать</p>
+                <img src="/svgs/dropdown.svg" class="w-[16px] h-[7px]">
+              </button>
+              <div id="sortOpenFilter" class="absolute left-0 top-full mt-1 border border-solid rounded-[3px] w-[160px] h-[95px] bg-white z-10 hidden">
+                <button class="h-[45px] pt-[17px] pb-[15px] px-[22px] flex items-center w-full">
+                  <p class="text-left hover:text-hoverb">Цена: по возрастанию</p>
+                </button>
+                <div class="h-[1px] w-full bg-black opacity-[.36]"></div>
+                <button class="h-[45px] pt-[17px] pb-[15px] px-[22px] flex items-center w-full">
+                  <p class="text-left hover:text-hoverb">Цена: по убыванию</p>
+                </button>
+              </div>
+            </div>
+
           </div>
-          <% }); %>
-        </div>
-      </section> -->
+
+          <!-- Каталог товаров c пагинацией -->
+          <div class="relative pt-[50px] px-[75px] flex flex-col">
+            <% products.forEach((product, index) => { %>
+            <div class="product-item min-w-[256px] max-w-[256px] flex-shrink-0 flex flex-col uppercase">
+              <a href="/products/<%= product.id %>">
+                <img src="<%= product.image_url %>" alt="<%= product.name %>" class="w-[256px] h-[347px] object-cover">
+              </a>
+              <a href="/products/<%= product.id %>" class="pt-[30px] flex flex-col items-start gap-[15px] leading-tight hover:text-hoverb">
+                <h3 class="text-2xl font-medium"><%= product.name %></h3>
+                <p class="text-xl font-light"><%= product.type %></p>
+              </a>
+              <div class="mt-[20px] flex justify-between items-center">
+                <span class="hidden"><%= product.category %></span>
+                <span class="font-quicksand font-medium text-xl"><%= product.price %> ₽</span>
+                <form action="/cart/add" style="height: 32px;" method="POST">
+                  <input type="hidden" name="productId" value="<%= product.id %>">
+                  <button type="submit" class="relative group">
+                    <img src="/svgs/plus-black.svg" alt="Добавить" class="w-8 h-8 group-hover:hidden" />
+                    <img src="/svgs/plus-black-press.svg" alt="Добавить" class="w-8 h-8 hidden group-hover:block" />
+                  </button>
+                </form>
+              </div>
+            </div>
+            <% }); %>
+          </div>
+        <script src="/js/pagination.js" defer></script>
+        <script src="/js/filter.js" defer></script>
+      </section>
     </main>
 <%- include('../partials/footer') %>
