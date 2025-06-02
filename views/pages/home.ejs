@@ -21,27 +21,7 @@
           <div class="w-[730px] pl-[73px] pr-[76px] pb-[50px]">
 
             <!-- Header -->
-            <header>
-              <nav class="hidden lg:flex justify-between items-center my-[50px] text-lg text-black font-light">
-                <div class="flex flex-wrap gap-[clamp(15px,2.5vw,35px)]">
-                  <a href="/products" class="hover:text-dark uppercase">Каталог</a>
-                  <a href="/skincare" class="hover:text-dark uppercase">Skincare</a>
-                  <a href="/about" class="hover:text-dark uppercase">О нас</a>
-                </div>
-                <div class="flex-1"></div>
-                <div class="flex gap-[clamp(10px,2vw,20px)]">
-                  <% if (typeof customer !== 'undefined') { %>
-                    <a href="/account" class="hover:text-dark">
-                      <span><%= customer.username %></span>
-                    </a>
-                  <% } else { %>
-                    <button id="authPopupBtn" class="auth-btn hover:text-darkgreen uppercase underline">Профиль</button>
-                  <% } %>
-                  <a href="/cart" class="hover:text-dark uppercase">Корзина</a>
-                </div>
-              </nav>
-              <%- include('../partials/auth-popup') %>
-            </header>
+            <%- include('../partials/header-home') %>
 
             <!-- Картинки -->
             <div class="flex justify-between">
@@ -74,3 +54,7 @@
       <%- include('../partials/products') %>
     </main>
 <%- include('../partials/footer') %>
+<script>
+  window.isAuthenticated = <%= typeof customer !== 'undefined' %>;
+</script>
+<script src="/js/cart-form-login-popup.js" defer></script>

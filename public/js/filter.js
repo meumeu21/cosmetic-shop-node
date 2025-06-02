@@ -95,8 +95,22 @@ document.addEventListener('DOMContentLoaded', function () {
       filtered.sort((a, b) => b.price - a.price);
     }
 
+    updateURL();
+
     if (window.updateFilteredProducts) {
       window.updateFilteredProducts(filtered.map(p => p.element));
+    }
+
+    function updateURL() {
+      const params = new URLSearchParams();
+      if (currentCategory && currentCategory !== 'Все') {
+        params.set('category', currentCategory);
+      }
+      if (currentSort && currentSort !== 'default') {
+        params.set('sort', currentSort);
+      }
+      const newUrl = `${window.location.pathname}?${params.toString()}`;
+      window.history.pushState({}, '', newUrl);
     }
   }
 
@@ -110,6 +124,24 @@ document.addEventListener('DOMContentLoaded', function () {
   function updateArrow(button, direction) {
     const img = button.querySelector('img');
     img.src = direction === 'up' ? '/svgs/updown.svg' : '/svgs/dropdown.svg';
+  }
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const initialCategory = urlParams.get('category') || 'Все';
+  const initialSort = urlParams.get('sort') || 'default';
+
+  categoryFilterBtn.querySelector('p').textContent = initialCategory;
+  sortFilterBtn.querySelector('p').textContent = sortLabelFromValue(initialSort);
+
+  currentCategory = initialCategory;
+  currentSort = initialSort;
+
+  filterAndSortProducts();
+
+  function sortLabelFromValue(value) {
+    if (value === 'asc') return 'Цена: по возрастанию';
+    if (value === 'desc') return 'Цена: по убыванию';
+    return 'Сортировать';
   }
 
   window.filterAndSortProducts = filterAndSortProducts;

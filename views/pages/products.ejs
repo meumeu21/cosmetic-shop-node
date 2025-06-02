@@ -6,3 +6,7 @@
       <%- include('../partials/products') %>
     </main>
 <%- include('../partials/footer') %>
+<script>
+  window.isAuthenticated = <%= typeof customer !== 'undefined' %>;
+</script>
+<script src="/js/cart-form-login-popup.js" defer></script>

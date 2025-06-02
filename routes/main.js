@@ -37,6 +37,7 @@ router.get("/products", async (req, res) => {
 router.get("/products/:id", async (req, res) => {
   try {
     const product = await Product.getById(req.params.id);
+    const bestsellers = await Product.getBestsellers(6);
 
     if (!product) {
       return res.status(404).render("pages/404", {
@@ -48,6 +49,7 @@ router.get("/products/:id", async (req, res) => {
     res.render("pages/product-card", {
       title: product.name,
       product,
+      bestsellers,
     });
   } catch (err) {
     console.error(err);

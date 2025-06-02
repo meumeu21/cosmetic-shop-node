@@ -1,52 +1,124 @@
-<div class="auth-popup" id="authPopup">
-  <div class="auth-container">
-    <button class="close-btn" id="closeAuthPopup">&times;</button>
+<!-- Pop-up фон -->
+<div
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm hidden"
+  id="authPopup"
+>
+  <div class="relative w-[540px] max-w-md bg-white shadow-xl px-[60px] py-[50px]">
 
-    <div class="auth-tabs">
-      <button class="tab-btn active" data-tab="login">Вход</button>
-      <button class="tab-btn" data-tab="register">Регистрация</button>
+    <!-- Табы -->
+    <div class="flex gap-[20px] mb-[30px] text-2xl">
+      <button
+        class="tab-btn uppercase transition text-black border-b-[1.5px] border-black"
+        data-tab="login"
+      >
+        Вход
+      </button>
+      <button
+        class="tab-btn uppercase transition text-hoverb border-b-[1.5px] border-white"
+        data-tab="register"
+      >
+        Регистрация
+      </button>
     </div>
 
+    <!-- Форма входа -->
     <form
       id="loginForm"
-      class="auth-form active"
+      class="auth-form active font-light"
       action="/auth/login"
       method="POST"
     >
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" name="email" required />
+      <div class="mb-[20px]">
+        <label class="block text-sm">Email</label>
+        <input
+          type="email"
+          name="email"
+          required
+          class="w-full text-xl mt-[10px] py-[10px] px-[15px] border border-black rounded-[3px] focus:outline-none focus:ring-[2px] focus:ring-black"
+        />
       </div>
-      <div class="form-group">
-        <label>Пароль</label>
-        <input type="password" name="password" required />
+      <div class="mb-[30px]">
+        <label class="block text-sm">Пароль</label>
+        <input
+          type="password"
+          name="password"
+          required
+          class="w-full text-xl mt-[10px] py-[10px] px-[15px] border border-black rounded-[3px] focus:outline-none focus:ring-[2px] focus:ring-black"
+        />
       </div>
-      <button type="submit" class="btn btn-primary">Войти</button>
+      <button
+        type="submit"
+        class="w-full py-[21px] mb-[20px] uppercase bg-darkmud text-truewhite rounded-[50px] hover:darkmuddeactivated transition"
+      >
+        Войти
+      </button>
+
+      <div class="flex justify-center items-center gap-[20px]">
+        <a href="#">
+          <img src="/svgs/google-b.svg" alt="Google" class="w-[35px] h-[35px]">
+        </a>
+        <a href="#">
+          <img src="/svgs/instagram-b.svg" alt="Instagram" class="w-[35px] h-[35px]">
+        </a>
+        <a href="#">
+          <img src="/svgs/facebook-b.svg" alt="Facebook" class="w-[31px] h-[30px]">
+        </a>
+        <a href="#">
+          <img src="/svgs/whatsapp-b.svg" alt="Whatsapp" class="w-[35px] h-[35px]">
+        </a>
+      </div>
     </form>
 
+    <!-- Форма регистрации -->
     <form
       id="registerForm"
-      class="auth-form"
+      class="auth-form hidden font-light"
       action="/auth/register"
       method="POST"
     >
-      <div class="form-group">
-        <label>Логин</label>
-        <input type="text" name="username" required />
+      <div class="mb-[15px]">
+        <label class="block text-sm">Логин</label>
+        <input
+          type="text"
+          name="username"
+          required
+          class="w-full px-[7px] py-[5px] text-xs border rounded-[3px] focus:outline-none focus:ring-[2px] focus:ring-black"
+        />
       </div>
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" name="email" required />
+      <div class="mb-[15px]">
+        <label class="block text-sm">Email</label>
+        <input
+          type="email"
+          name="email"
+          required
+          class="w-full px-[7px] py-[5px] text-xs border rounded-[3px] focus:outline-none focus:ring-[2px] focus:ring-black"
+        />
       </div>
-      <div class="form-group">
-        <label>Пароль</label>
-        <input type="password" name="password" required minlength="6" />
+      <div class="mb-[15px]">
+        <label class="block text-sm">Пароль</label>
+        <input
+          type="password"
+          name="password"
+          required
+          minlength="6"
+          class="w-full px-[7px] py-[5px] text-xs border rounded-[3px] focus:outline-none focus:ring-[2px] focus:ring-black"
+        />
       </div>
-      <div class="form-group">
-        <label>Подтвердите пароль</label>
-        <input type="password" name="confirmPassword" required />
+      <div class="mb-[28px]">
+        <label class="block text-sm">Подтвердите пароль</label>
+        <input
+          type="password"
+          name="confirmPassword"
+          required
+          class="w-full px-[7px] py-[5px] text-xs border rounded-[3px] focus:outline-none focus:ring-[2px] focus:ring-black"
+        />
       </div>
-      <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+      <button
+        type="submit"
+        class="w-full py-[21px] uppercase bg-darkmud text-truewhite rounded-[50px] hover:darkmuddeactivated transition"
+      >
+        Зарегистрироваться
+      </button>
     </form>
   </div>
 </div>

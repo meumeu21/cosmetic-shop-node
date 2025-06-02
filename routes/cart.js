@@ -100,4 +100,16 @@ router.post("/checkout", ensureCustomer, async (req, res) => {
   }
 });
 
+router.get("/count", ensureCustomer, async (req, res) => {
+  try {
+    const cart = await Cart.getOrCreateCart(req.user.id);
+    const items = await Cart.getCartItems(cart.id);
+    const count = items.reduce((sum, item) => sum + item.quantity, 0);
+    res.json({ count });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ count: 0 });
+  }
+});
+
 module.exports = router;

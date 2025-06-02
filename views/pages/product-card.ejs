@@ -1,58 +1,198 @@
 <%- include('../partials/head', { title: title }) %>
   <body class="bg-dark font-raleway">
+    <style>
+      input[type=number]::-webkit-outer-spin-button,
+      input[type=number]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      input[type=number] {
+        -moz-appearance: textfield;
+      }
+    </style>
     <%- include('../partials/header') %>
 
     <main class="content bg-white">
-      <div class="product-container">
-        <div class="product-images">
-          <% if (product.image_url) { %>
-          <img
-            src="<%= product.image_url %>"
-            alt="<%= product.name %>"
-            class="main-image"
-          />
-          <% } else { %>
-          <div class="no-image">No image</div>
-          <% } %>
-        </div>
-
-        <div class="product-info">
-          <h1><%= product.name %></h1>
-          <p class="price"><%= product.price %> ₽</p>
-
-          <div class="product-meta">
-            <p><strong>Бренд:</strong> <%= product.brand || 'Не указан' %></p>
-            <p><strong>Возраст:</strong> <%= product.age_group %></p>
-            <p><strong>Объем:</strong> <%= product.volume %> мл</p>
-            <p><strong>В наборе:</strong> <%= product.items_in_set %> шт</p>
-            <p>
-              <strong>Гипоаллергенно:</strong> <%= product.is_hypoallergenic ?
-              'Да' : 'Нет' %>
+      <div class="absolute top-[85px] left-[13px] z-0">
+        <img
+          src="/images/flower-bg.svg"
+          alt="Background pattern"
+          class="w-[1114px] h-[1769px]"
+        />
+      </div>
+      <div class="relative z-10">
+        <section class="product-container">
+          <div class="max-w-[1440px] mx-auto px-[75px]">
+            <p class="command-line text-base font-medium opacity-[.61] pt-[67px] pb-[57px]">
+              . . /
+              <a href="/products" class="hover:text-dark">Products</a> /
+              <a href="/products?category=<%= product.category %>" class="hover:text-dark"><%= product.category %></a> /
+              <span class="underline"><%= product.name %> <%= product.type %></span>
             </p>
+            <div class="flex flex-row">
+              <div class="min-w-[488px] min-h-[652px] bg-white border border-black rounded-[3px] flex justify-center items-center">
+                <% if (product.image_url) { %>
+                  <img src="<%= product.image_url %>" alt="<%= product.name %>" class="main-image w-[415px] h-auto"/>
+                <% } else { %>
+                  <div class="no-image">No image</div>
+                <% } %>
+              </div>
+
+              <div class="product-info ml-[54px] w-full">
+                <div class="flex flex-row justify-between">
+                  <div class="main-info uppercase">
+                    <h1 class="text-3xl font-medium"><%= product.name || 'Не указан' %></h1>
+                    <h2 class="text-2xl font-light"><%= product.type || 'Не указан' %></h2>
+                    <h3 class="text-base font-semibold"><%= product.brand || 'Не указан' %></h3>
+                  </div>
+
+                  <div class="pay-info w-[302px]">
+                    <p class="text-2xl font-quicksand font-medium mb-[23px]">
+                      <%= product.price %> ₽
+                    </p>
+
+                    <form action="/cart/add" method="POST" class="flex flex-col">
+                      <input type="hidden" name="productId" value="<%= product.id %>" />
+                      <input type="hidden" name="quantity" id="quantity-hidden" value="1" />
+                      <button type="submit"
+                        class="uppercase bg-darkmud text-truewhite rounded-[30px] py-[19px] px-[50px] hover:bg-darkmuddeactivated transition">
+                        В корзину
+                      </button>
+
+                      <div class="flex items-center justify-center gap-[24px] mt-[17px]">
+                        <button type="button" onclick="changeQuantity(-1)">
+                          <img src="/svgs/remove-button.svg" alt="−" class="w-4 h-4" />
+                        </button>
+                        <span id="quantity-display" class="text-lg font-quicksand w-[16px] text-center select-none">
+                          1
+                        </span>
+                        <button type="button" onclick="changeQuantity(1)">
+                          <img src="/svgs/add-button.svg" alt="+" class="w-4 h-4" />
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+
+                </div>
+
+                <div class="font-light flex flex-col gap-[10px]" id="product-details">
+                  <% function dottedLine(label, value, totalLength = 40) {
+                      const raw = label + value;
+                      const dotsNeeded = totalLength - raw.length;
+                      const dots = ' .'.repeat(Math.max(dotsNeeded, 2));
+                      return `${label}${dots} ${value}`;
+                    }
+                  %>
+
+                  <p><%= dottedLine('Возраст', product.age_group) %></p>
+                  <% if (product.volume > 0) { %>
+                    <p><%= dottedLine('Объем', product.volume + ' мл', 42) %></p>
+                  <% } else { %>
+                    <p><%= dottedLine('В наборе', product.items_in_set + ' шт', 42) %></p>
+                  <% } %>
+                  <p><%= dottedLine('Гипоаллергенно', product.is_hypoallergenic ? 'Да' : 'Нет') %></p>
+
+                   <div class="flex flex-row items-center gap-2 cursor-pointer toggle-btn" data-target="application">
+                    <p class="capitalize">Применение</p>
+                    <img src="/svgs/dropdown.svg" class="w-[12px] h-[5px] toggle-icon">
+                  </div>
+                  <div id="application" class="toggle-content hidden flex gap-[20px] my-[20px]">
+                    <div class="w-[308px] overflow-auto">
+                      <p><%= product.application.split(' ').slice(0, product.application.split(' ').length / 2).join(' ') %></p>
+                    </div>
+                    <div class="w-[308px] overflow-auto">
+                      <p><%= product.application.split(' ').slice(product.application.split(' ').length / 2).join(' ') %></p>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-row items-center gap-2 cursor-pointer toggle-btn" data-target="composition">
+                    <p class="capitalize">Состав</p>
+                    <img src="/svgs/dropdown.svg" class="w-[12px] h-[5px] toggle-icon">
+                  </div>
+                  <div id="composition" class="toggle-content hidden flex gap-[20px] my-[20px]">
+                    <div class="w-[308px] overflow-auto">
+                      <p><%= product.composition.split(' ').slice(0, product.composition.split(' ').length / 2).join(' ') %></p>
+                    </div>
+                    <div class="w-[308px] overflow-auto">
+                      <p><%= product.composition.split(' ').slice(product.composition.split(' ').length / 2).join(' ') %></p>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-row items-center gap-2 cursor-pointer toggle-btn" data-target="contraindications">
+                    <p class="capitalize">Противопоказания</p>
+                    <img src="/svgs/dropdown.svg" class="w-[12px] h-[5px] toggle-icon">
+                  </div>
+                  <div id="contraindications" class="toggle-content hidden flex gap-[20px] my-[20px]">
+                    <div class="w-[308px] overflow-auto">
+                      <p><%= product.contraindications.split(' ').slice(0, product.contraindications.split(' ').length / 2).join(' ') %></p>
+                    </div>
+                    <div class="w-[308px] overflow-auto">
+                      <p><%= product.contraindications.split(' ').slice(product.contraindications.split(' ').length / 2).join(' ') %></p>
+                    </div>
+                  </div>
+
+                </div>
+
+                <!-- Описание (description) -->
+                <div id="product-description" class="font-light flex gap-[20px] mt-[38px]">
+                  <div class="w-[308px] overflow-auto">
+                    <p><%= product.description.split(' ').slice(0, Math.floor(product.description.split(' ').length / 2)).join(' ') %></p>
+                  </div>
+                  <div class="w-[308px] overflow-auto">
+                    <p><%= product.description.split(' ').slice(Math.floor(product.description.split(' ').length / 2)).join(' ') %></p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
           </div>
+        </section>
 
-          <div class="product-description">
-            <h3>Описание</h3>
-            <p><%= product.description %></p>
-
-            <h3>Применение</h3>
-            <p><%= product.application %></p>
-
-            <h3>Состав</h3>
-            <p><%= product.composition %></p>
-
-            <h3>Противопоказания</h3>
-            <p><%= product.contraindications %></p>
-          </div>
-
-          <div class="product-actions">
-            <form action="/cart/add" method="POST">
-              <input type="hidden" name="productId" value="<%= product.id %>" />
-              <input type="number" name="quantity" value="1" min="1" max="10" />
-              <button type="submit" class="btn">Добавить в корзину</button>
-            </form>
-          </div>
-        </div>
+        <%- include('../partials/you-may-like') %>
       </div>
     </main>
 <%- include('../partials/footer') %>
+<script>
+  window.isAuthenticated = <%= typeof customer !== 'undefined' %>;
+
+  function changeQuantity(delta) {
+    const display = document.getElementById('quantity-display');
+    const hiddenInput = document.getElementById('quantity-hidden');
+
+    let value = parseInt(hiddenInput.value, 10);
+    const min = 1;
+    const max = 10;
+
+    value = Math.min(max, Math.max(min, value + delta));
+
+    display.textContent = value;
+    hiddenInput.value = value;
+  }
+
+  const buttons = document.querySelectorAll('.toggle-btn');
+  const contents = document.querySelectorAll('.toggle-content');
+  const description = document.getElementById('product-description');
+
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      const targetId = button.dataset.target;
+      const content = document.getElementById(targetId);
+      const icon = button.querySelector('.toggle-icon');
+
+      // Если уже открыт — скрываем всё и показываем описание
+      const isActive = !content.classList.contains('hidden');
+      contents.forEach(c => c.classList.add('hidden'));
+      document.querySelectorAll('.toggle-icon').forEach(i => i.src = '/svgs/dropdown.svg');
+
+      if (isActive) {
+        description.classList.remove('hidden');
+      } else {
+        content.classList.remove('hidden');
+        icon.src = '/svgs/updown.svg';
+        description.classList.add('hidden');
+      }
+    });
+  });
+</script>
+<script src="/js/cart-form-login-popup.js" defer></script>

@@ -44,6 +44,9 @@ app.use((req, res, next) => {
     next();
 });
 
+const cartInfo = require("./middleware/cartInfo");
+app.use(cartInfo);
+
 const mainRouter = require('./routes/main');
 const adminRouter = require('./routes/admin');
 const authRouter = require('./routes/auth');
