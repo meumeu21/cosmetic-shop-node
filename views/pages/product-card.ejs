@@ -1,4 +1,4 @@
-<%- include('../partials/head', { title: title }) %>
+<%- include('../partials/head') %>
   <body class="bg-dark font-raleway">
     <style>
       input[type=number]::-webkit-outer-spin-button,
@@ -25,8 +25,8 @@
         <section class="product-container">
           <div class="max-w-[1440px] mx-auto px-[75px]">
             <p class="command-line text-base font-medium opacity-[.61] pt-[67px] pb-[57px]">
-              . . /
-              <a href="/products" class="hover:text-dark">Products</a> /
+              <a href="/" class="hover:text-dark">. .</a> /
+              <a href="/products" class="hover:text-dark">Каталог</a> /
               <a href="/products?category=<%= product.category %>" class="hover:text-dark"><%= product.category %></a> /
               <span class="underline"><%= product.name %> <%= product.type %></span>
             </p>
@@ -52,7 +52,7 @@
                       <%= product.price %> ₽
                     </p>
 
-                    <form action="/cart/add" method="POST" class="flex flex-col">
+                    <form action="/cart/add" id="productAddForm" method="POST" class="flex flex-col">
                       <input type="hidden" name="productId" value="<%= product.id %>" />
                       <input type="hidden" name="quantity" id="quantity-hidden" value="1" />
                       <button type="submit"
@@ -155,44 +155,8 @@
 <%- include('../partials/footer') %>
 <script>
   window.isAuthenticated = <%= typeof customer !== 'undefined' %>;
-
-  function changeQuantity(delta) {
-    const display = document.getElementById('quantity-display');
-    const hiddenInput = document.getElementById('quantity-hidden');
-
-    let value = parseInt(hiddenInput.value, 10);
-    const min = 1;
-    const max = 10;
-
-    value = Math.min(max, Math.max(min, value + delta));
-
-    display.textContent = value;
-    hiddenInput.value = value;
-  }
-
-  const buttons = document.querySelectorAll('.toggle-btn');
-  const contents = document.querySelectorAll('.toggle-content');
-  const description = document.getElementById('product-description');
-
-  buttons.forEach(button => {
-    button.addEventListener('click', () => {
-      const targetId = button.dataset.target;
-      const content = document.getElementById(targetId);
-      const icon = button.querySelector('.toggle-icon');
-
-      // Если уже открыт — скрываем всё и показываем описание
-      const isActive = !content.classList.contains('hidden');
-      contents.forEach(c => c.classList.add('hidden'));
-      document.querySelectorAll('.toggle-icon').forEach(i => i.src = '/svgs/dropdown.svg');
-
-      if (isActive) {
-        description.classList.remove('hidden');
-      } else {
-        content.classList.remove('hidden');
-        icon.src = '/svgs/updown.svg';
-        description.classList.add('hidden');
-      }
-    });
-  });
 </script>
 <script src="/js/cart-form-login-popup.js" defer></script>
+<script src="/js/product-card-quantity.js" defer></script>
+<script src="/js/cart-product-card.js" defer></script>
+<script src="/js/cart-products.js" defer></script>

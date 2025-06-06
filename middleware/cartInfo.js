@@ -1,7 +1,7 @@
 const Cart = require("../models/Cart");
 
 module.exports = async function cartInfo(req, res, next) {
-  if (!req.user) {
+  if (!req.user || req.user.type !== "customer") {
     res.locals.cartItemCount = 0;
     return next();
   }

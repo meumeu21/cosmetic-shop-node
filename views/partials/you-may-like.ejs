@@ -26,7 +26,7 @@
             </a>
             <div class="mt-[20px] flex justify-between items-center">
               <span class="font-quicksand font-medium text-xl"><%= product.price %> ₽</span>
-              <form action="/cart/add" style="height: 32px;" method="POST">
+              <form action="/cart/add" class="add-to-cart-form h-[32px]" method="POST">
                 <input type="hidden" name="productId" value="<%= product.id %>">
                 <button type="submit" class="relative group">
                   <img src="/svgs/plus-black.svg" alt="Добавить" class="w-8 h-8 group-hover:hidden" />

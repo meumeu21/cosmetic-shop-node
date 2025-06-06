@@ -1,69 +1,71 @@
-<%- include('../partials/head', { title: title }) %>
+<%- include('../partials/head') %>
   <body class="bg-dark font-raleway">
     <%- include('../partials/header') %>
 
-    <main class="account-container bg-white">
-      <h1>Мой аккаунт</h1>
+    <main class="bg-white">
+      <section>
+        <div class="max-w-[1440px] mx-auto px-[75px] pb-[80px]">
+          <p class="command-line text-base font-medium opacity-[.61] pt-[67px] pb-[57px]">
+            <a href="/" class="hover:text-dark">. .</a> /
+            <span class="underline">Профиль</span>
+          </p>
 
-      <div class="account-info">
-        <div class="account-section">
-          <h2>Личная информация</h2>
-          <div class="info-row">
-            <span class="info-label">Логин:</span>
-            <span class="info-value"><%= customer.username %></span>
-          </div>
-          <div class="info-row">
-            <span class="info-label">Email:</span>
-            <span class="info-value"><%= customer.email %></span>
-          </div>
-          <div class="info-row">
-            <span class="info-label">Телефон:</span>
-            <span class="info-value"><%= customer.phone || 'Не указан' %></span>
-          </div>
-        </div>
+          <h1 class="hidden text-white">SOME BY MI</h1>
+          <h2 class="hidden text-white">Профиль</h2>
 
-        <div class="account-actions">
-          <a href="/account/edit" class="btn btn-edit">Редактировать профиль</a>
-          <form action="/auth/logout" method="GET">
-            <button type="submit" class="btn btn-logout">Выйти</button>
-          </form>
+          <div class="flex flex-row items-center justify-between">
+            <div class="flex flex-row items-center gap-[20px]">
+              <div class="w-[90px] h-[90px] border-[1px] flex justify-center items-center">
+                <% if (customer.image_url) { %>
+                  <img src="<%= customer.image_url %>" alt="Изображение" class="w-full h-full object-cover" />
+                <% } else { %>
+                  <img src="/images/avatar.svg" alt="Нет изображения" class="w-[64px] h-[64px]" />
+                <% } %>
+              </div>
+              <span class="text-2xl uppercase"><%= customer.username %></span>
+            </div>
+            <div class="flex flex-row gap-[40px] font-light text-sm">
+              <a href="/account/edit" class="hover:text-dark">Редактировать профиль</a>
+              <form action="/auth/logout" method="GET">
+                <button type="submit" class="hover:text-dark">Выйти</button>
+              </form>
+            </div>
+          </div>
+
+          <div class="text-lg mt-[30px] ml-[110px]">
+            <div class="mb-[20px]">
+              <span>Логин:</span>
+              <span><%= customer.username %></span>
+            </div>
+            <div class="mb-[20px]">
+              <span>Пол:</span>
+              <span>
+                <%= customer.gender === 'other' ? 'Другое' : '' %>
+                <%= customer.gender === 'female' ? 'Женщина' : '' %>
+                <%= customer.gender === 'male' ? 'Мужчина' : '' %>
+              </span>
+            </div>
+            <div class="mb-[20px]">
+              <span>Email:</span>
+              <span><%= customer.email %></span>
+            </div>
+            <div class="mb-[20px]">
+              <span>Телефон:</span>
+              <span><%= customer.phone || 'Не указан' %></span>
+            </div>
+            <div>
+              <span>Адрес:</span>
+              <span><%= customer.address || 'Не указан' %></span>
+            </div>
+          </div>
+
+          <a href="/account/orders" class="hover:text-dark text-2xl font-light flex flex-row items-center gap-[15px] mt-[50px] group">
+            Мои заказы
+            <img src="/svgs/arrow-orders.svg" alt="Добавить" class="w-[60px] h-[20px] group-hover:hidden" />
+            <img src="/svgs/arrow-orders-hover.svg" alt="Добавить" class="w-[60px] h-[20px] hidden group-hover:block" />
+          </a>
         </div>
-      </div>
-      <div class="account-section">
-        <h2>История заказов</h2>
-        <% if (orders.length > 0) { %>
-        <table class="orders-table">
-          <thead>
-            <tr>
-              <th>№ заказа</th>
-              <th>Дата</th>
-              <th>Товаров</th>
-              <th>Сумма</th>
-              <th>Статус</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <% orders.forEach(order => { %>
-            <tr>
-              <td>#<%= order.id %></td>
-              <td><%= new Date(order.order_date).toLocaleDateString() %></td>
-              <td><%= order.items_count %></td>
-              <td><%= parseFloat(order.total_amount).toFixed(2) %> ₽</td>
-              <td><%= order.status %></td>
-              <td>
-                <a href="/account/orders/<%= order.id %>" class="btn btn-sm"
-                  >Подробнее</a
-                >
-              </td>
-            </tr>
-            <% }); %>
-          </tbody>
-        </table>
-        <% } else { %>
-        <p>У вас пока нет заказов</p>
-        <% } %>
-      </div>
+      </section>
     </main>
 
 <%- include('../partials/footer') %>

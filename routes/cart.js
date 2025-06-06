@@ -10,7 +10,7 @@ router.post("/add", ensureCustomer, async (req, res) => {
     const { productId, quantity } = req.body;
     const cart = await Cart.getOrCreateCart(req.user.id);
     await Cart.addItem(cart.id, productId, quantity);
-    res.redirect("/cart");
+    res.json({ success: true, message: "Товар добавлен в корзину" });
   } catch (err) {
     console.error(err);
     res.status(500).send("Ошибка сервера");
@@ -93,7 +93,7 @@ router.post("/checkout", ensureCustomer, async (req, res) => {
     await Cart.clearCart(cart.id);
 
     req.flash("success_msg", "Заказ успешно оформлен!");
-    res.redirect(`/account/orders/${orderId}`);
+    res.redirect(`/account/orders`);
   } catch (err) {
     console.error(err);
     res.status(500).send("Ошибка сервера");

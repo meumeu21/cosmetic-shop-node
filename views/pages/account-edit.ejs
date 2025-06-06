@@ -1,63 +1,176 @@
-<%- include('../partials/head', { title: title }) %>
+<%- include('../partials/head') %>
   <body class="bg-dark font-raleway">
     <%- include('../partials/header') %>
-    <section class="bg-white">
-      <h2>Редактировать профиль</h2>
 
-      <form action="/account/edit" method="POST">
-        <div>
-          <label for="username">Логин:</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value="<%= customer.username %>"
-            required
-          />
+    <main class="bg-white">
+      <section>
+        <div class="max-w-[1440px] mx-auto px-[75px]">
+          <p class="command-line text-base font-medium opacity-[.61] pt-[67px] pb-[57px]">
+            <a href="/" class="hover:text-dark">. .</a> /
+            <a href="/account" class="hover:text-dark">Профиль</a> /
+            <span class="underline">Редактировать</span>
+          </p>
+
+          <h1 class="hidden text-white">SOME BY MI</h1>
+          <h2 class="hidden text-white">Редактировать профиль</h2>
+
+          <div class="flex flex-row gap-[130px] pb-[80px]">
+            <div class="">
+              <label class="hidden">Текущее изображение</label>
+              <div id="imageContainer" class="w-[308px] h-[308px] border-[1px] flex justify-center items-center">
+                <% if (customer.image_url) { %>
+                  <img id="previewImage" src="<%= customer.image_url %>" alt="Изображение" class="w-full h-full object-cover" />
+                <% } else { %>
+                  <img id="previewImage" src="/images/avatar.svg" alt="Нет изображения" class="w-[220px] h-[220px]" />
+                <% } %>
+              </div>
+              <button
+                type="button"
+                id="changeImageBtn"
+                class="w-full mt-[20px] py-[17px] uppercase bg-darkmud text-white rounded-[100px] hover:darkmuddeactivated transition"
+              >
+                Новое фото
+              </button>
+            </div>
+
+            <form action="/account/edit" class="w-full" method="POST">
+              <div class="hidden">
+                <label>Ссылка на изображение:</label>
+                <input
+                  type="text"
+                  name="image_url"
+                  pattern="^(.+\.(jpg|jpeg|png|gif|webp))|(\/?.+\/.+\.(jpg|jpeg|png|gif|webp))$"
+                  title="Введите URL или относительный путь к изображению (jpg, jpeg, png, gif или webp)"
+                  value="<%= customer ? customer.image_url : '' %>"
+                />
+              </div>
+
+              <div class="mb-[35px]">
+                <label class="block uppercase text-2xl mb-[10px]">Логин</label>
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  value="<%= customer.username %>"
+                  required
+                  class="font-light w-full border-[1px] bg-white rounded-[3px] py-[8px] px-[20px]"
+                />
+              </div>
+
+              <div class="mb-[35px]">
+                <label class="hidden">Пол:</label>
+                <div class="flex gap-[30px] font-light">
+                  <label class="flex items-center cursor-pointer gap-[10px]">
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="male"
+                      class="peer hidden"
+                      <%= customer && customer.gender === 'male' ? 'checked' : '' %>
+                    />
+                    <div class="w-[20px] h-[20px] rounded-full border border-black flex items-center justify-center peer-checked:bg-black">
+                      <div class="w-[10px] h-[10px] bg-white rounded-full"></div>
+                    </div>
+                    <span>Мужчина</span>
+                  </label>
+
+                  <label class="flex items-center cursor-pointer gap-[10px]">
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="female"
+                      class="peer hidden"
+                      <%= customer && customer.gender === 'female' ? 'checked' : '' %>
+                    />
+                    <div class="w-[20px] h-[20px] rounded-full border border-black flex items-center justify-center peer-checked:bg-black">
+                      <div class="w-[10px] h-[10px] bg-white rounded-full"></div>
+                    </div>
+                    <span>Женщина</span>
+                  </label>
+
+                  <label class="flex items-center cursor-pointer gap-[10px]">
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="other"
+                      class="peer hidden"
+                      <%= !customer || customer.gender === 'other' ? 'checked' : '' %>
+                    />
+                    <div class="w-[20px] h-[20px] rounded-full border border-black flex items-center justify-center peer-checked:bg-black">
+                      <div class="w-[10px] h-[10px] bg-white rounded-full"></div>
+                    </div>
+                    <span>Другое</span>
+                  </label>
+                </div>
+              </div>
+
+
+              <div class="mb-[35px]">
+                <label class="block uppercase text-2xl mb-[10px]">Номер телефона</label>
+                <input
+                  type="tel"
+                  name="phone"
+                  pattern="+7[0-9]{10}"
+                  value="<%= customer ? customer.phone : '' %>"
+                  class="font-light w-full border-[1px] bg-white rounded-[3px] py-[8px] px-[20px]"
+                />
+                <span>Формат: +79999999999</span>
+              </div>
+
+              <div class="mb-[35px]">
+                <label class="block uppercase text-2xl mb-[10px]">Адрес</label>
+                <textarea name="address" class="font-light w-full border-[1px] bg-white rounded-[3px] py-[8px] px-[20px] h-[250px]"><%= customer ? customer.address : '' %></textarea>
+              </div>
+
+              <div class="mb-[35px]">
+                <label class="block uppercase text-2xl mb-[10px]">E-mail</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value="<%= customer ? customer.email : '' %>"
+                  required
+                  class="font-light w-full border-[1px] bg-white rounded-[3px] py-[8px] px-[20px]"
+                />
+              </div>
+
+              <button
+                type="submit"
+                class="font-light w-full py-[17px] uppercase bg-darkmud text-white rounded-[50px] hover:darkmuddeactivated transition"
+              >
+                Сохранить изменения
+              </button>
+            </form>
+          </div>
+
+          <div id="imagePopup" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm hidden">
+            <div class="relative w-[450px] max-w-md bg-white shadow-xl px-[30px] py-[25px]">
+              <button
+                id="closePopupBtn"
+                class="absolute top-3 right-5 text-xl hover:text-dark"
+                aria-label="Закрыть"
+              >
+                &times;
+              </button>
+              <h2 class="text-xl mb-[20px]">Введите ссылку на изображение</h2>
+              <input
+                id="imageInput"
+                type="text"
+                placeholder="https://example.com/image.jpg"
+                pattern="^(.+\.(jpg|jpeg|png|gif|webp))|(\/?.+\/.+\.(jpg|jpeg|png|gif|webp))$"
+                class="font-light w-full border-[1px] bg-white rounded-[3px] py-[8px] px-[20px] mb-[20px]"
+              />
+              <button
+                id="applyImageBtn"
+                class="w-full py-[15px] uppercase bg-darkmud text-white rounded-[50px] hover:darkmuddeactivated transition"
+              >
+                Загрузить
+              </button>
+            </div>
+          </div>
+
         </div>
-
-        <div>
-          <label for="email">Электронная почта:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value="<%= customer.email %>"
-            required
-          />
-        </div>
-
-        <div>
-          <label for="password">Пароль:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value="<%= customer.password %>"
-            required
-          />
-        </div>
-
-        <div>
-          <label>Номер телефона</label>
-          <input
-            type="tel"
-            name="phone"
-            pattern="+7[0-9]{10}"
-            class="form-control"
-            value="<%= customer.phone %>"
-          />
-          <span>Формат: +79999999999</span>
-        </div>
-
-        <div>
-          <label>Адрес</label>
-          <textarea name="address" class="form-control">
-          <%= customer.address %></textarea >
-        </div>
-
-        <button type="submit">Сохранить</button>
-      </form>
-    </section>
-
+      </section>
+    </main>
+  <script src="/js/photo-popup.js" defer></script>
 <%- include('../partials/footer') %>

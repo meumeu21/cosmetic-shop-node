@@ -308,14 +308,15 @@ router.get("/customers/add", ensureAdmin, (req, res) => {
 
 router.post("/customers/add", ensureAdmin, async (req, res) => {
   try {
-    const { first_name, last_name, email, password, phone, address } = req.body;
+    const { username, email, password, phone, address, image_url, gender } = req.body;
     await Customer.create({
-      first_name,
-      last_name,
+      username,
       email,
       password,
       phone,
       address,
+      image_url,
+      gender
     });
     req.flash("success_msg", "Покупатель успешно добавлен");
     res.redirect("/admin/customers");

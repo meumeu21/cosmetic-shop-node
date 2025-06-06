@@ -28,6 +28,7 @@
       action="/auth/login"
       method="POST"
     >
+      <div id="loginError" class="text-red mb-4 hidden"></div>
       <div class="mb-[20px]">
         <label class="block text-sm">Email</label>
         <input
@@ -76,6 +77,7 @@
       action="/auth/register"
       method="POST"
     >
+      <div id="registerError" class="text-red mb-4 hidden"></div>
       <div class="mb-[15px]">
         <label class="block text-sm">Логин</label>
         <input

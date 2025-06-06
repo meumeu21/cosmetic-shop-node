@@ -58,14 +58,11 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function updatePagination() {
-    const pageNumbersContainer = document.querySelector('.pagination .flex.gap-2');
     if (!pageNumbersContainer) return;
 
     pageNumbersContainer.innerHTML = '';
 
     pageNumbersContainer.appendChild(createPageNumberButton(1));
-
-    console.log(totalPages)
 
     if (totalPages <= 5) {
       for (let i = 2; i <= totalPages; i++) {
@@ -96,11 +93,16 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
 
-    if (document.querySelector('.pagination-first')) {
-      document.querySelector('.pagination-first').disabled = currentPage === 1;
-      document.querySelector('.pagination-prev').disabled = currentPage === 1;
-      document.querySelector('.pagination-next').disabled = currentPage === totalPages;
-      document.querySelector('.pagination-last').disabled = currentPage === totalPages;
+    const first = document.querySelector('.pagination-first');
+    const prev = document.querySelector('.pagination-prev');
+    const next = document.querySelector('.pagination-next');
+    const last = document.querySelector('.pagination-last');
+
+    if (first && prev && next && last) {
+      first.disabled = currentPage === 1;
+      prev.disabled = currentPage === 1;
+      next.disabled = currentPage === totalPages;
+      last.disabled = currentPage === totalPages;
     }
   }
 

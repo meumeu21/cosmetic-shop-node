@@ -29,6 +29,15 @@
           </div>
 
           <div class="form-group">
+            <label>Пол</label>
+            <select name="gender" class="form-control">
+              <option value="other" <%= customer && customer.gender === 'other' ? 'selected' : '' %>>Другое</option>
+              <option value="male" <%= customer && customer.gender === 'male' ? 'selected' : '' %>>Мужчина</option>
+              <option value="female" <%= customer && customer.gender === 'female' ? 'selected' : '' %>>Женщина</option>
+            </select>
+          </div>
+
+          <div class="form-group">
             <label>Пароль</label>
             <input
               type="password"
@@ -52,8 +61,19 @@
 
           <div class="form-group">
             <label>Адрес</label>
-            <textarea name="address" class="form-control">
-              <%= customer ? customer.address : '' %></textarea>
+            <textarea name="address" class="form-control"><%= customer ? customer.address : '' %></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Ссылка на изображение</label>
+            <input
+              type="text"
+              name="image_url"
+              class="form-control"
+              pattern="^(.+\.(jpg|jpeg|png|gif|webp))|(\/?.+\/.+\.(jpg|jpeg|png|gif|webp))$"
+              title="Введите URL или относительный путь к изображению (jpg, jpeg, png, gif или webp)"
+              value="<%= customer ? customer.image_url : '' %>"
+            />
           </div>
 
           <button type="submit" class="btn btn-primary">

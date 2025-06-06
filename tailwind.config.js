@@ -21,7 +21,8 @@ module.exports = {
       'black': '#191818',
       'hoverw': '#A8A4A4',
       'hoverb': '#70746C',
-      'truewhite': '#FFFFFF'
+      'truewhite': '#FFFFFF',
+      'red': '#B3373E'
     },
   },
   plugins: [],

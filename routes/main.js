@@ -25,7 +25,7 @@ router.get("/products", async (req, res) => {
   try {
     const products = await Product.getAll();
     res.render("pages/products", {
-      title: "Все товары",
+      title: "Каталог",
       products,
     });
   } catch (err) {
@@ -47,7 +47,7 @@ router.get("/products/:id", async (req, res) => {
     }
 
     res.render("pages/product-card", {
-      title: product.name,
+      title: product.name + " " + product.type,
       product,
       bestsellers,
     });
@@ -61,7 +61,7 @@ router.get("/products/:id", async (req, res) => {
 });
 
 router.get("/skincare", (req, res) => {
-  res.render("pages/skincare", { title: "Уход за кожей" });
+  res.render("pages/skincare", { title: "Skincare" });
 });
 
 router.get("/account", ensureCustomer, async (req, res) => {
@@ -69,7 +69,7 @@ router.get("/account", ensureCustomer, async (req, res) => {
     if (req.isAuthenticated()) {
       const orders = await Order.getCustomerOrders(req.user.id);
       return res.render("pages/account", {
-        title: "Мой аккаунт",
+        title: "Мой профиль",
         customer: req.user,
         orders: orders,
       });
@@ -90,9 +90,9 @@ router.get("/account/edit", ensureCustomer, (req, res) => {
 
 router.post("/account/edit", ensureCustomer, async (req, res) => {
   try {
-    const { username, email, password, address } = req.body;
+    const { username, phone, address, email, image_url, gender} = req.body;
     const customerId = req.user.id;
-    await Customer.update(customerId, { username, email, password, address });
+    await Customer.updateAccount(customerId, { username, phone, address, email, image_url, gender });
     req.flash("success_msg", "Данные успешно обновлены");
     res.redirect("/account");
   } catch (err) {
@@ -102,24 +102,41 @@ router.post("/account/edit", ensureCustomer, async (req, res) => {
   }
 });
 
-router.get("/account/orders/:id", ensureCustomer, async (req, res) => {
+router.get("/account/orders", ensureCustomer, async (req, res) => {
   try {
-    const orderId = req.params.id;
-    const orderDetails = await Order.getOrderDetails(orderId);
-
-    if (orderDetails.customer_id !== req.user.id) {
-      return res.status(403).send("Доступ запрещен");
+    if (req.isAuthenticated()) {
+      const orders = await Order.getCustomerOrders(req.user.id);
+      return res.render("pages/account-orders", {
+        title: "Заказы",
+        customer: req.user,
+        orders: orders,
+      });
     }
-
-    res.render("pages/order", {
-      title: `Заказ #${orderId}`,
-      order: orderDetails,
-    });
+    res.redirect("/");
   } catch (err) {
     console.error(err);
     res.status(500).send("Ошибка сервера");
   }
 });
+
+// router.get("/account/orders/:id", ensureCustomer, async (req, res) => {
+//   try {
+//     const orderId = req.params.id;
+//     const orderDetails = await Order.getOrderDetails(orderId);
+
+//     if (orderDetails.customer_id !== req.user.id) {
+//       return res.status(403).send("Доступ запрещен");
+//     }
+
+//     res.render("pages/account-order", {
+//       title: `Заказ #${orderId}`,
+//       order: orderDetails,
+//     });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send("Ошибка сервера");
+//   }
+// });
 
 router.get("/about", (req, res) => {
   res.render("pages/about", { title: "О нас" });

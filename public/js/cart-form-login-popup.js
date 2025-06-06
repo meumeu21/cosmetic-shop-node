@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   const popup = document.getElementById("authPopup");
 
-  // Отлов всех форм добавления в корзину
   document.querySelectorAll('form[action="/cart/add"]').forEach(form => {
     form.addEventListener("submit", function (e) {
       if (!window.isAuthenticated) {
@@ -9,5 +8,11 @@ document.addEventListener("DOMContentLoaded", function () {
         popup.style.display = "flex";
       }
     });
+  });
+
+  popup.addEventListener("click", function (e) {
+    if (e.target === popup) {
+      popup.style.display = "none";
+    }
   });
 });

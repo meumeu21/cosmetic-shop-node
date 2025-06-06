@@ -21,10 +21,33 @@ class Order {
 
   static async getCustomerOrders(customerId) {
     const [orders] = await db.query(
-      `SELECT o.*, (SELECT COUNT(*) FROM order_items oi WHERE oi.order_id = o.id) AS items_count FROM orders o WHERE o.customer_id = ? ORDER BY o.order_date DESC`,
-      [customerId],
+      `SELECT * FROM orders WHERE customer_id = ? ORDER BY order_date DESC`,
+      [customerId]
     );
-    return orders;
+
+    const orderIds = orders.map(order => order.id);
+    if (orderIds.length === 0) return [];
+
+    const [items] = await db.query(
+      `SELECT oi.order_id, oi.product_id, oi.quantity, oi.price, p.name, p.image_url
+      FROM order_items oi
+      JOIN products p ON oi.product_id = p.id
+      WHERE oi.order_id IN (?)`,
+      [orderIds]
+    );
+
+    // группируем товары по заказам
+    const itemsByOrder = {};
+    items.forEach(item => {
+      if (!itemsByOrder[item.order_id]) itemsByOrder[item.order_id] = [];
+      itemsByOrder[item.order_id].push(item);
+    });
+
+    // добавляем items к каждому заказу
+    return orders.map(order => ({
+      ...order,
+      items: itemsByOrder[order.id] || [],
+    }));
   }
 
   static async getOrderDetails(orderId) {
