@@ -1,10 +1,38 @@
 <%- include('../partials/head', { title: 'Страница не найдена (404)' }) %>
 <body class="bg-dark font-raleway">
-  <div class="container">
-    <h1>404 - Страница не найдена</h1>
-    <% if (typeof message !== 'undefined' && message) { %>
-      <div class="alert alert-warning"><%= message %></div>
-    <% } %>
-    <p>Запрошенная страница не существует.</p>
-  </div>
-<%- include('../partials/footer') %>
+  <main class="bg-white min-h-[900px]">
+    <div class="absolute top-[50px] left-[77px] z-0">
+      <img
+        src="/images/404.svg"
+        alt="Страница 404"
+        class="w-[1288px] h-[800px]"
+      />
+    </div>
+    <div class="relative z-10">
+      <section>
+        <div class="max-w-[1440px] mx-auto px-[75px]">
+          <div class="flex flex-row gap-[430px]">
+            <div>
+              <h1 class="text-4xl pt-[280px]">Что-то пошло не так!</h1>
+              <div class="text-2xl font-light mt-[125px]">
+                <% if (typeof message !== 'undefined' && message) { %>
+                  <p><%= message %></p>
+                <% } else { %>
+                  <p>Запрошенной страницы не существует</p>
+                <% } %>
+              </div>
+              <a href="/"
+                class="uppercase bg-darkmud mt-[200px] text-white text-2xl font-light block w-[400px] rounded-[100px] py-[19px] px-[50px] hover:bg-darkmuddeactivated transition">
+                На главную страницу
+              </a>
+            </div>
+            <div class="text-[256px] w-[215px] h-[130px] pt-[220px]">
+              <p>
+                404
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>

@@ -37,12 +37,25 @@ class Cart {
     }
   }
 
+  // static async getCartItems(cartId) {
+  //   const [items] = await db.query(
+  //     `SELECT ci.*, p.name, p.price, p.image_url FROM cart_items ci JOIN products p ON ci.product_id = p.id WHERE ci.cart_id = ?`,
+  //     [cartId],
+  //   );
+  //   return items;
+  // }
+
   static async getCartItems(cartId) {
-    const [items] = await db.query(
-      `SELECT ci.*, p.name, p.price, p.image_url FROM cart_items ci JOIN products p ON ci.product_id = p.id WHERE ci.cart_id = ?`,
-      [cartId],
+    const [rows] = await db.query(
+      `SELECT ci.*,
+              p.name, p.image_url, p.price, p.type,
+              p.age_group, p.volume, p.items_in_set, p.is_hypoallergenic
+       FROM cart_items ci
+       JOIN products p ON ci.product_id = p.id
+       WHERE ci.cart_id = ?`,
+      [cartId]
     );
-    return items;
+    return rows;
   }
 
   static async removeItem(cartItemId) {

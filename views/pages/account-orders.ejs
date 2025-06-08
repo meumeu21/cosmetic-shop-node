@@ -32,7 +32,11 @@
                         alt="<%= item.name %>"
                         class="w-[198px] h-[284px] object-cover cursor-pointer"
                         data-id="<%= item.product_id %>"
-                        data-name="<%= item.name %>"
+                        data-name="<%= item.name %> <%= item.type %>"
+                        data-age="<%= item.age_group %>"
+                        data-volume="<%= item.volume %> мл"
+                        data-setitems="<%= item.items_in_set %> шт"
+                        data-hypoallergenic="<%= item.is_hypoallergenic ? 'Да' : 'Нет' %>"
                         data-qty="<%= item.quantity %>"
                         data-price="<%= parseFloat(item.price).toFixed(2) %>"
                         data-total="<%= parseFloat(item.price * item.quantity).toFixed(2) %>"
@@ -67,7 +71,7 @@
           </div>
 
           <div id="itemPopup" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm hidden">
-            <div class="relative w-[450px] max-w-md bg-white shadow-xl px-[30px] py-[25px]">
+            <div class="relative bg-white shadow-xl px-[30px] py-[30px]">
               <button
                 id="closePopupBtn"
                 class="absolute top-3 right-5 text-xl hover:text-dark"
@@ -75,32 +79,50 @@
               >
                 &times;
               </button>
-              <div class="flex flex-col">
-                <div class="flex flex-row gap-[60px]">
-                  <div class="w-[160px]"><span>ID:</span></div>
-                  <div><span class="font-light" id="popupId"></span></div>
-                </div>
-                <div class="flex flex-row gap-[60px]">
-                  <div class="w-[160px]"><span>Название:</span></div>
-                  <div><span class="font-light" id="popupName"></span></div>
-                </div>
-                <div class="flex flex-row gap-[60px]">
-                  <div class="w-[160px]"><span>Количество:</span></div>
-                  <div><span class="font-light" id="popupQty"></span></div>
-                </div>
-                <div class="flex flex-row gap-[60px]">
-                  <div class="w-[160px]"><span>Цена за штуку:</span></div>
-                  <div><span class="font-light" id="popupPrice"></span> ₽</div>
-                </div>
-                <div class="flex flex-row gap-[60px]">
-                  <div class="w-[160px]"><span>Итоговая цена:</span></div>
-                  <div><span class="font-light" id="popupTotal"></span> ₽</div>
-                </div>
-                <div class="flex justify-center mt-[20px]">
+              <div class="flex flex-row">
+                <div class="mr-[20px]">
                   <img
                     id="popupImage"
-                    class="w-[350px] object-cover"
+                    class="w-[250px] h-[358px] object-cover"
                   />
+                </div>
+                <div class="flex flex-col w-[380px] gap-[10px]">
+                  <div class="flex flex-row gap-[60px]">
+                    <div class="w-[120px]"><span>ID:</span></div>
+                    <div><span class="font-light" id="popupId"></span></div>
+                  </div>
+                  <div class="flex flex-row gap-[60px]">
+                    <div class="w-[120px]"><span>Название:</span></div>
+                    <div class="w-[160px]"><span class="font-light" id="popupName"></span></div>
+                  </div>
+                  <div class="flex flex-row gap-[60px]">
+                    <div class="w-[120px]"><span>Возраст:</span></div>
+                    <div><span class="font-light" id="popupAge"></span></div>
+                  </div>
+                  <div id="volumeRow" class="flex flex-row gap-[60px] hidden">
+                    <div class="w-[120px]"><span>Объем:</span></div>
+                    <div><span class="font-light" id="popupVolume"></span></div>
+                  </div>
+                  <div id="setItemsRow" class="flex flex-row gap-[60px] hidden">
+                    <div class="w-[120px]"><span>В наборе:</span></div>
+                    <div><span class="font-light" id="popupSetItems"></span></div>
+                  </div>
+                  <div class="flex flex-row gap-[60px]">
+                    <div class="w-[120px]"><span>Гипоаллергенно:</span></div>
+                    <div><span class="font-light" id="popupHypoallergenic"></span></div>
+                  </div>
+                  <div class="flex flex-row gap-[60px]">
+                    <div class="w-[120px]"><span>Количество:</span></div>
+                    <div><span class="font-light" id="popupQty"></span></div>
+                  </div>
+                  <div class="flex flex-row gap-[60px]">
+                    <div class="w-[120px]"><span>Цена за штуку:</span></div>
+                    <div><span class="font-light" id="popupPrice"></span> <span class="font-quicksand">₽</span></div>
+                  </div>
+                  <div class="flex flex-row gap-[60px]">
+                    <div class="w-[120px]"><span>Итоговая цена:</span></div>
+                    <div><span class="font-light" id="popupTotal"></span> <span class="font-quicksand">₽</span></div>
+                  </div>
                 </div>
               </div>
             </div>

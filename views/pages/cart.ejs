@@ -12,54 +12,96 @@
 
           <h1 class="hidden text-white">SOME BY MI</h1>
 
-          <h2 class="text-3xl mb-[40px]">Ваша корзина (<%= cartItemCount %>)</h2>
+          <h2 class="text-3xl mb-[40px]">Ваша корзина (<%= cartItemCount %>):</h2>
 
           <% if (items.length > 0) { %>
-          <div class="cart-items">
+          <div class="">
             <% items.forEach(item => { %>
-            <div class="cart-item">
-              <a href="/products/<%= item.product_id %>">
+            <div class="cart-item flex flex-row mb-[50px]">
+              <a href="/products/<%= item.product_id %>" class="mr-[60px]">
                 <img
                   src="<%= item.image_url || '/images/no-image.png' %>"
-                  alt="<%= item.name %>"
+                  alt="<%= item.name %> <%= item.type %>"
+                  class="w-[256px] h-[347px] object-cover"
                 />
               </a>
-              <div class="item-details">
-                <h3><%= item.name %></h3>
-                <div class="quantity-control">
+              <div class="w-[380px] mr-[42px] product-info">
+                <p class="font-light mt-[16px]">ID товара: <%= item.product_id %></p>
+                <div class="text-xl font-normal mt-[25px]">
+                  <a href="/products/<%= item.product_id %>" class="uppercase hover:text-hoverb">
+                    <%= item.name %> <%= item.type %>
+                  </a>
+                </div>
+                <p class="price font-quicksand text-2xl font-semibold mt-[136px]"><%= parseFloat(item.price).toFixed(2) %> ₽</p>
+              </div>
+              <div class="w-[300px] mt-[90px] mr-[11px] font-light">
+                <% function dottedLine(label, value, totalLength = 30) {
+                    const raw = label + value;
+                    const dotsNeeded = totalLength - raw.length;
+                    const dots = ' .'.repeat(Math.max(dotsNeeded, 2));
+                    return `${label}${dots} ${value}`;
+                  }
+                %>
+
+                <p class="mb-[10px]"><%= dottedLine('Возраст', item.age_group) %></p>
+                <% if (item.volume > 0) { %>
+                  <p class="mb-[10px]"><%= dottedLine('Объем', item.volume + ' мл', 29) %></p>
+                <% } else { %>
+                  <p class="mb-[10px]"><%= dottedLine('В наборе', item.items_in_set + ' шт') %></p>
+                <% } %>
+                <p><%= dottedLine('Гипоаллергенно', item.is_hypoallergenic ? 'Да' : 'Нет') %></p>
+              </div>
+              <div>
+                <p class="font-light text-lg">
+                  Итого:
+                </p>
+                <p class="total font-quicksand text-xl font-medium mb-[10px]">
+                  <%= (parseFloat(item.price) * item.quantity).toFixed(2) %> ₽
+                </p>
+                <div class="flex flex-row gap-[40px]">
                   <form
                     action="/cart/update/<%= item.id %>"
                     method="POST"
                     class="quantity-form"
                   >
-                    <button type="button" class="quantity-btn minus">-</button>
-                    <input
-                      type="number"
-                      name="quantity"
-                      value="<%= item.quantity %>"
-                      min="1"
-                      class="quantity-input"
-                    />
-                    <button type="button" class="quantity-btn plus">+</button>
+                    <div class="flex items-center justify-center gap-[24px]">
+                      <button type="button" class="quantity-btn minus relative group">
+                        <img src="/svgs/remove-button.svg" alt="-" class="w-[28px] h-[28px] group-hover:hidden" />
+                        <img src="/svgs/pressed-add-remove.svg" alt="-" class="w-[28px] h-[28px] hidden group-hover:block" />
+                      </button>
+
+                      <span class="quantity-display text-xl font-quicksand w-[16px] text-center select-none">
+                        <%= item.quantity %>
+                      </span>
+                      <input type="hidden" name="quantity" class="quantity-input" value="<%= item.quantity %>" />
+
+                      <button type="button" class="quantity-btn plus relative group">
+                        <img src="/svgs/add-button.svg" alt="+" class="w-[28px] h-[28px] group-hover:hidden" />
+                        <img src="/svgs/pressed-add-remove.svg" alt="+" class="w-[28px] h-[28px] hidden group-hover:block" />
+                      </button>
+                    </div>
+                  </form>
+
+                  <form action="/cart/remove/<%= item.id %>" method="POST">
+                    <button type="submit" class="relative group">
+                      <img src="/svgs/trashbin.svg" alt="x" class="w-[25px] h-[27px] group-hover:hidden" />
+                      <img src="/svgs/trashbin-hover.svg" alt="x" class="w-[25px] h-[27px] hidden group-hover:block" />
+                    </button>
                   </form>
                 </div>
-                <p class="price"><%= parseFloat(item.price).toFixed(2) %> ₽</p>
-                <p class="total">
-                  Итого: <%= (parseFloat(item.price) * item.quantity).toFixed(2) %>
-                  ₽
-                </p>
               </div>
-              <form action="/cart/remove/<%= item.id %>" method="POST">
-                <button type="submit" class="remove-btn">×</button>
-              </form>
             </div>
             <% }); %>
           </div>
 
-          <div class="cart-summary">
-            <h3>Итого: <span><%= total %> ₽</span></h3>
+          <div class="cart-summary pb-[100px]">
+            <p class="text-3xl font-light mb-[10px]">Итого:</p>
+            <p class="text-4xl font-quicksand font-medium mb-[25px]"><span><%= total %> ₽</span></p>
             <form action="/cart/checkout" method="POST">
-              <button type="submit" class="checkout-btn">Оформить заказ</button>
+              <button type="submit"
+                class="uppercase bg-darkmud text-truewhite rounded-[100px] py-[20px] px-[70px] hover:bg-darkmuddeactivated transition">
+                Оформить заказ
+              </button>
             </form>
           </div>
           <% } else { %>

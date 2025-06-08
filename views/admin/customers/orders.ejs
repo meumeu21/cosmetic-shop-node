@@ -19,7 +19,6 @@
                 <th>ID заказа</th>
                 <th>Дата</th>
                 <th>Сумма</th>
-                <th>Кол-во товаров</th>
                 <th>Действия</th>
               </tr>
             </thead>
@@ -29,7 +28,6 @@
                 <td><%= order.id %></td>
                 <td><%= new Date(order.order_date).toLocaleString() %></td>
                 <td><%= order.total_amount %> руб.</td>
-                <td><%= order.items_count %></td>
                 <td>
                   <a href="/admin/customers/<%= customer.id %>/orders/<%= order.id %>"
                     class="btn btn-sm btn-info">Подробнее</a>

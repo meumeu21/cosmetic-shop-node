@@ -17,7 +17,7 @@
       <div class="absolute top-[85px] left-[13px] z-0">
         <img
           src="/images/flower-bg.svg"
-          alt="Background pattern"
+          alt="Фон карточка товара"
           class="w-[1114px] h-[1769px]"
         />
       </div>
@@ -61,14 +61,16 @@
                       </button>
 
                       <div class="flex items-center justify-center gap-[24px] mt-[17px]">
-                        <button type="button" onclick="changeQuantity(-1)">
-                          <img src="/svgs/remove-button.svg" alt="−" class="w-4 h-4" />
+                        <button type="button" onclick="changeQuantity(-1)" class="relative group">
+                          <img src="/svgs/remove-button.svg" alt="−" class="w-4 h-4 group-hover:hidden" />
+                          <img src="/svgs/pressed-add-remove.svg" alt="−" class="w-4 h-4 hidden group-hover:block" />
                         </button>
                         <span id="quantity-display" class="text-lg font-quicksand w-[16px] text-center select-none">
                           1
                         </span>
-                        <button type="button" onclick="changeQuantity(1)">
-                          <img src="/svgs/add-button.svg" alt="+" class="w-4 h-4" />
+                        <button type="button" onclick="changeQuantity(1)" class="relative group">
+                          <img src="/svgs/add-button.svg" alt="+" class="w-4 h-4 group-hover:hidden" />
+                          <img src="/svgs/pressed-add-remove.svg" alt="−" class="w-4 h-4 hidden group-hover:block" />
                         </button>
                       </div>
                     </form>

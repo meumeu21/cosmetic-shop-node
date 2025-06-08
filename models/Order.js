@@ -29,21 +29,19 @@ class Order {
     if (orderIds.length === 0) return [];
 
     const [items] = await db.query(
-      `SELECT oi.order_id, oi.product_id, oi.quantity, oi.price, p.name, p.image_url
+      `SELECT oi.order_id, oi.product_id, oi.quantity, oi.price, p.name, p.image_url, p.age_group, p.volume, p.items_in_set, p.is_hypoallergenic, p.type
       FROM order_items oi
       JOIN products p ON oi.product_id = p.id
       WHERE oi.order_id IN (?)`,
       [orderIds]
     );
 
-    // группируем товары по заказам
     const itemsByOrder = {};
     items.forEach(item => {
       if (!itemsByOrder[item.order_id]) itemsByOrder[item.order_id] = [];
       itemsByOrder[item.order_id].push(item);
     });
 
-    // добавляем items к каждому заказу
     return orders.map(order => ({
       ...order,
       items: itemsByOrder[order.id] || [],
@@ -55,7 +53,7 @@ class Order {
       orderId,
     ]);
     const [items] = await db.query(
-      `SELECT oi.*, p.name, p.image_url FROM order_items oi JOIN products p ON oi.product_id = p.id WHERE oi.order_id = ?`,
+      `SELECT oi.*, p.name, p.image_url, p.age_group, p.volume, p.items_in_set, p.is_hypoallergenic, p.type FROM order_items oi JOIN products p ON oi.product_id = p.id WHERE oi.order_id = ?`,
       [orderId],
     );
 
