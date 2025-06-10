@@ -1,6 +1,9 @@
 # Сайт для онлайн-магазина косметики
 
 
+![image info](./readme/screen1.png)
+
+
 Создан с помощью Node.js, использовались EJS, фреймворки Bootstrap и Tailwind CSS.
 
 
@@ -16,7 +19,6 @@
 
 
 Скриншоты сайта:
-![image info](./readme/screen1.png)
 ![image info](./readme/screen2.png)
 ![image info](./readme/screen3.png)
 ![image info](./readme/screen4.png)
