@@ -1,61 +1,47 @@
 <%- include('../partials/head') %>
-  <body class="bg-dark font-raleway">
-    <main class="content">
+<body class="bg-dark font-raleway">
+  <main class="content">
+    <h1 class="hidden text-white">SOME BY MI</h1>
 
-      <h1 class="hidden text-white">SOME BY MI</h1>
+    <a href="/" class="absolute top-[39px] left-[75px]">
+      <img src="/svgs/logo-white.png" alt="Логотип" class="w-[72px] h-[47px]" />
+    </a>
 
-      <a href="/" class="absolute top-[39px] left-[75px]">
-        <img src="/svgs/logo-white.png" alt="Логотип" class="w-[72px] h-[47px]">
-      </a>
+    <section class="main bg-white text-black">
+      <div class="flex flex-col lg:flex-row max-w-[1440px] w-full mx-auto">
+        <div class="w-[710px] bg-mud">
+          <img src="/images/main-illustration.png" alt="main-illustration" class="w-[710px] h-[934px] object-cover" />
+        </div>
 
-      <!-- Главная страница -->
-      <section class="main bg-white text-black">
-        <div class="flex flex-col lg:flex-row max-w-[1440px] w-full mx-auto">
+        <div class="w-[730px] pl-[73px] pr-[76px] pb-[50px]">
+          <%- include('../partials/header-home') %>
 
-          <!-- Левая часть: изображение -->
-          <div class="w-[710px] bg-mud">
-            <img src="/images/main-illustration.png" alt="main-illustration" class="w-[710px] h-[934px] object-cover" />
+          <div class="flex justify-between">
+            <img src="/images/product.png" alt="main-product" class="w-[270px] h-[270px] object-cover" />
+            <img src="/images/haerin.png" alt="main-haerin" class="w-[270px] h-[408px] object-cover self-start" />
           </div>
 
-          <!-- Правая часть: контент -->
-          <div class="w-[730px] pl-[73px] pr-[76px] pb-[50px]">
-
-            <!-- Header -->
-            <%- include('../partials/header-home') %>
-
-            <!-- Картинки -->
-            <div class="flex justify-between">
-              <img src="/images/product.png" alt="main-product" class="w-[270px] h-[270px] object-cover" />
-              <img src="/images/haerin.png" alt="main-haerin" class="w-[270px] h-[408px] object-cover self-start" />
-            </div>
-
-            <!-- Заголовок -->
-            <p class="font-medium text-left text-5xl mt-[20px] uppercase">Take care of yourself</p>
-
-            <!-- Текст в двух колонках -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-[41px] text-lg font-light leading-snug text-black leading-relaxed mt-[30px]">
-              <p>
-                Хорошая кожа — это не только ДНК. Ваши ежедневные привычки
-                сильно влияют на то, как вы выглядите. От того, какие обзоры продуктов вы читаете и c какими
-                врачами вы консультируетесь, мнения могут быть ошеломляюще разными:
-              </p>
-              <p>
-                от увлажнения кожи, до зашиты от ультрафиолета.
-                В конечном итоге, уход за кожей — сугубо индивидуальное дело. Вот что стоит учитывать,
-                чтобы разобраться во всем этом потоке информации.
-              </p>
-            </div>
+          <p class="font-medium text-left text-5xl mt-[20px] uppercase">Take care of yourself</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-[41px] text-lg font-light leading-snug text-black leading-relaxed mt-[30px]">
+            <p>
+              Хорошая кожа — это не только ДНК. Ваши ежедневные привычки сильно влияют на то, как вы выглядите. От того, какие обзоры продуктов вы читаете и c
+              какими врачами вы консультируетесь, мнения могут быть ошеломляюще разными:
+            </p>
+            <p>
+              от увлажнения кожи, до зашиты от ультрафиолета. В конечном итоге, уход за кожей — сугубо индивидуальное дело. Вот что стоит учитывать, чтобы
+              разобраться во всем этом потоке информации.
+            </p>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <%- include('../partials/bestsellers') %>
-
-      <%- include('../partials/products') %>
-    </main>
-<%- include('../partials/footer') %>
-<script>
-  window.isAuthenticated = <%= typeof customer !== 'undefined' %>;
-</script>
-<script src="/js/cart-form-login-popup.js" defer></script>
-<script src="/js/cart-products.js" defer></script>
+    <%- include('../partials/bestsellers') %> <%- include('../partials/products') %>
+  </main>
+  <%- include('../partials/footer') %>
+  <script>
+    window.isAuthenticated = <%= typeof customer !== 'undefined' %>;
+  </script>
+  <script src="/js/cart-form-login-popup.js" defer></script>
+  <script src="/js/cart-products.js" defer></script>
+</body>

@@ -53,7 +53,7 @@ class Cart {
        FROM cart_items ci
        JOIN products p ON ci.product_id = p.id
        WHERE ci.cart_id = ?`,
-      [cartId]
+      [cartId],
     );
     return rows;
   }

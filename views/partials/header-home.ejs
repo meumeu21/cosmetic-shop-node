@@ -8,13 +8,13 @@
     <div class="flex-1"></div>
     <div class="flex gap-[clamp(10px,2vw,35px)]">
       <% if (typeof customer !== 'undefined') { %>
-        <a href="/account" class="hover:text-dark">
-          <span><%= customer.username %></span>
-        </a>
-        <a href="/cart" class="hover:text-dark uppercase cart-link">Корзина (<%= cartItemCount %>)</a>
+      <a href="/account" class="hover:text-dark">
+        <span><%= customer.username %></span>
+      </a>
+      <a href="/cart" class="hover:text-dark uppercase cart-link">Корзина (<%= cartItemCount %>)</a>
       <% } else { %>
-        <button id="authPopupBtn" class="auth-btn hover:text-dark uppercase underline">Профиль</button>
-        <button id="cartPopupBtn" class="auth-btn hover:text-dark uppercase">Корзина</button>
+      <button id="authPopupBtn" class="auth-btn hover:text-dark uppercase underline">Профиль</button>
+      <button id="cartPopupBtn" class="auth-btn hover:text-dark uppercase">Корзина</button>
       <% } %>
     </div>
   </nav>

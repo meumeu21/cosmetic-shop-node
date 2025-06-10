@@ -1,19 +1,20 @@
 <%- include('../partials/head') %>
-  <body class="bg-dark font-raleway">
-    <%- include('../partials/header') %>
-    <main class="content bg-white">
-      <div class="max-w-[1440px] mx-auto px-[75px]">
-        <p class="command-line text-base opacity-[.61] font-medium pt-[67px]">
-          <a href="/" class="hover:text-dark">. .</a> /
-          <span href="/products" class="underline">Каталог</span>
-        </p>
-      </div>
-      <h1 class="hidden text-white">SOME BY MI</h1>
-      <%- include('../partials/products') %>
-    </main>
-<%- include('../partials/footer') %>
-<script>
-  window.isAuthenticated = <%= typeof customer !== 'undefined' %>;
-</script>
-<script src="/js/cart-form-login-popup.js" defer></script>
-<script src="/js/cart-products.js" defer></script>
+<body class="bg-dark font-raleway">
+  <%- include('../partials/header') %>
+  <main class="content bg-white">
+    <div class="max-w-[1440px] mx-auto px-[75px]">
+      <p class="command-line text-base opacity-[.61] font-medium pt-[67px]">
+        <a href="/" class="hover:text-dark">. .</a> /
+        <span href="/products" class="underline">Каталог</span>
+      </p>
+    </div>
+    <h1 class="hidden text-white">SOME BY MI</h1>
+    <%- include('../partials/products') %>
+  </main>
+  <%- include('../partials/footer') %>
+  <script>
+    window.isAuthenticated = <%= typeof customer !== 'undefined' %>;
+  </script>
+  <script src="/js/cart-form-login-popup.js" defer></script>
+  <script src="/js/cart-products.js" defer></script>
+</body>

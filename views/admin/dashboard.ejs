@@ -1,13 +1,12 @@
 <%- include('../partials/admin-head', { title: 'Панель администратора' }) %>
-  <body class="dashboard">
-    <div class="admin-container">
-      <%- include('../partials/admin-aside') %>
+<body class="dashboard">
+  <div class="admin-container">
+    <%- include('../partials/admin-aside') %>
 
-      <main class="content">
-        <h1>Добро пожаловать, <%= user.username %>!</h1>
-        <p>
-          Ваша роль: <%= user.role === 'admin' ? 'Администратор' : 'Менеджер' %>
-        </p>
-      </main>
-    </div>
-<%- include('../partials/admin-footer') %>
+    <main class="content">
+      <h1>Добро пожаловать, <%= user.username %>!</h1>
+      <p>Ваша роль: <%= user.role === 'admin' ? 'Администратор' : 'Менеджер' %></p>
+    </main>
+  </div>
+  <%- include('../partials/admin-footer') %>
+</body>

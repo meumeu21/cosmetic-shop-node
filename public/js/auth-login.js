@@ -6,16 +6,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function showPopup() {
     popup.classList.remove("hidden");
-    popup.removeAttribute('style');
+    popup.removeAttribute("style");
   }
 
   function hidePopup() {
     popup.classList.add("hidden");
-    popup.removeAttribute('style');
+    popup.removeAttribute("style");
   }
 
-  document.addEventListener('click', function(e) {
-    if (e.target.closest('#authPopupBtn, #cartPopupBtn')) {
+  document.addEventListener("click", function (e) {
+    if (e.target.closest("#authPopupBtn, #cartPopupBtn")) {
       e.preventDefault();
       showPopup();
     }
@@ -29,7 +29,9 @@ document.addEventListener("DOMContentLoaded", function () {
       authForms.forEach((f) => f.classList.add("hidden"));
 
       btn.classList.add("active", "border-black");
-      document.getElementById(btn.dataset.tab + "Form").classList.remove("hidden");
+      document
+        .getElementById(btn.dataset.tab + "Form")
+        .classList.remove("hidden");
     });
   });
 
@@ -65,7 +67,6 @@ document.addEventListener("DOMContentLoaded", function () {
       const errorElement = document.getElementById("registerError");
 
       if (data.password !== data.confirmPassword) {
-        // alert("Пароли не совпадают");
         errorElement.textContent = "Пароли не совпадают";
         errorElement.classList.remove("hidden");
         return;
@@ -86,7 +87,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const result = await response.json();
 
         if (!result.isUnique) {
-          // alert(result.message);
           errorElement.textContent = result.message;
           errorElement.classList.remove("hidden");
           return;
@@ -96,7 +96,6 @@ document.addEventListener("DOMContentLoaded", function () {
         registerForm.submit();
       } catch (error) {
         console.error("Ошибка при проверке уникальности:", error);
-        // alert("Ошибка при проверке данных");
         errorElement.textContent = "Ошибка при проверке данных";
         errorElement.classList.remove("hidden");
       }
@@ -127,7 +126,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const result = await response.json();
 
         if (!result.isValid) {
-          // alert(result.message);
           errorElement.textContent = result.message;
           errorElement.classList.remove("hidden");
           return;
@@ -137,7 +135,6 @@ document.addEventListener("DOMContentLoaded", function () {
         loginForm.submit();
       } catch (error) {
         console.error("Ошибка при валидации:", error);
-        // alert("Ошибка при проверке данных");
         errorElement.textContent = "Ошибка при проверке данных";
         errorElement.classList.remove("hidden");
       }

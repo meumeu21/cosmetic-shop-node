@@ -55,7 +55,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #DADED6;
+  background-color: #daded6;
 }
 
 .admin-container {
@@ -65,7 +65,7 @@ body {
 
 .sidebar {
   width: 250px;
-  background-color: #52544E;
+  background-color: #52544e;
   color: white;
   padding: 20px;
 }

@@ -1,135 +1,121 @@
 <%- include('../partials/head') %>
-  <body class="bg-dark font-raleway">
-    <%- include('../partials/header') %>
+<body class="bg-dark font-raleway">
+  <%- include('../partials/header') %>
 
-    <main class="bg-white">
-      <section>
-        <div class="max-w-[1440px] mx-auto px-[75px]">
-          <p class="command-line text-base font-medium opacity-[.61] pt-[67px] pb-[50px]">
-            <a href="/" class="hover:text-dark">. .</a> /
-            <a href="/account" class="hover:text-dark">Профиль</a> /
-            <span class="underline">Заказы</span>
-          </p>
+  <main class="bg-white">
+    <section>
+      <div class="max-w-[1440px] mx-auto px-[75px]">
+        <p class="command-line text-base font-medium opacity-[.61] pt-[67px] pb-[50px]">
+          <a href="/" class="hover:text-dark">. .</a> / <a href="/account" class="hover:text-dark">Профиль</a> /
+          <span class="underline">Заказы</span>
+        </p>
 
-          <h1 class="hidden text-white">SOME BY MI</h1>
-          <h2 class="hidden text-white">История заказов</h2>
+        <h1 class="hidden text-white">SOME BY MI</h1>
+        <h2 class="hidden text-white">История заказов</h2>
 
-          <div class="account-section">
-            <% if (orders.length > 0) { %>
-              <% orders.forEach((order, index) => { %>
-                <div>
-                  <div class="mb-[20px] flex justify-between items-center text-xl font-medium">
-                    <span>
-                      <%= new Date(order.order_date).toLocaleDateString("ru-RU") %>
-                      (Заказ №<%= order.id %>)
-                    </span>
-                  </div>
+        <div class="account-section">
+          <% if (orders.length > 0) { %> <% orders.forEach((order, index) => { %>
+          <div>
+            <div class="mb-[20px] flex justify-between items-center text-xl font-medium">
+              <span> <%= new Date(order.order_date).toLocaleDateString("ru-RU") %> (Заказ №<%= order.id %>) </span>
+            </div>
 
-                  <div class="flex flex-wrap gap-[20px]">
-                    <% order.items.forEach(item => { %>
-                      <img
-                        src="<%= item.image_url || '' %>"
-                        alt="<%= item.name %>"
-                        class="w-[198px] h-[284px] object-cover cursor-pointer"
-                        data-id="<%= item.product_id %>"
-                        data-name="<%= item.name %> <%= item.type %>"
-                        data-age="<%= item.age_group %>"
-                        data-volume="<%= item.volume %> мл"
-                        data-setitems="<%= item.items_in_set %> шт"
-                        data-hypoallergenic="<%= item.is_hypoallergenic ? 'Да' : 'Нет' %>"
-                        data-qty="<%= item.quantity %>"
-                        data-price="<%= parseFloat(item.price).toFixed(2) %>"
-                        data-total="<%= parseFloat(item.price * item.quantity).toFixed(2) %>"
-                        data-image="<%= item.image_url || '' %>"
-                        onclick="openItemPopup(this)"
-                      />
-                    <% }); %>
-                  </div>
-
-                  <div class="flex flex-col items-left gap-[20px] mt-[30px] mb-[50px]">
-                    <div class="text-2xl font-light">Сумма:</div>
-                    <div class="text-3xl font-medium"><%= parseFloat(order.total_amount).toFixed(2) %> ₽</div>
-                  </div>
-
-                  <% if (index !== orders.length - 1) { %>
-                    <div class="h-[1px] w-full bg-black mb-[50px]"></div>
-                  <% } else { %>
-                    <div class="h-[1px] w-full bg-white pb-[50px]"></div>
-                  <% } %>
-
-                </div>
+            <div class="flex flex-wrap gap-[20px]">
+              <% order.items.forEach(item => { %>
+              <img
+                src="<%= item.image_url || '' %>"
+                alt="<%= item.name %>"
+                class="w-[198px] h-[284px] object-cover cursor-pointer"
+                data-id="<%= item.product_id %>"
+                data-name="<%= item.name %> <%= item.type %>"
+                data-age="<%= item.age_group %>"
+                data-volume="<%= item.volume %> мл"
+                data-setitems="<%= item.items_in_set %> шт"
+                data-hypoallergenic="<%= item.is_hypoallergenic ? 'Да' : 'Нет' %>"
+                data-qty="<%= item.quantity %>"
+                data-price="<%= parseFloat(item.price).toFixed(2) %>"
+                data-total="<%= parseFloat(item.price * item.quantity).toFixed(2) %>"
+                data-image="<%= item.image_url || '' %>"
+                onclick="openItemPopup(this)"
+              />
               <% }); %>
+            </div>
+
+            <div class="flex flex-col items-left gap-[20px] mt-[30px] mb-[50px]">
+              <div class="text-2xl font-light">Сумма:</div>
+              <div class="text-3xl font-medium"><%= parseFloat(order.total_amount).toFixed(2) %> ₽</div>
+            </div>
+
+            <% if (index !== orders.length - 1) { %>
+            <div class="h-[1px] w-full bg-black mb-[50px]"></div>
             <% } else { %>
-              <p class="empty-cart text-center text-2xl font-light">У вас пока нет заказов</p>
-              <div class="py-[50px]">
-                <a href="/products"
-                  class="uppercase bg-darkmud text-white mx-auto block w-[270px] h-[56px] rounded-[30px] py-[19px] px-[50px] hover:bg-darkmuddeactivated transition">
-                  Перейти в каталог
-                </a>
-              </div>
+            <div class="h-[1px] w-full bg-white pb-[50px]"></div>
             <% } %>
           </div>
+          <% }); %> <% } else { %>
+          <p class="empty-cart text-center text-2xl font-light">У вас пока нет заказов</p>
+          <div class="py-[50px]">
+            <a
+              href="/products"
+              class="uppercase bg-darkmud text-white mx-auto block w-[270px] h-[56px] rounded-[30px] py-[19px] px-[50px] hover:bg-darkmuddeactivated transition"
+            >
+              Перейти в каталог
+            </a>
+          </div>
+          <% } %>
+        </div>
 
-          <div id="itemPopup" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm hidden">
-            <div class="relative bg-white shadow-xl px-[30px] py-[30px]">
-              <button
-                id="closePopupBtn"
-                class="absolute top-3 right-5 text-xl hover:text-dark"
-                aria-label="Закрыть"
-              >
-                &times;
-              </button>
-              <div class="flex flex-row">
-                <div class="mr-[20px]">
-                  <img
-                    id="popupImage"
-                    class="w-[250px] h-[358px] object-cover"
-                  />
+        <div id="itemPopup" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm hidden">
+          <div class="relative bg-white shadow-xl px-[30px] py-[30px]">
+            <button id="closePopupBtn" class="absolute top-3 right-5 text-xl hover:text-dark" aria-label="Закрыть">&times;</button>
+            <div class="flex flex-row">
+              <div class="mr-[20px]">
+                <img id="popupImage" class="w-[250px] h-[358px] object-cover" />
+              </div>
+              <div class="flex flex-col w-[380px] gap-[10px]">
+                <div class="flex flex-row gap-[60px]">
+                  <div class="w-[120px]"><span>ID:</span></div>
+                  <div><span class="font-light" id="popupId"></span></div>
                 </div>
-                <div class="flex flex-col w-[380px] gap-[10px]">
-                  <div class="flex flex-row gap-[60px]">
-                    <div class="w-[120px]"><span>ID:</span></div>
-                    <div><span class="font-light" id="popupId"></span></div>
-                  </div>
-                  <div class="flex flex-row gap-[60px]">
-                    <div class="w-[120px]"><span>Название:</span></div>
-                    <div class="w-[160px]"><span class="font-light" id="popupName"></span></div>
-                  </div>
-                  <div class="flex flex-row gap-[60px]">
-                    <div class="w-[120px]"><span>Возраст:</span></div>
-                    <div><span class="font-light" id="popupAge"></span></div>
-                  </div>
-                  <div id="volumeRow" class="flex flex-row gap-[60px] hidden">
-                    <div class="w-[120px]"><span>Объем:</span></div>
-                    <div><span class="font-light" id="popupVolume"></span></div>
-                  </div>
-                  <div id="setItemsRow" class="flex flex-row gap-[60px] hidden">
-                    <div class="w-[120px]"><span>В наборе:</span></div>
-                    <div><span class="font-light" id="popupSetItems"></span></div>
-                  </div>
-                  <div class="flex flex-row gap-[60px]">
-                    <div class="w-[120px]"><span>Гипоаллергенно:</span></div>
-                    <div><span class="font-light" id="popupHypoallergenic"></span></div>
-                  </div>
-                  <div class="flex flex-row gap-[60px]">
-                    <div class="w-[120px]"><span>Количество:</span></div>
-                    <div><span class="font-light" id="popupQty"></span></div>
-                  </div>
-                  <div class="flex flex-row gap-[60px]">
-                    <div class="w-[120px]"><span>Цена за штуку:</span></div>
-                    <div><span class="font-light" id="popupPrice"></span> <span class="font-quicksand">₽</span></div>
-                  </div>
-                  <div class="flex flex-row gap-[60px]">
-                    <div class="w-[120px]"><span>Итоговая цена:</span></div>
-                    <div><span class="font-light" id="popupTotal"></span> <span class="font-quicksand">₽</span></div>
-                  </div>
+                <div class="flex flex-row gap-[60px]">
+                  <div class="w-[120px]"><span>Название:</span></div>
+                  <div class="w-[160px]"><span class="font-light" id="popupName"></span></div>
+                </div>
+                <div class="flex flex-row gap-[60px]">
+                  <div class="w-[120px]"><span>Возраст:</span></div>
+                  <div><span class="font-light" id="popupAge"></span></div>
+                </div>
+                <div id="volumeRow" class="flex flex-row gap-[60px] hidden">
+                  <div class="w-[120px]"><span>Объем:</span></div>
+                  <div><span class="font-light" id="popupVolume"></span></div>
+                </div>
+                <div id="setItemsRow" class="flex flex-row gap-[60px] hidden">
+                  <div class="w-[120px]"><span>В наборе:</span></div>
+                  <div><span class="font-light" id="popupSetItems"></span></div>
+                </div>
+                <div class="flex flex-row gap-[60px]">
+                  <div class="w-[120px]"><span>Гипоаллергенно:</span></div>
+                  <div><span class="font-light" id="popupHypoallergenic"></span></div>
+                </div>
+                <div class="flex flex-row gap-[60px]">
+                  <div class="w-[120px]"><span>Количество:</span></div>
+                  <div><span class="font-light" id="popupQty"></span></div>
+                </div>
+                <div class="flex flex-row gap-[60px]">
+                  <div class="w-[120px]"><span>Цена за штуку:</span></div>
+                  <div><span class="font-light" id="popupPrice"></span> <span class="font-quicksand">₽</span></div>
+                </div>
+                <div class="flex flex-row gap-[60px]">
+                  <div class="w-[120px]"><span>Итоговая цена:</span></div>
+                  <div><span class="font-light" id="popupTotal"></span> <span class="font-quicksand">₽</span></div>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
-      </section>
-    </main>
+      </div>
+    </section>
+  </main>
   <script src="/js/item-popup.js" defer></script>
-<%- include('../partials/footer') %>
+  <%- include('../partials/footer') %>
+</body>
