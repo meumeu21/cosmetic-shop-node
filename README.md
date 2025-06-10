@@ -13,3 +13,10 @@
 6. Запустить через npm run dev.
 
 Логин и пароль от изначального администратора в файле initAdmin.js (вход по логину производится через почту).
+
+
+Скриншоты сайта:
+![image info](./readme/screen1.png)
+![image info](./readme/screen2.png)
+![image info](./readme/screen3.png)
+![image info](./readme/screen4.png)
