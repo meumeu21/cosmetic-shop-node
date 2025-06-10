@@ -1,11 +1,33 @@
-<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm hidden" id="authPopup">
+<!-- Pop-up фон -->
+<div
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm hidden"
+  id="authPopup"
+>
   <div class="relative w-[540px] max-w-md bg-white shadow-xl px-[60px] py-[50px]">
+
+    <!-- Табы -->
     <div class="flex gap-[20px] mb-[30px] text-2xl">
-      <button class="tab-btn uppercase transition text-black border-b-[1.5px] border-black" data-tab="login">Вход</button>
-      <button class="tab-btn uppercase transition text-hoverb border-b-[1.5px] border-white" data-tab="register">Регистрация</button>
+      <button
+        class="tab-btn uppercase transition text-black border-b-[1.5px] border-black"
+        data-tab="login"
+      >
+        Вход
+      </button>
+      <button
+        class="tab-btn uppercase transition text-hoverb border-b-[1.5px] border-white"
+        data-tab="register"
+      >
+        Регистрация
+      </button>
     </div>
 
-    <form id="loginForm" class="auth-form active font-light" action="/auth/login" method="POST">
+    <!-- Форма входа -->
+    <form
+      id="loginForm"
+      class="auth-form active font-light"
+      action="/auth/login"
+      method="POST"
+    >
       <div id="loginError" class="text-red mb-4 hidden"></div>
       <div class="mb-[20px]">
         <label class="block text-sm">Email</label>
@@ -25,27 +47,36 @@
           class="w-full text-xl mt-[10px] py-[10px] px-[15px] border border-black rounded-[3px] focus:outline-none focus:ring-[2px] focus:ring-black"
         />
       </div>
-      <button type="submit" class="w-full py-[21px] mb-[20px] uppercase bg-darkmud text-truewhite rounded-[50px] hover:bg-darkmuddeactivated transition">
+      <button
+        type="submit"
+        class="w-full py-[21px] mb-[20px] uppercase bg-darkmud text-truewhite rounded-[50px] hover:bg-darkmuddeactivated transition"
+      >
         Войти
       </button>
 
       <div class="flex justify-center items-center gap-[20px]">
         <a href="#">
-          <img src="/svgs/google-b.svg" alt="Google" class="w-[35px] h-[35px]" />
+          <img src="/svgs/google-b.svg" alt="Google" class="w-[35px] h-[35px]">
         </a>
         <a href="#">
-          <img src="/svgs/instagram-b.svg" alt="Instagram" class="w-[35px] h-[35px]" />
+          <img src="/svgs/instagram-b.svg" alt="Instagram" class="w-[35px] h-[35px]">
         </a>
         <a href="#">
-          <img src="/svgs/facebook-b.svg" alt="Facebook" class="w-[31px] h-[30px]" />
+          <img src="/svgs/facebook-b.svg" alt="Facebook" class="w-[31px] h-[30px]">
         </a>
         <a href="#">
-          <img src="/svgs/whatsapp-b.svg" alt="Whatsapp" class="w-[35px] h-[35px]" />
+          <img src="/svgs/whatsapp-b.svg" alt="Whatsapp" class="w-[35px] h-[35px]">
         </a>
       </div>
     </form>
 
-    <form id="registerForm" class="auth-form hidden font-light" action="/auth/register" method="POST">
+    <!-- Форма регистрации -->
+    <form
+      id="registerForm"
+      class="auth-form hidden font-light"
+      action="/auth/register"
+      method="POST"
+    >
       <div id="registerError" class="text-red mb-4 hidden"></div>
       <div class="mb-[15px]">
         <label class="block text-sm">Логин</label>
@@ -84,7 +115,10 @@
           class="w-full px-[7px] py-[5px] text-xs border rounded-[3px] focus:outline-none focus:ring-[2px] focus:ring-black"
         />
       </div>
-      <button type="submit" class="w-full py-[21px] uppercase bg-darkmud text-truewhite rounded-[50px] hover:bg-darkmuddeactivated transition">
+      <button
+        type="submit"
+        class="w-full py-[21px] uppercase bg-darkmud text-truewhite rounded-[50px] hover:bg-darkmuddeactivated transition"
+      >
         Зарегистрироваться
       </button>
     </form>

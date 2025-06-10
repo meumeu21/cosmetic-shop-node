@@ -9,26 +9,26 @@ function changeQuantity(delta) {
 
 async function updateCartCountInHeader() {
   try {
-    const res = await fetch("/cart/count");
+    const res = await fetch('/cart/count');
     const data = await res.json();
-    const cartLink = document.querySelector(".cart-link");
-    if (cartLink) {
-      cartLink.textContent = `Корзина (${data.count})`;
-    }
+    const cartLink = document.querySelector('.cart-link');
+  if (cartLink) {
+    cartLink.textContent = `Корзина (${data.count})`;
+  }
   } catch (err) {
-    console.error("Ошибка при обновлении количества в хедере:", err);
+    console.error('Ошибка при обновлении количества в хедере:', err);
   }
 }
 
 const form = document.getElementById("productAddForm");
-form.addEventListener("submit", async function (e) {
+  form.addEventListener("submit", async function (e) {
   e.preventDefault();
 
   const formData = new FormData(form);
   const response = await fetch("/cart/add", {
     method: "POST",
     body: new URLSearchParams(formData),
-    headers: { Accept: "application/json" },
+    headers: { Accept: "application/json" }
   });
 
   const result = await response.json();

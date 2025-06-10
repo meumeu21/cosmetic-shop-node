@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   const popup = document.getElementById("authPopup");
 
-  document.querySelectorAll('form[action="/cart/add"]').forEach((form) => {
+  document.querySelectorAll('form[action="/cart/add"]').forEach(form => {
     form.addEventListener("submit", function (e) {
       if (!window.isAuthenticated) {
         e.preventDefault();

@@ -22,10 +22,10 @@ class Order {
   static async getCustomerOrders(customerId) {
     const [orders] = await db.query(
       `SELECT * FROM orders WHERE customer_id = ? ORDER BY order_date DESC`,
-      [customerId],
+      [customerId]
     );
 
-    const orderIds = orders.map((order) => order.id);
+    const orderIds = orders.map(order => order.id);
     if (orderIds.length === 0) return [];
 
     const [items] = await db.query(
@@ -33,16 +33,16 @@ class Order {
       FROM order_items oi
       JOIN products p ON oi.product_id = p.id
       WHERE oi.order_id IN (?)`,
-      [orderIds],
+      [orderIds]
     );
 
     const itemsByOrder = {};
-    items.forEach((item) => {
+    items.forEach(item => {
       if (!itemsByOrder[item.order_id]) itemsByOrder[item.order_id] = [];
       itemsByOrder[item.order_id].push(item);
     });
 
-    return orders.map((order) => ({
+    return orders.map(order => ({
       ...order,
       items: itemsByOrder[order.id] || [],
     }));
@@ -64,8 +64,8 @@ class Order {
   }
 
   static async delete(orderId) {
-    await db.query("DELETE FROM order_items WHERE order_id = ?", [orderId]);
-    await db.query("DELETE FROM orders WHERE id = ?", [orderId]);
+    await db.query('DELETE FROM order_items WHERE order_id = ?', [orderId]);
+    await db.query('DELETE FROM orders WHERE id = ?', [orderId]);
   }
 }
 

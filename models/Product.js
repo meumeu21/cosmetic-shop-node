@@ -2,9 +2,7 @@ const db = require("../config/db");
 
 class Product {
   static async getAll() {
-    const [rows] = await db.query(
-      `SELECT p.*, s.username as creator_name FROM products p JOIN staff s ON p.created_by = s.id ORDER BY p.created_at DESC`,
-    );
+    const [rows] = await db.query(`SELECT p.*, s.username as creator_name FROM products p JOIN staff s ON p.created_by = s.id ORDER BY p.created_at DESC`);
     return rows;
   }
 

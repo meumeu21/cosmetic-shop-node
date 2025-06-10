@@ -1,56 +1,61 @@
 <%- include('../partials/head') %>
-<body class="bg-dark font-raleway">
-  <%- include('../partials/header') %>
+  <body class="bg-dark font-raleway">
+    <%- include('../partials/header') %>
 
-  <main class="bg-white">
-    <section>
-      <div class="max-w-[1440px] mx-auto px-[75px]">
-        <p class="command-line text-base font-medium opacity-[.61] pt-[67px] pb-[50px]">
-          <a href="/" class="hover:text-dark">. .</a> / <a href="/account" class="hover:text-dark">Профиль</a> /
-          <a href="/account/orders" class="hover:text-dark">Заказы</a> /
-          <span class="underline">Заказ #<%= order.id %></span>
-        </p>
+    <main class="bg-white">
+      <section>
+        <div class="max-w-[1440px] mx-auto px-[75px]">
+          <p class="command-line text-base font-medium opacity-[.61] pt-[67px] pb-[50px]">
+            <a href="/" class="hover:text-dark">. .</a> /
+            <a href="/account" class="hover:text-dark">Профиль</a> /
+            <a href="/account/orders" class="hover:text-dark">Заказы</a> /
+            <span class="underline">Заказ #<%= order.id %></span>
+          </p>
 
-        <h1>Заказ #<%= order.id %></h1>
+          <h1>Заказ #<%= order.id %></h1>
 
-        <div class="order-info">
-          <div class="info-block">
-            <h3>Дата заказа</h3>
-            <p><%= new Date(order.order_date).toLocaleDateString() %></p>
-          </div>
+          <div class="order-info">
+            <div class="info-block">
+              <h3>Дата заказа</h3>
+              <p><%= new Date(order.order_date).toLocaleDateString() %></p>
+            </div>
 
-          <div class="info-block">
-            <h3>Статус</h3>
-            <p class="status-<%= order.status %>">
-              <% const statusText = { 'pending': 'В обработке', 'processing': 'В процессе', 'shipped': 'Отправлен', 'delivered': 'Доставлен', 'cancelled':
-              'Отменен' }; %> <%= statusText[order.status] %>
-            </p>
-          </div>
+            <div class="info-block">
+              <h3>Статус</h3>
+              <p class="status-<%= order.status %>">
+                <% const statusText = { 'pending': 'В обработке', 'processing': 'В процессе', 'shipped': 'Отправлен', 'delivered': 'Доставлен',
+                'cancelled': 'Отменен' }; %> <%= statusText[order.status] %>
+              </p>
+            </div>
 
-          <div class="info-block">
-            <h3>Сумма заказа</h3>
-            <p><%= parseFloat(order.total_amount).toFixed(2) %> ₽</p>
-          </div>
-        </div>
-
-        <h2>Товары в заказе</h2>
-
-        <div class="order-items">
-          <% order.items.forEach(item => { %>
-          <div class="order-item">
-            <img src="<%= item.image_url || '/images/no-image.png' %>" alt="<%= item.name %>" />
-
-            <div class="item-details">
-              <h3><%= item.name %></h3>
-              <p>Количество: <%= item.quantity %></p>
-              <p>Цена: <%= parseFloat(item.price).toFixed(2) %> ₽</p>
-              <p class="item-total">Итого: <%= parseFloat(item.price * item.quantity).toFixed(2) %> ₽</p>
+            <div class="info-block">
+              <h3>Сумма заказа</h3>
+              <p><%= parseFloat(order.total_amount).toFixed(2) %> ₽</p>
             </div>
           </div>
-          <% }); %>
+
+          <h2>Товары в заказе</h2>
+
+          <div class="order-items">
+            <% order.items.forEach(item => { %>
+              <div class="order-item">
+                <img
+                  src="<%= item.image_url || '/images/no-image.png' %>"
+                  alt="<%= item.name %>"
+                />
+
+                <div class="item-details">
+                  <h3><%= item.name %></h3>
+                  <p>Количество: <%= item.quantity %></p>
+                  <p>Цена: <%= parseFloat(item.price).toFixed(2) %> ₽</p>
+                  <p class="item-total">
+                    Итого: <%= parseFloat(item.price * item.quantity).toFixed(2) %> ₽
+                  </p>
+                </div>
+              </div>
+            <% }); %>
+          </div>
         </div>
-      </div>
-    </section>
-  </main>
-  <%- include('../partials/footer') %>
-</body>
+      </section>
+    </main>
+<%- include('../partials/footer') %>

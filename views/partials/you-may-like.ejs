@@ -2,17 +2,23 @@
   <div class="relative overflow-hidden max-w-[1440px] min-w-[1440px] pt-[60px] pb-[80px] mx-auto">
     <h2 class="text-3xl mb-[60px] ml-[78px] uppercase">Вам может понравиться</h2>
 
+    <!-- Карусель -->
     <div class="relative px-[157px]">
+
+      <!-- Стрелка влево -->
       <button id="prevBtn" class="absolute left-[55px] top-1/2 -translate-y-1/2 z-10 disabled:opacity-50 disabled:pointer-events-none">
-        <img src="/svgs/left-arrow-b.svg" alt="Prev" />
+        <img src="/svgs/left-arrow-b.svg" alt="Prev">
       </button>
 
+      <!-- Оверфлоу контейнер -->
       <div class="relative overflow-hidden">
+        <!-- Контейнер с карточками -->
         <div id="carousel" class="flex transition-transform duration-500 ease-in-out gap-[100px]">
+
           <% bestsellers.forEach((product, index) => { %>
           <div class="min-w-[308px] max-w-[308px] flex-shrink-0 flex flex-col uppercase">
             <a href="/products/<%= product.id %>">
-              <img src="<%= product.image_url %>" alt="<%= product.name %>" class="w-[308px] h-[419px] object-cover" />
+              <img src="<%= product.image_url %>" alt="<%= product.name %>" class="w-[308px] h-[419px] object-cover">
             </a>
             <a href="/products/<%= product.id %>" class="pt-[30px] flex flex-col items-start gap-[15px] leading-tight hover:text-hoverb">
               <h3 class="text-2xl font-medium"><%= product.name %></h3>
@@ -21,7 +27,7 @@
             <div class="mt-[20px] flex justify-between items-center">
               <span class="font-quicksand font-medium text-xl"><%= product.price %> ₽</span>
               <form action="/cart/add" class="add-to-cart-form h-[32px]" method="POST">
-                <input type="hidden" name="productId" value="<%= product.id %>" />
+                <input type="hidden" name="productId" value="<%= product.id %>">
                 <button type="submit" class="relative group">
                   <img src="/svgs/plus-black.svg" alt="Добавить" class="w-8 h-8 group-hover:hidden" />
                   <img src="/svgs/plus-black-press.svg" alt="Добавить" class="w-8 h-8 hidden group-hover:block" />
@@ -30,14 +36,17 @@
             </div>
           </div>
           <% }); %>
+
         </div>
       </div>
 
+      <!-- Стрелка вправо -->
       <button id="nextBtn" class="absolute right-[55px] top-1/2 -translate-y-1/2 z-10 disabled:opacity-50 disabled:pointer-events-none">
-        <img src="/svgs/right-arrow-b.svg" alt="Next" />
+        <img src="/svgs/right-arrow-b.svg" alt="Next">
       </button>
     </div>
 
+    <!-- Точки навигации -->
     <div class="flex justify-center gap-2 mt-[53px]" id="carousel-dots">
       <% bestsellers.slice(0, bestsellers.length - 2).forEach((_, i) => { %>
       <svg class="w-3 h-3 cursor-pointer" fill="<%= i === 0 ? '#191818' : '#DADED6' %>" viewBox="0 0 8 8">

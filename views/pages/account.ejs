@@ -1,71 +1,71 @@
 <%- include('../partials/head') %>
-<body class="bg-dark font-raleway">
-  <%- include('../partials/header') %>
+  <body class="bg-dark font-raleway">
+    <%- include('../partials/header') %>
 
-  <main class="bg-white">
-    <section>
-      <div class="max-w-[1440px] mx-auto px-[75px] pb-[80px]">
-        <p class="command-line text-base font-medium opacity-[.61] pt-[67px] pb-[57px]">
-          <a href="/" class="hover:text-dark">. .</a> /
-          <span class="underline">Профиль</span>
-        </p>
+    <main class="bg-white">
+      <section>
+        <div class="max-w-[1440px] mx-auto px-[75px] pb-[80px]">
+          <p class="command-line text-base font-medium opacity-[.61] pt-[67px] pb-[57px]">
+            <a href="/" class="hover:text-dark">. .</a> /
+            <span class="underline">Профиль</span>
+          </p>
 
-        <h1 class="hidden text-white">SOME BY MI</h1>
-        <h2 class="hidden text-white">Профиль</h2>
+          <h1 class="hidden text-white">SOME BY MI</h1>
+          <h2 class="hidden text-white">Профиль</h2>
 
-        <div class="flex flex-row items-center justify-between">
-          <div class="flex flex-row items-center gap-[20px]">
-            <div class="w-[90px] h-[90px] border-[1px] flex justify-center items-center">
-              <% if (customer.image_url) { %>
-              <img src="<%= customer.image_url %>" alt="Изображение" class="w-full h-full object-cover" />
-              <% } else { %>
-              <img src="/images/avatar.svg" alt="Нет изображения" class="w-[64px] h-[64px]" />
-              <% } %>
+          <div class="flex flex-row items-center justify-between">
+            <div class="flex flex-row items-center gap-[20px]">
+              <div class="w-[90px] h-[90px] border-[1px] flex justify-center items-center">
+                <% if (customer.image_url) { %>
+                  <img src="<%= customer.image_url %>" alt="Изображение" class="w-full h-full object-cover" />
+                <% } else { %>
+                  <img src="/images/avatar.svg" alt="Нет изображения" class="w-[64px] h-[64px]" />
+                <% } %>
+              </div>
+              <span class="text-2xl uppercase"><%= customer.username %></span>
             </div>
-            <span class="text-2xl uppercase"><%= customer.username %></span>
+            <div class="flex flex-row gap-[40px] font-light text-sm">
+              <a href="/account/edit" class="hover:text-dark">Редактировать профиль</a>
+              <form action="/auth/logout" method="GET">
+                <button type="submit" class="hover:text-dark">Выйти</button>
+              </form>
+            </div>
           </div>
-          <div class="flex flex-row gap-[40px] font-light text-sm">
-            <a href="/account/edit" class="hover:text-dark">Редактировать профиль</a>
-            <form action="/auth/logout" method="GET">
-              <button type="submit" class="hover:text-dark">Выйти</button>
-            </form>
+
+          <div class="text-lg mt-[30px] ml-[110px]">
+            <div class="mb-[20px]">
+              <span>Логин:</span>
+              <span><%= customer.username %></span>
+            </div>
+            <div class="mb-[20px]">
+              <span>Пол:</span>
+              <span>
+                <%= customer.gender === 'other' ? 'Другое' : '' %>
+                <%= customer.gender === 'female' ? 'Женщина' : '' %>
+                <%= customer.gender === 'male' ? 'Мужчина' : '' %>
+              </span>
+            </div>
+            <div class="mb-[20px]">
+              <span>Email:</span>
+              <span><%= customer.email %></span>
+            </div>
+            <div class="mb-[20px]">
+              <span>Телефон:</span>
+              <span><%= customer.phone || 'Не указан' %></span>
+            </div>
+            <div>
+              <span>Адрес:</span>
+              <span><%= customer.address || 'Не указан' %></span>
+            </div>
           </div>
+
+          <a href="/account/orders" class="hover:text-dark text-2xl font-light flex flex-row items-center gap-[15px] mt-[50px] group">
+            Мои заказы
+            <img src="/svgs/arrow-orders.svg" alt="Добавить" class="w-[60px] h-[20px] group-hover:hidden" />
+            <img src="/svgs/arrow-orders-hover.svg" alt="Добавить" class="w-[60px] h-[20px] hidden group-hover:block" />
+          </a>
         </div>
+      </section>
+    </main>
 
-        <div class="text-lg mt-[30px] ml-[110px]">
-          <div class="mb-[20px]">
-            <span>Логин:</span>
-            <span><%= customer.username %></span>
-          </div>
-          <div class="mb-[20px]">
-            <span>Пол:</span>
-            <span>
-              <%= customer.gender === 'other' ? 'Другое' : '' %> <%= customer.gender === 'female' ? 'Женщина' : '' %> <%= customer.gender === 'male' ? 'Мужчина'
-              : '' %>
-            </span>
-          </div>
-          <div class="mb-[20px]">
-            <span>Email:</span>
-            <span><%= customer.email %></span>
-          </div>
-          <div class="mb-[20px]">
-            <span>Телефон:</span>
-            <span><%= customer.phone || 'Не указан' %></span>
-          </div>
-          <div>
-            <span>Адрес:</span>
-            <span><%= customer.address || 'Не указан' %></span>
-          </div>
-        </div>
-
-        <a href="/account/orders" class="hover:text-dark text-2xl font-light flex flex-row items-center gap-[15px] mt-[50px] group">
-          Мои заказы
-          <img src="/svgs/arrow-orders.svg" alt="Добавить" class="w-[60px] h-[20px] group-hover:hidden" />
-          <img src="/svgs/arrow-orders-hover.svg" alt="Добавить" class="w-[60px] h-[20px] hidden group-hover:block" />
-        </a>
-      </div>
-    </section>
-  </main>
-
-  <%- include('../partials/footer') %>
-</body>
+<%- include('../partials/footer') %>

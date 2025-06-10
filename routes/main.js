@@ -42,7 +42,7 @@ router.get("/products/:id", async (req, res) => {
     if (!product) {
       return res.status(404).render("pages/404", {
         message: "Товар с ID " + req.params.id + " не найден",
-        user: req.user || null,
+        user: req.user || null
       });
     }
 
@@ -55,7 +55,7 @@ router.get("/products/:id", async (req, res) => {
     console.error(err);
     res.status(500).render("pages/500", {
       message: "Произошла ошибка при загрузке товара",
-      user: req.user || null,
+      user: req.user || null
     });
   }
 });
@@ -90,16 +90,9 @@ router.get("/account/edit", ensureCustomer, (req, res) => {
 
 router.post("/account/edit", ensureCustomer, async (req, res) => {
   try {
-    const { username, phone, address, email, image_url, gender } = req.body;
+    const { username, phone, address, email, image_url, gender} = req.body;
     const customerId = req.user.id;
-    await Customer.updateAccount(customerId, {
-      username,
-      phone,
-      address,
-      email,
-      image_url,
-      gender,
-    });
+    await Customer.updateAccount(customerId, { username, phone, address, email, image_url, gender });
     req.flash("success_msg", "Данные успешно обновлены");
     res.redirect("/account");
   } catch (err) {

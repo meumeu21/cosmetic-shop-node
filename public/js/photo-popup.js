@@ -23,12 +23,9 @@ closePopupBtn.addEventListener("click", () => {
 
 applyImageBtn.addEventListener("click", () => {
   const url = imageInput.value.trim();
-  const pattern =
-    /^(.+\.(jpg|jpeg|png|gif|webp))|(\/?.+\/.+\.(jpg|jpeg|png|gif|webp))$/i;
+  const pattern = /^(.+\.(jpg|jpeg|png|gif|webp))|(\/?.+\/.+\.(jpg|jpeg|png|gif|webp))$/i;
   if (!pattern.test(url)) {
-    alert(
-      "Ссылка некорректна. Убедитесь, что она заканчивается на .jpg, .png и т.д.",
-    );
+    alert("Ссылка некорректна. Убедитесь, что она заканчивается на .jpg, .png и т.д.");
     return;
   }
 

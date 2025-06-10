@@ -1,13 +1,13 @@
 const ensureAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
-    if (req.user.role === "admin" || req.user.role === "manager") {
+    if (req.user.role === 'admin' || req.user.role === 'manager') {
       return next();
     }
-    req.flash("error_msg", "У вас нет прав доступа к этой странице");
-    return res.redirect("/admin/login");
+    req.flash('error_msg', 'У вас нет прав доступа к этой странице');
+    return res.redirect('/admin/login');
   }
-  req.flash("error_msg", "Пожалуйста, войдите в систему");
-  res.redirect("/admin/login");
+  req.flash('error_msg', 'Пожалуйста, войдите в систему');
+  res.redirect('/admin/login');
 };
 
 const ensureAdmin = (req, res, next) => {

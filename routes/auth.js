@@ -73,16 +73,10 @@ router.post("/validate-login", async (req, res) => {
 
     const customer = await Customer.findByEmail(email);
     if (!customer) {
-      return res.json({
-        isValid: false,
-        message: "Пользователь с таким email не найден",
-      });
+      return res.json({ isValid: false, message: "Пользователь с таким email не найден" });
     }
 
-    const isMatch = await Customer.comparePasswords(
-      password,
-      customer.password_hash,
-    );
+    const isMatch = await Customer.comparePasswords(password, customer.password_hash);
     if (!isMatch) {
       return res.json({ isValid: false, message: "Неверный пароль" });
     }

@@ -7,8 +7,7 @@ function openItemPopup(el) {
   document.getElementById("popupAge").innerText = el.dataset.age;
   document.getElementById("popupVolume").innerText = el.dataset.volume;
   document.getElementById("popupSetItems").innerText = el.dataset.setitems;
-  document.getElementById("popupHypoallergenic").innerText =
-    el.dataset.hypoallergenic;
+  document.getElementById("popupHypoallergenic").innerText = el.dataset.hypoallergenic;
   document.getElementById("popupQty").innerText = el.dataset.qty;
   document.getElementById("popupPrice").innerText = el.dataset.price;
   document.getElementById("popupTotal").innerText = el.dataset.total;

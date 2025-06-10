@@ -1,146 +1,164 @@
 <%- include('../partials/head') %>
-<body class="bg-dark font-raleway">
-  <style>
-    input[type='number']::-webkit-outer-spin-button,
-    input[type='number']::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
+  <body class="bg-dark font-raleway">
+    <style>
+      input[type=number]::-webkit-outer-spin-button,
+      input[type=number]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
 
-    input[type='number'] {
-      -moz-appearance: textfield;
-    }
-  </style>
-  <%- include('../partials/header') %>
+      input[type=number] {
+        -moz-appearance: textfield;
+      }
+    </style>
+    <%- include('../partials/header') %>
 
-  <main class="content bg-white">
-    <div class="absolute top-[85px] left-[13px] z-0">
-      <img src="/images/flower-bg.svg" alt="Фон карточка товара" class="w-[1114px] h-[1769px]" />
-    </div>
-    <div class="relative z-10">
-      <section class="product-container">
-        <div class="max-w-[1440px] mx-auto px-[75px]">
-          <p class="command-line text-base font-medium opacity-[.61] pt-[67px] pb-[57px]">
-            <a href="/" class="hover:text-dark">. .</a> / <a href="/products" class="hover:text-dark">Каталог</a> /
-            <a href="/products?category=<%= product.category %>" class="hover:text-dark"><%= product.category %></a> /
-            <span class="underline"><%= product.name %> <%= product.type %></span>
-          </p>
-          <div class="flex flex-row">
-            <div class="min-w-[488px] min-h-[652px] bg-white border border-black rounded-[3px] flex justify-center items-center">
-              <% if (product.image_url) { %>
-              <img src="<%= product.image_url %>" alt="<%= product.name %>" class="main-image w-[415px] h-auto" />
-              <% } else { %>
-              <div class="no-image">No image</div>
-              <% } %>
-            </div>
-
-            <div class="product-info ml-[54px] w-full">
-              <div class="flex flex-row justify-between">
-                <div class="main-info uppercase">
-                  <h1 class="text-3xl font-medium"><%= product.name || 'Не указан' %></h1>
-                  <h2 class="text-2xl font-light"><%= product.type || 'Не указан' %></h2>
-                  <h3 class="text-base font-semibold"><%= product.brand || 'Не указан' %></h3>
-                </div>
-
-                <div class="pay-info w-[302px]">
-                  <p class="text-2xl font-quicksand font-medium mb-[23px]"><%= product.price %> ₽</p>
-
-                  <form action="/cart/add" id="productAddForm" method="POST" class="flex flex-col">
-                    <input type="hidden" name="productId" value="<%= product.id %>" />
-                    <input type="hidden" name="quantity" id="quantity-hidden" value="1" />
-                    <button type="submit" class="uppercase bg-darkmud text-truewhite rounded-[30px] py-[19px] px-[50px] hover:bg-darkmuddeactivated transition">
-                      В корзину
-                    </button>
-
-                    <div class="flex items-center justify-center gap-[24px] mt-[17px]">
-                      <button type="button" onclick="changeQuantity(-1)" class="relative group">
-                        <img src="/svgs/remove-button.svg" alt="−" class="w-4 h-4 group-hover:hidden" />
-                        <img src="/svgs/pressed-add-remove.svg" alt="−" class="w-4 h-4 hidden group-hover:block" />
-                      </button>
-                      <span id="quantity-display" class="text-lg font-quicksand w-[16px] text-center select-none"> 1 </span>
-                      <button type="button" onclick="changeQuantity(1)" class="relative group">
-                        <img src="/svgs/add-button.svg" alt="+" class="w-4 h-4 group-hover:hidden" />
-                        <img src="/svgs/pressed-add-remove.svg" alt="−" class="w-4 h-4 hidden group-hover:block" />
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-
-              <div class="font-light flex flex-col gap-[10px]" id="product-details">
-                <% function dottedLine(label, value, totalLength = 40) { const raw = label + value; const dotsNeeded = totalLength - raw.length; const dots = '
-                .'.repeat(Math.max(dotsNeeded, 2)); return `${label}${dots} ${value}`; } %>
-
-                <p><%= dottedLine('Возраст', product.age_group) %></p>
-                <% if (product.volume > 0) { %>
-                <p><%= dottedLine('Объем', product.volume + ' мл', 42) %></p>
+    <main class="content bg-white">
+      <div class="absolute top-[85px] left-[13px] z-0">
+        <img
+          src="/images/flower-bg.svg"
+          alt="Фон карточка товара"
+          class="w-[1114px] h-[1769px]"
+        />
+      </div>
+      <div class="relative z-10">
+        <section class="product-container">
+          <div class="max-w-[1440px] mx-auto px-[75px]">
+            <p class="command-line text-base font-medium opacity-[.61] pt-[67px] pb-[57px]">
+              <a href="/" class="hover:text-dark">. .</a> /
+              <a href="/products" class="hover:text-dark">Каталог</a> /
+              <a href="/products?category=<%= product.category %>" class="hover:text-dark"><%= product.category %></a> /
+              <span class="underline"><%= product.name %> <%= product.type %></span>
+            </p>
+            <div class="flex flex-row">
+              <div class="min-w-[488px] min-h-[652px] bg-white border border-black rounded-[3px] flex justify-center items-center">
+                <% if (product.image_url) { %>
+                  <img src="<%= product.image_url %>" alt="<%= product.name %>" class="main-image w-[415px] h-auto"/>
                 <% } else { %>
-                <p><%= dottedLine('В наборе', product.items_in_set + ' шт', 42) %></p>
+                  <div class="no-image">No image</div>
                 <% } %>
-                <p><%= dottedLine('Гипоаллергенно', product.is_hypoallergenic ? 'Да' : 'Нет') %></p>
-
-                <div class="flex flex-row items-center gap-2 cursor-pointer toggle-btn" data-target="application">
-                  <p class="capitalize">Применение</p>
-                  <img src="/svgs/dropdown.svg" class="w-[12px] h-[5px] toggle-icon" />
-                </div>
-                <div id="application" class="toggle-content hidden flex gap-[20px] my-[20px]">
-                  <div class="w-[308px] overflow-auto">
-                    <p><%= product.application.split(' ').slice(0, product.application.split(' ').length / 2).join(' ') %></p>
-                  </div>
-                  <div class="w-[308px] overflow-auto">
-                    <p><%= product.application.split(' ').slice(product.application.split(' ').length / 2).join(' ') %></p>
-                  </div>
-                </div>
-
-                <div class="flex flex-row items-center gap-2 cursor-pointer toggle-btn" data-target="composition">
-                  <p class="capitalize">Состав</p>
-                  <img src="/svgs/dropdown.svg" class="w-[12px] h-[5px] toggle-icon" />
-                </div>
-                <div id="composition" class="toggle-content hidden flex gap-[20px] my-[20px]">
-                  <div class="w-[308px] overflow-auto">
-                    <p><%= product.composition.split(' ').slice(0, product.composition.split(' ').length / 2).join(' ') %></p>
-                  </div>
-                  <div class="w-[308px] overflow-auto">
-                    <p><%= product.composition.split(' ').slice(product.composition.split(' ').length / 2).join(' ') %></p>
-                  </div>
-                </div>
-
-                <div class="flex flex-row items-center gap-2 cursor-pointer toggle-btn" data-target="contraindications">
-                  <p class="capitalize">Противопоказания</p>
-                  <img src="/svgs/dropdown.svg" class="w-[12px] h-[5px] toggle-icon" />
-                </div>
-                <div id="contraindications" class="toggle-content hidden flex gap-[20px] my-[20px]">
-                  <div class="w-[308px] overflow-auto">
-                    <p><%= product.contraindications.split(' ').slice(0, product.contraindications.split(' ').length / 2).join(' ') %></p>
-                  </div>
-                  <div class="w-[308px] overflow-auto">
-                    <p><%= product.contraindications.split(' ').slice(product.contraindications.split(' ').length / 2).join(' ') %></p>
-                  </div>
-                </div>
               </div>
 
-              <div id="product-description" class="font-light flex gap-[20px] mt-[38px]">
-                <div class="w-[308px] overflow-auto">
-                  <p><%= product.description.split(' ').slice(0, Math.floor(product.description.split(' ').length / 2)).join(' ') %></p>
+              <div class="product-info ml-[54px] w-full">
+                <div class="flex flex-row justify-between">
+                  <div class="main-info uppercase">
+                    <h1 class="text-3xl font-medium"><%= product.name || 'Не указан' %></h1>
+                    <h2 class="text-2xl font-light"><%= product.type || 'Не указан' %></h2>
+                    <h3 class="text-base font-semibold"><%= product.brand || 'Не указан' %></h3>
+                  </div>
+
+                  <div class="pay-info w-[302px]">
+                    <p class="text-2xl font-quicksand font-medium mb-[23px]">
+                      <%= product.price %> ₽
+                    </p>
+
+                    <form action="/cart/add" id="productAddForm" method="POST" class="flex flex-col">
+                      <input type="hidden" name="productId" value="<%= product.id %>" />
+                      <input type="hidden" name="quantity" id="quantity-hidden" value="1" />
+                      <button type="submit"
+                        class="uppercase bg-darkmud text-truewhite rounded-[30px] py-[19px] px-[50px] hover:bg-darkmuddeactivated transition">
+                        В корзину
+                      </button>
+
+                      <div class="flex items-center justify-center gap-[24px] mt-[17px]">
+                        <button type="button" onclick="changeQuantity(-1)" class="relative group">
+                          <img src="/svgs/remove-button.svg" alt="−" class="w-4 h-4 group-hover:hidden" />
+                          <img src="/svgs/pressed-add-remove.svg" alt="−" class="w-4 h-4 hidden group-hover:block" />
+                        </button>
+                        <span id="quantity-display" class="text-lg font-quicksand w-[16px] text-center select-none">
+                          1
+                        </span>
+                        <button type="button" onclick="changeQuantity(1)" class="relative group">
+                          <img src="/svgs/add-button.svg" alt="+" class="w-4 h-4 group-hover:hidden" />
+                          <img src="/svgs/pressed-add-remove.svg" alt="−" class="w-4 h-4 hidden group-hover:block" />
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+
                 </div>
-                <div class="w-[308px] overflow-auto">
-                  <p><%= product.description.split(' ').slice(Math.floor(product.description.split(' ').length / 2)).join(' ') %></p>
+
+                <div class="font-light flex flex-col gap-[10px]" id="product-details">
+                  <% function dottedLine(label, value, totalLength = 40) {
+                      const raw = label + value;
+                      const dotsNeeded = totalLength - raw.length;
+                      const dots = ' .'.repeat(Math.max(dotsNeeded, 2));
+                      return `${label}${dots} ${value}`;
+                    }
+                  %>
+
+                  <p><%= dottedLine('Возраст', product.age_group) %></p>
+                  <% if (product.volume > 0) { %>
+                    <p><%= dottedLine('Объем', product.volume + ' мл', 42) %></p>
+                  <% } else { %>
+                    <p><%= dottedLine('В наборе', product.items_in_set + ' шт', 42) %></p>
+                  <% } %>
+                  <p><%= dottedLine('Гипоаллергенно', product.is_hypoallergenic ? 'Да' : 'Нет') %></p>
+
+                   <div class="flex flex-row items-center gap-2 cursor-pointer toggle-btn" data-target="application">
+                    <p class="capitalize">Применение</p>
+                    <img src="/svgs/dropdown.svg" class="w-[12px] h-[5px] toggle-icon">
+                  </div>
+                  <div id="application" class="toggle-content hidden flex gap-[20px] my-[20px]">
+                    <div class="w-[308px] overflow-auto">
+                      <p><%= product.application.split(' ').slice(0, product.application.split(' ').length / 2).join(' ') %></p>
+                    </div>
+                    <div class="w-[308px] overflow-auto">
+                      <p><%= product.application.split(' ').slice(product.application.split(' ').length / 2).join(' ') %></p>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-row items-center gap-2 cursor-pointer toggle-btn" data-target="composition">
+                    <p class="capitalize">Состав</p>
+                    <img src="/svgs/dropdown.svg" class="w-[12px] h-[5px] toggle-icon">
+                  </div>
+                  <div id="composition" class="toggle-content hidden flex gap-[20px] my-[20px]">
+                    <div class="w-[308px] overflow-auto">
+                      <p><%= product.composition.split(' ').slice(0, product.composition.split(' ').length / 2).join(' ') %></p>
+                    </div>
+                    <div class="w-[308px] overflow-auto">
+                      <p><%= product.composition.split(' ').slice(product.composition.split(' ').length / 2).join(' ') %></p>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-row items-center gap-2 cursor-pointer toggle-btn" data-target="contraindications">
+                    <p class="capitalize">Противопоказания</p>
+                    <img src="/svgs/dropdown.svg" class="w-[12px] h-[5px] toggle-icon">
+                  </div>
+                  <div id="contraindications" class="toggle-content hidden flex gap-[20px] my-[20px]">
+                    <div class="w-[308px] overflow-auto">
+                      <p><%= product.contraindications.split(' ').slice(0, product.contraindications.split(' ').length / 2).join(' ') %></p>
+                    </div>
+                    <div class="w-[308px] overflow-auto">
+                      <p><%= product.contraindications.split(' ').slice(product.contraindications.split(' ').length / 2).join(' ') %></p>
+                    </div>
+                  </div>
+
                 </div>
+
+                <!-- Описание (description) -->
+                <div id="product-description" class="font-light flex gap-[20px] mt-[38px]">
+                  <div class="w-[308px] overflow-auto">
+                    <p><%= product.description.split(' ').slice(0, Math.floor(product.description.split(' ').length / 2)).join(' ') %></p>
+                  </div>
+                  <div class="w-[308px] overflow-auto">
+                    <p><%= product.description.split(' ').slice(Math.floor(product.description.split(' ').length / 2)).join(' ') %></p>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <%- include('../partials/you-may-like') %>
-    </div>
-  </main>
-  <%- include('../partials/footer') %>
-  <script>
-    window.isAuthenticated = <%= typeof customer !== 'undefined' %>;
-  </script>
-  <script src="/js/cart-form-login-popup.js" defer></script>
-  <script src="/js/product-card-quantity.js" defer></script>
-  <script src="/js/cart-product-card.js" defer></script>
-  <script src="/js/cart-products.js" defer></script>
-</body>
+        <%- include('../partials/you-may-like') %>
+      </div>
+    </main>
+<%- include('../partials/footer') %>
+<script>
+  window.isAuthenticated = <%= typeof customer !== 'undefined' %>;
+</script>
+<script src="/js/cart-form-login-popup.js" defer></script>
+<script src="/js/product-card-quantity.js" defer></script>
+<script src="/js/cart-product-card.js" defer></script>
+<script src="/js/cart-products.js" defer></script>
