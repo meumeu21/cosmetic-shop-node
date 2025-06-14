@@ -1,13 +1,13 @@
 # Сайт для онлайн-магазина косметики
 
 
-![image info](./readme/screen1.png)
+![главная страница](./readme/main-page.png)
 
 
 Создан с помощью Node.js, использовались EJS, фреймворки Bootstrap и Tailwind CSS.
 
 
-Инструкции к запуску:
+Инструкция к запуску:
 1. Скачать репозиторий;
 2. Скачать зависимости через npm install;
 3. Создать базу данных в MySQL;
@@ -19,6 +19,48 @@
 
 
 Скриншоты сайта:
-![image info](./readme/screen2.png)
-![image info](./readme/screen3.png)
-![image info](./readme/screen4.png)
+
+
+Главная страница
+![главная страница 1](./readme/main-page-1.png)
+![главная страница 2](./readme/main-page-2.png)
+
+
+Каталог товаров
+![каталог товаров](./readme/catalogue.png)
+
+
+Страница товара
+![страница товара](./readme/catalogue-product-info.png)
+
+
+Страница «Skincare»
+![страница skincare](./readme/skincare.png)
+
+
+Страница «О нас»
+![страница skincare](./readme/about.png)
+
+
+Попап авторизации
+![попап авторизации](./readme/popup-login.png)
+
+
+Попап регистрации
+![попап регистрации](./readme/popup-register.png)
+
+
+Профиль пользователя
+![профиль пользователя](./readme/user-info.png)
+
+
+Редактирование профиля пользователя
+![редактирование профиля пользователя](./readme/user-edit.png)
+
+
+Заказы пользователя
+![заказы пользователя](./readme/user-orders.png)
+
+
+Корзина
+![корзина](./readme/cart.png)
