@@ -22,45 +22,56 @@
 
 
 Главная страница
+
 ![главная страница 1](./readme/main-page-1.png)
 ![главная страница 2](./readme/main-page-2.png)
 
 
 Каталог товаров
+
 ![каталог товаров](./readme/catalogue.png)
 
 
 Страница товара
+
 ![страница товара](./readme/catalogue-product-info.png)
 
 
 Страница «Skincare»
+
 ![страница skincare](./readme/skincare.png)
 
 
 Страница «О нас»
+
 ![страница skincare](./readme/about.png)
 
 
 Попап авторизации
+
 ![попап авторизации](./readme/popup-login.png)
 
 
 Попап регистрации
+
 ![попап регистрации](./readme/popup-register.png)
 
 
 Профиль пользователя
+
 ![профиль пользователя](./readme/user-info.png)
 
 
 Редактирование профиля пользователя
+
 ![редактирование профиля пользователя](./readme/user-edit.png)
 
 
 Заказы пользователя
+
 ![заказы пользователя](./readme/user-orders.png)
 
 
 Корзина
+
 ![корзина](./readme/cart.png)
