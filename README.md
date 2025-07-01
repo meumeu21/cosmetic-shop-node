@@ -4,7 +4,7 @@
 ![главная страница](./readme/main-page.png)
 
 
-Создан с помощью Node.js, база данных на MySQL, использовались EJS, фреймворки Bootstrap и Tailwind CSS. Присутствует панель администратора по адресу /admin. Вёрстка производилась по ![шаблону в Figma](https://www.figma.com/design/pWO4aLIcrRv4syZeewb0Xy/skincare?node-id=0-1&m=dev&t=5uCm5ewaETfEF7YF-1).
+Создан с помощью Node.js, база данных на MySQL, использовались EJS, фреймворки Bootstrap и Tailwind CSS. Присутствует панель администратора по адресу /admin. Вёрстка производилась по [шаблону в Figma](https://www.figma.com/design/pWO4aLIcrRv4syZeewb0Xy/skincare?node-id=0-1&m=dev&t=5uCm5ewaETfEF7YF-1).
 
 
 ## Инструкция к запуску
